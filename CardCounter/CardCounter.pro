@@ -9,11 +9,29 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    bettingview.cpp \
+    card.cpp \
+    controller.cpp \
+    deck.cpp \
+    gamestate.cpp \
+    hand.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    statistics.cpp \
+    statsview.cpp \
+    tableview.cpp
 
 HEADERS += \
-    mainwindow.h
+    bettingview.h \
+    card.h \
+    controller.h \
+    deck.h \
+    gamestate.h \
+    hand.h \
+    mainwindow.h \
+    statistics.h \
+    statsview.h \
+    tableview.h
 
 FORMS += \
     mainwindow.ui
