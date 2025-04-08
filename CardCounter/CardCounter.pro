@@ -45,4 +45,4 @@ DISTFILES += \
     Playing Cards/3_of_clubs.png
 
 RESOURCES += \
-    CardsPNGFolder.qrc
+    cards_pngImport.qrc
