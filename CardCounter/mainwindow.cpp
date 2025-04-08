@@ -5,7 +5,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    std::vector<std::string> images = {
+    std::vector<QString> images = {
         ":/new/prefix1/Cards/2_of_clubs.png"
         ":/new/prefix1/Cards/2_of_diamonds.png"
         ":/new/prefix1/Cards/2_of_hearts.png"
@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
         ":/new/prefix1/Cards/king_of_spades.png"
     };
 
-    static const string HardTable[13][10] = {
+    static const QString HardTable[16][10] = {
         // Hard 5
         { "H","H","H","H","H","H","H","H","H","H" },
         // Hard 6
@@ -95,7 +95,7 @@ MainWindow::MainWindow(QWidget *parent)
         { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
     };
 
-    static const string SoftHands[8][10] = {
+    static const QString SoftHands[8][10] = {
         // A,2
         { "H","H","H","D","D","H","H","H","H","H" },
         // A,3
@@ -114,7 +114,7 @@ MainWindow::MainWindow(QWidget *parent)
         { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
     };
 
-    static const string PairHands[10][10] = {
+    static const QString PairHands[10][10] = {
         // 2,2
         { "SP","SP","SP","SP","SP","SP","H","H","H","H" },
         // 3,3
