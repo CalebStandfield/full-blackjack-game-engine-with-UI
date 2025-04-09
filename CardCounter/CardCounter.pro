@@ -124,6 +124,7 @@ HEADERS += \
     mainwindow.h \
     statistics.h \
     statsview.h \
+    suits.h \
     tableview.h
 
 FORMS += \
