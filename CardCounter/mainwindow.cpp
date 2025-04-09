@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(Controller c, QWidget *parent)
+MainWindow::MainWindow(Controller* c, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {

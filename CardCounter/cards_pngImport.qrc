@@ -54,4 +54,5 @@
         <file>cards_pngsource/queen_of_spades.png</file>
     </qresource>
     <qresource prefix="/cash"/>
+    <qresource prefix="/table"/>
 </RCC>
