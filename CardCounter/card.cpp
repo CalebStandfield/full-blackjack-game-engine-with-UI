@@ -1,13 +1,31 @@
 #include "card.h"
+#include "suits.h"
+#include "rank.h"
 
-Card::Card(int value, SUIT suit) : value(value), suit(suit) {}
+Card::Card(SUIT suit, RANK rank) : suit(suit), rank(rank) {}
 
-int Card::getValue()
-{
-    return value;
-}
-
-SUIT Card::getSuit()
+SUIT Card::getSuit() const
 {
     return suit;
+}
+
+RANK Card::getRank() const
+{
+    return rank;
+}
+
+void Card::setSuit(SUIT suit)
+{
+    this->suit = suit;
+}
+
+void Card::setRank(RANK rank)
+{
+    this->rank = rank;
+}
+
+std::ostream& operator<<(std::ostream& os, const Card& card)
+{
+    os << toString(card.rank) << " of " << toString(card.suit);
+    return os;
 }

@@ -23,6 +23,12 @@ public:
      */
     Card getNextCard();
 
+    /**
+     * @brief isEmpty Checks if the there are any more cards left in the shuffled deck
+     * @return Returns true if there are no more cards and false if the shuffled deck is not empty
+     */
+    bool isEmpty() const;
+
 private:
     /**
      * @brief masterDeck The master deck holding all 52 cards in order
@@ -37,7 +43,12 @@ private:
     /**
      * @brief shuffledDeckIndex The current index in the shuffled deck
      */
-    int shuffledDeckIndex = 0;
+    int currentDeckIndex = 0;
+
+    /**
+     * @brief createDeck Creates a full 52 card deck in number order. Suit goes
+     */
+    void createDeck();
 };
 
 #endif // DECK_H

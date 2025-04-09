@@ -122,6 +122,7 @@ HEADERS += \
     gamestate.h \
     hand.h \
     mainwindow.h \
+    rank.h \
     statistics.h \
     statsview.h \
     suits.h \

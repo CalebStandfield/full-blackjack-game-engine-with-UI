@@ -27,11 +27,29 @@ inline std::string toString(SUIT suit)
     case SUIT::SPADES:
         return "Spades";
     }
+
+    return "Unknown suit";
 }
 
+/**
+ * @brief operator << Prints out the string of the SUIT when used with the ostream operator
+ * @param os The stream to add the string to
+ * @param suit The suit to convert
+ * @return The ostream with the suit as a string
+ */
 inline std::ostream& operator<<(std::ostream& os, SUIT suit) {
     return os << toString(suit);
 }
+
+/**
+ * @brief allSuits An array of all the suit values
+ */
+inline constexpr SUIT allSuits[] = {
+    SUIT::HEARTS,
+    SUIT::DIAMONDS,
+    SUIT::CLUBS,
+    SUIT::SPADES
+};
 
 #endif // SUITS_H
 
