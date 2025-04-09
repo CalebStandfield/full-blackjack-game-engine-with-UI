@@ -54,8 +54,10 @@
         <file>cards_pngsource/queen_of_spades.png</file>
     </qresource>
     <qresource prefix="/cash"/>
-    <qresource prefix="/table"/>
-    <qresource prefix="/">
+    <qresource prefix="/table">
+        <file>BlackJackTableMat.png</file>
+    </qresource>
+    <qresource prefix="/backGround">
         <file>cards_pngsource/BackGround.png</file>
     </qresource>
 </RCC>
