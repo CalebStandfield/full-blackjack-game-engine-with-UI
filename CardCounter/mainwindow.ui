@@ -44,7 +44,7 @@
      <height>700</height>
     </size>
    </property>
-   <widget class="screens" name="stackedWidget">
+   <widget class="Screens" name="stackedWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -79,7 +79,7 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>screens</class>
+   <class>Screens</class>
    <extends>QStackedWidget</extends>
    <header>screens.h</header>
    <container>1</container>
