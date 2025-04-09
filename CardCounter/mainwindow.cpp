@@ -139,6 +139,17 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     ui->setupUi(this);
 
+
+    QPixmap bgImage(":/cards_pngsource/BackGround.png");
+
+    bgImage = bgImage.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, bgImage);
+    this->setPalette(palette);
+
+    this->setAutoFillBackground(true);
+
     tableView = new TableView(this);
 
     // Create all signal/slot connections with c (controller) here

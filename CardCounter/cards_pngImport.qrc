@@ -55,4 +55,7 @@
     </qresource>
     <qresource prefix="/cash"/>
     <qresource prefix="/table"/>
+    <qresource prefix="/">
+        <file>cards_pngsource/BackGround.png</file>
+    </qresource>
 </RCC>
