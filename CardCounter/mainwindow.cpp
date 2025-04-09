@@ -139,6 +139,8 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     ui->setupUi(this);
 
+    // Object creationk
+
 
     QPixmap bgImage(":/table/BlackJackTableMat.png");
 

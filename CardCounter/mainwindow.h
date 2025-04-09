@@ -5,6 +5,7 @@
 #include <QPalette>
 #include <QPixmap>
 #include "controller.h"
+#include "screens.h"
 #include "tableview.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,5 +25,6 @@ public:
 private:
     Ui::MainWindow *ui;
     TableView *tableView;
+    Screens *screens;
 };
 #endif // MAINWINDOW_H

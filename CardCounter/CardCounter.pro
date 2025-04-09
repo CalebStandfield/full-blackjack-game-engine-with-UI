@@ -63,6 +63,7 @@ SOURCES += \
     hand.cpp \
     main.cpp \
     mainwindow.cpp \
+    screens.cpp \
     statistics.cpp \
     statsview.cpp \
     tableview.cpp
@@ -123,6 +124,7 @@ HEADERS += \
     hand.h \
     mainwindow.h \
     rank.h \
+    screens.h \
     statistics.h \
     statsview.h \
     suits.h \
