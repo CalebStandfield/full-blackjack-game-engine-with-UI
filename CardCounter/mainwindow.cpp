@@ -140,7 +140,7 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
     ui->setupUi(this);
 
 
-    QPixmap bgImage(":/cards_pngsource/BackGround.png");
+    QPixmap bgImage(":/table/BlackJackTableMat.png");
 
     bgImage = bgImage.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
