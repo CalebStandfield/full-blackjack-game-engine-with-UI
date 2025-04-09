@@ -3,11 +3,13 @@
 
 #include <string>
 
+namespace Suit {
+
 enum class SUIT {
+    SPADES,
     HEARTS,
-    DIAMONDS,
     CLUBS,
-    SPADES
+    DIAMONDS
 };
 
 /**
@@ -45,11 +47,12 @@ inline std::ostream& operator<<(std::ostream& os, SUIT suit) {
  * @brief allSuits An array of all the suit values
  */
 inline constexpr SUIT allSuits[] = {
+    SUIT::SPADES,
     SUIT::HEARTS,
-    SUIT::DIAMONDS,
     SUIT::CLUBS,
-    SUIT::SPADES
+    SUIT::DIAMONDS
 };
 
+}
 #endif // SUITS_H
 
