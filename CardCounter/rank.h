@@ -4,6 +4,9 @@
 #include <string>
 #include <ostream>
 
+namespace Rank {
+
+
 /**
  * @brief RANK An enum of card ranks
  */
@@ -129,4 +132,5 @@ inline constexpr RANK allRanks[] = {
     RANK::ACE
 };
 
+}
 #endif // RANK_H

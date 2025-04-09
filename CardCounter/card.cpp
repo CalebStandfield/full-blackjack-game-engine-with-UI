@@ -9,19 +9,14 @@ SUIT Card::getSuit() const
     return suit;
 }
 
-RANK Card::getRank() const
+Rank::RANK Card::getRank() const
 {
     return rank;
 }
 
-void Card::setSuit(SUIT suit)
+std::string Card::toString()
 {
-    this->suit = suit;
-}
-
-void Card::setRank(RANK rank)
-{
-    this->rank = rank;
+    return Rank::toString(rank) + " of " + Suit::toString(suit);
 }
 
 std::ostream& operator<<(std::ostream& os, const Card& card)

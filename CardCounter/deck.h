@@ -9,8 +9,9 @@ class Deck
 public:
     /**
      * @brief Deck The constructor for the deck class
+     * @param deckNumber The number of decks to use in the shuffled deck
      */
-    Deck();
+    Deck(int deckNumber = 1);
 
     /**
      * Shuffles the shuffleDeck so it is randomized

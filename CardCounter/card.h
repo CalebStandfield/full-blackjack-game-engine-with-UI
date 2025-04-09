@@ -4,6 +4,9 @@
 #include "suits.h"
 #include "rank.h"
 
+using Rank::RANK;
+using Suit::SUIT;
+
 class Card
 {
     /**
@@ -14,6 +17,7 @@ class Card
      */
     friend std::ostream& operator<<(std::ostream& os, const Card& card);
 
+    //friend std::string toString(const Card& card);
 public:
     /**
      * @brief Card Constructor which sets the rank and suit of the card
@@ -35,16 +39,11 @@ public:
     RANK getRank() const;
 
     /**
-     * @brief setSuit Sets the suit of the card
-     * @param suit The new suit of the card
+     * @brief toString Gives the string output of this card as Rank of Suit
+     * @return "Rank of Suit"
      */
-    void setSuit(SUIT suit);
+    std::string toString();
 
-    /**
-     * @brief setRank Sets the rank of the card
-     * @param suit The new rank of the card
-     */
-    void setRank(RANK rank);
 private:
     /**
      * @brief suit The suit of the card

@@ -4,18 +4,22 @@
 #include <algorithm>
 #include <random>
 
-Deck::Deck()
+Deck::Deck(int deckNumber)
 {
     createDeck();
-    shuffledDeck = masterDeck;
+
+    for(int i = 0; i < deckNumber; i++) {
+        shuffledDeck.insert(shuffledDeck.end(), masterDeck.begin(), masterDeck.end());
+    }
+    shuffle();
 }
 
 void Deck::createDeck()
 {
     masterDeck.reserve(52);
 
-    for (RANK rank : allRanks)
-        for (SUIT suit : allSuits)
+    for (RANK rank : Rank::allRanks)
+        for (SUIT suit : Suit::allSuits)
             masterDeck.emplace_back(suit, rank);
 }
 
@@ -28,8 +32,11 @@ void Deck::shuffle()
 
 Card Deck::getNextCard()
 {
-    if (isEmpty())
-        throw std::out_of_range("No more cards in the deck");
+    if (currentDeckIndex > (shuffledDeck.size() * 0.8))
+    {
+        shuffle();
+        currentDeckIndex = 0;
+    }
 
     return shuffledDeck[currentDeckIndex++];
 }
