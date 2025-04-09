@@ -1,5 +1,10 @@
 #include "tableview.h"
 
-TableView::TableView(QObject *parent)
-    : QObject{parent}
+TableView::TableView(QWidget *parent)
+    : QWidget{parent}
 {}
+
+TableView::~TableView()
+{
+
+}

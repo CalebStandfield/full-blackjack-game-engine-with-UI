@@ -1,13 +1,16 @@
 #ifndef TABLEVIEW_H
 #define TABLEVIEW_H
 
-#include <QObject>
+#include <QtWidgets/qwidget.h>
 
-class TableView : public QObject
+class TableView : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TableView(QObject *parent = nullptr);
+    explicit TableView(QWidget *parent = nullptr);
+    ~TableView();
+
+private:
 
 signals:
 };

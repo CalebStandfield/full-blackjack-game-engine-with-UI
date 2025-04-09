@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "controller.h"
+#include "tableview.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,5 +21,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    TableView *tableView;
 };
 #endif // MAINWINDOW_H

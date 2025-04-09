@@ -139,6 +139,8 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     ui->setupUi(this);
 
+    tableView = new TableView(this);
+
     // Create all signal/slot connections with c (controller) here
     // Do not use controller in rest of class, breaks mvc
 }
