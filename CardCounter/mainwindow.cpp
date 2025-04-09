@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(Controller c, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
@@ -138,6 +138,9 @@ MainWindow::MainWindow(QWidget *parent)
         };
 
     ui->setupUi(this);
+
+    // Create all signal/slot connections with c (controller) here
+    // Do not use controller in rest of class, breaks mvc
 }
 
 MainWindow::~MainWindow()
