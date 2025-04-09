@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/images">
+    <qresource prefix="/cardImages">
         <file>cards_pngsource/2_of_clubs.png</file>
         <file>cards_pngsource/2_of_diamonds.png</file>
         <file>cards_pngsource/2_of_hearts.png</file>
@@ -53,4 +53,5 @@
         <file>cards_pngsource/queen_of_hearts.png</file>
         <file>cards_pngsource/queen_of_spades.png</file>
     </qresource>
+    <qresource prefix="/cash"/>
 </RCC>
