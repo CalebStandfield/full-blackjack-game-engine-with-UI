@@ -4,6 +4,9 @@
 #include <QObject>
 #include "gamestate.h"
 #include "hand.h"
+#include "playerStatus.h"
+
+using PlayerStatus::PLAYERSTATUS;
 
 class Controller : public QObject
 {
@@ -40,7 +43,7 @@ signals:
      * @param money The money they have left
      * @param status The status of the player (busted or stood)
      */
-    void playerUpdated(int playerIndex, const Hand& hand, int total, int money, QString status);
+    void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
 
     /**
      * @brief dealerUpdated Signal that the dealer has updated with their updated info
@@ -56,10 +59,10 @@ signals:
     void nextPlayerTurn(int nextPlayerIndex);
 
     /**
-     * @brief roundEnded Signal that the round has ended
+     * @brief endRound Signal that the round has ended
      * @param roundSummary A brief summary of the round to display
      */
-    void roundEnded(QString roundSummary);
+    void endRound(QString roundSummary);
 
     /**
      * @brief gameMessage Signal to send a game message (ex. player 0 has busted)
@@ -87,6 +90,11 @@ private:
      * @brief advanceToNextPlayer Move to the next player's turn
      */
     void advanceToNextPlayer();
+
+    /**
+     * @brief checkTurnEnd
+     */
+    void checkTurnEnd(const Player& player);
 };
 
 #endif // CONTROLLER_H

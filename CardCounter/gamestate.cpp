@@ -1,4 +1,7 @@
 #include "gamestate.h"
+#include "playerStatus.h"
+
+using PlayerStatus::PLAYERSTATUS;
 
 GameState::GameState(int playerCount, int deckCount, int initialBet, int initialMoney)
     : deck(deckCount), dealerHand(0)
@@ -12,6 +15,7 @@ GameState::GameState(int playerCount, int deckCount, int initialBet, int initial
 
 void GameState::dealInitialCards()
 {
+    deck.shuffle();
     dealerHand = Hand(0);
     dealerFinished = false;
 
@@ -33,19 +37,31 @@ void GameState::dealInitialCards()
 
 void GameState::hit(int playerIndex)
 {
-    players[playerIndex].hand.addCard(deck.getNextCard());
+    Player &currPlayer = players[playerIndex];
+    currPlayer.status = PLAYERSTATUS::ACTIVE;
+    currPlayer.hand.addCard(deck.getNextCard());
+    if(isBust(currPlayer.hand)){
+        currPlayer.status = PLAYERSTATUS::BUST;
+    }
 }
 
 void GameState::doubleDown(int playerIndex)
 {
-    int currentBet = players[playerIndex].hand.getBet();
-    players[playerIndex].hand.setBet(currentBet * 2);
-    players[playerIndex].hand.addCard(deck.getNextCard());
+    Player &currPlayer = players[playerIndex];
+    int currentBet = currPlayer.hand.getBet();
+    currPlayer.money -= currentBet;
+    currPlayer.hand.setBet(currentBet * 2);
+    currPlayer.hand.addCard(deck.getNextCard());
+    currPlayer.status = PLAYERSTATUS::STAND;
+    if(isBust(currPlayer.hand)){
+        currPlayer.status = PLAYERSTATUS::BUST;
+    }
 }
 
 void GameState::stand(int playerIndex)
 {
-
+    Player &currPlayer = players[playerIndex];
+    currPlayer.status = PLAYERSTATUS::STAND;
 }
 
 void GameState::dealerPlay()
@@ -85,15 +101,20 @@ void GameState::endRound()
     }
 }
 
-const Hand& GameState::getPlayerHand(int index) const
+void GameState::setPlayerActive(int index)
 {
-    return players.at(index).hand;
+    players[index].status = PLAYERSTATUS::ACTIVE;
 }
 
-int GameState::getPlayerMoney(int index) const
+const Player& GameState::getPlayer(int index) const
 {
-    return players.at(index).money;
+    return players.at(index);
 }
+
+// int GameState::getPlayerMoney(int index) const
+// {
+//     return players.at(index).money;
+// }
 
 const Hand& GameState::getDealerHand() const
 {

@@ -24,16 +24,19 @@ public:
 
     /**
      * @brief hit Deals a single card to the specified player, checks for bust
+     * @param playerIndex The index of the current player
      */
     void hit(int playerIndex);
 
     /**
      * @brief doubleDown Double bet for the specified player, deal one card, check bust
+     * @param playerIndex The index of the current player
      */
     void doubleDown(int playerIndex);
 
     /**
      * @brief stand The player stands
+     * @param playerIndex The index of the current player
      */
     void stand(int playerIndex);
 
@@ -49,6 +52,7 @@ public:
 
     /**
      * @brief isBust Checks if a hand is over 21
+     * @param hand The hand to check
      */
     bool isBust(const Hand& hand) const;
 
@@ -58,19 +62,26 @@ public:
     int getPlayerCount() const;
 
     /**
-     * @brief getPlayerHand Gets a player's current hand
+     * @brief getPlayer Gets a player's current hand
+     * @param index The current player's index
      */
-    const Hand& getPlayerHand(int index) const;
+    const Player& getPlayer(int index) const;
 
-    /**
-     * @brief getPlayerMoney Get how much money a player has.
-     */
-    int getPlayerMoney(int index) const;
+    // /**
+    //  * @brief getPlayerMoney Get how much money a player has.
+    //  */
+    // int getPlayerMoney(int index) const;
 
     /**
      * @brief getDealerHand Gets the dealer's current hand
      */
     const Hand& getDealerHand() const;
+
+    /**
+     * @brief setPlayerActive Sets the player at given index to ACTIVE
+     * @param index The player to set to ACTIVE
+     */
+    void setPlayerActive(int index);
 
 private:
     /**

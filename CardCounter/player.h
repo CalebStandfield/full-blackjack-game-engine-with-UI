@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "hand.h"
+#include "playerStatus.h"
 
 class Player
 {
@@ -17,9 +18,9 @@ public:
     int money;
 
     /**
-     * @brief isBusted True if the player busted, false otherwise
+     * @brief status Stores the current status of the player
      */
-    bool isBusted = false;
+    PlayerStatus::PLAYERSTATUS status = PlayerStatus::PLAYERSTATUS::WAITING;
 
     /**
      * @brief Player Constructor that creates a new player with the given bet and money
