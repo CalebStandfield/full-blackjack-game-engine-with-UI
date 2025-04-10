@@ -4,7 +4,9 @@
 
 TableView::TableView(QWidget *parent)
     : QWidget{parent}
-{}
+{
+
+}
 
 TableView::~TableView()
 {

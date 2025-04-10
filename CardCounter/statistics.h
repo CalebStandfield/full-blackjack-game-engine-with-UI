@@ -9,6 +9,12 @@ class Statistics : public QObject
 public:
     explicit Statistics(QObject *parent = nullptr);
 
+    static const QString HardTable[16][10];
+
+    static const QString SoftHands[8][10];
+
+    static const QString PairHands[10][10];
+
 signals:
 };
 
