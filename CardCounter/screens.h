@@ -16,45 +16,95 @@ private:
     Ui::MainWindow *ui;
     TableView *tableView;
 
-    // BackGround Functions
+    enum GAMEPLAYMODE {
+        BLACKJACK,
+        BLACKJACKTUTORIAL,
+        COUNTCARDS,
+        COUNTCARDSTUTORIAL,
+        UNSELECTED
+    };
 
-    void setUpBackGround();
-
-    // Table Functions
+    GAMEPLAYMODE mode;
 
     /**
-     * @brief setUpTable Sets up the table for program start.
+     * @brief setUpConnect Sets up all the connect functions for this class
+     */
+    void setUpConnect();
+
+    /**
+     * @brief setUpBackGround Sets up the general background for the ui
+     */
+    void setUpBackGround();
+
+    /**
+     * @brief setUpTable Sets up the table for program start
      */
     void setUpTable();
 
-    // StartMenu Functions
-
     /**
-     * @brief setUpStartMenuButtons Sets up the button area for the startMenu.
+     * @brief setUpStartMenuButtons Sets up the button area for the startMenu
      */
     void setUpStartMenuButtons();
 
-    // StyleSheet
+    /**
+     * @brief setUpGamePlayButtons Sets up the game play buttons
+     */
+    void setUpGamePlayButtons();
 
     /**
-     * @brief setUpQStyleSheets Initalizes the QStrings for the different StyleSheets.
+     * @brief setUpSettingsPopup Sets up the settings pop up
+     */
+    void setUpSettingsPopup();
+
+    /**
+     * @brief setUpQStyleSheets Initalizes the QStrings for the different StyleSheets
      */
     void setUpQStyleSheets();
 
     /**
-     * @brief QPushButtonStylef QString of the general QPushButton StyleSheet.
+     * @brief QPushButtonStylef QString of the general QPushButton StyleSheet
      */
     QString QPushButtonStyle;
 
     /**
-     * @brief getQLableStyle QString of the general QLabel StyleSheet.
+     * @brief getQLableStyle QString of the general QLabel StyleSheet
      */
     QString QLabelStyle;
 
     /**
-     * @brief getQWidgetStylenQString of the general QWidget StyleSheet.
+     * @brief getQWidgetStylenQString of the general QWidget StyleSheet
      */
     QString QWidgetStyle;
+
+    /**
+     * @brief moveToPlayScreen Move from current screen to the play screen
+     */
+    void moveToPlayScreen();
+
+    /**
+     * @brief moveBackToStartScreen Move from the current to the start screen
+     */
+    void moveToStartScreen();
+
+    /**
+     * @brief hideSettingsPopup Hides the settings popup
+     */
+    void hideSettingsPopup();
+
+    /**
+     * @brief showSettingsPopup Shows the settings popup
+     */
+    void showSettingsPopup();
+
+    /**
+     * @brief applyShadowToWidget Applies a shadow effect for more depth for the passed in widget
+     * @param widget The widget to give shadow to
+     */
+    void applyShadowToWidget(QWidget *widget);
+
+private slots:
+public slots:
+
 };
 
 #endif // SCREENS_H
