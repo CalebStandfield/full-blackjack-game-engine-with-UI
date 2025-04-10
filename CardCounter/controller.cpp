@@ -7,6 +7,11 @@ Controller::Controller(QObject *parent) : QObject{parent}
     // players start from left of dealer (i.e. right to left) (what order to make players?)
 }
 
+Controller::~Controller()
+{
+    delete model;
+}
+
 void Controller::checkTurnEnd(const Player& player){
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
