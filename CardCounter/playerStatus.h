@@ -17,20 +17,20 @@ enum class PLAYERSTATUS {
  * @param PLAYERSTATUS The PLAYERSTATUS to convert
  * @return A string of the PLAYERSTATUS provided
  */
-inline std::string toString(PLAYERSTATUS PLAYERSTATUS)
+inline std::string toString(PLAYERSTATUS playerStatus)
 {
-    switch (PLAYERSTATUS) {
+    switch (playerStatus) {
     case PLAYERSTATUS::ACTIVE:
-        return "ACTIVE";
+        return "Active";
     case PLAYERSTATUS::BUST:
-        return "BUST";
+        return "Bust";
     case PLAYERSTATUS::WAITING:
-        return "WAITING";
+        return "Waiting";
     case PLAYERSTATUS::STAND:
-        return "STAND";
+        return "Stand";
     }
 
-    return "Unknown PLAYERSTATUS";
+    return "Unknown player status";
 }
 
 /**
@@ -39,14 +39,14 @@ inline std::string toString(PLAYERSTATUS PLAYERSTATUS)
  * @param PLAYERSTATUS The PLAYERSTATUS to convert
  * @return The ostream with the PLAYERSTATUS as a string
  */
-inline std::ostream& operator<<(std::ostream& os, PLAYERSTATUS PLAYERSTATUS) {
-    return os << toString(PLAYERSTATUS);
+inline std::ostream& operator<<(std::ostream& os, PLAYERSTATUS playerStatus) {
+    return os << toString(playerStatus);
 }
 
 /**
  * @brief allPLAYERSTATUSs An array of all the PLAYERSTATUS values
  */
-inline constexpr PLAYERSTATUS allPLAYERSTATUSs[] = {
+inline constexpr PLAYERSTATUS allPlayerStatus[] = {
     PLAYERSTATUS::STAND,
     PLAYERSTATUS::ACTIVE,
     PLAYERSTATUS::WAITING,
