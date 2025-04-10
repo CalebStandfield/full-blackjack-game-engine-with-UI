@@ -96,51 +96,30 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
     };
 
     static const QString SoftHands[8][10] = {
-        // A,2
-        { "H","H","H","D","D","H","H","H","H","H" },
-        // A,3
-        { "H","H","H","D","D","H","H","H","H","H" },
-        // A,4
-        { "H","H","D","D","D","H","H","H","H","H" },
-        // A,5
-        { "H","H","D","D","D","H","H","H","H","H" },
-        // A,6
-        { "H","D","D","D","D","H","H","H","H","H" },
-        // A,7
-        { "D","D","D","D","D","ST","ST","H","H","H" },
-        // A,8
-        { "ST","ST","ST","ST","D","ST","ST","ST","ST","ST" },
-        // A,9
-        { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
+        { "H","H","H","D","D","H","H","H","H","H" },            // A,2
+        { "H","H","H","D","D","H","H","H","H","H" },            // A,3
+        { "H","H","D","D","D","H","H","H","H","H" },            // A,4
+        { "H","H","D","D","D","H","H","H","H","H" },            // A,5
+        { "H","D","D","D","D","H","H","H","H","H" },            // A,6
+        { "D","D","D","D","D","ST","ST","H","H","H" },          // A,7
+        { "ST","ST","ST","ST","D","ST","ST","ST","ST","ST" },   // A,8
+        { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // A,9
     };
 
     static const QString PairHands[10][10] = {
-        // 2,2
-        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },
-        // 3,3
-        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },
-        // 4,4
-        { "H","H","H","SP","SP","H","H","H","H","H" },
-        // 5,5
-        { "D","D","D","D","D","D","D","D","H","H" },
-        // 6,6
-        { "SP","SP","SP","SP","SP","H","H","H","H","H" },
-        // 7,7
-        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },
-        // 8,8
-        { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },
-        // 9,9
-        { "SP","SP","SP","SP","SP","ST","SP","SP","ST","ST" },
-        // 10,10
-        { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
-        // A,A
-        { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },
+        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 2,2
+        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 3,3
+        { "H","H","H","SP","SP","H","H","H","H","H" },              // 4,4
+        { "D","D","D","D","D","D","D","D","H","H" },                // 5,5
+        { "SP","SP","SP","SP","SP","H","H","H","H","H" },           // 6,6
+        { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 7,7
+        { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },      // 8,8
+        { "SP","SP","SP","SP","SP","ST","SP","SP","ST","ST" },      // 9,9
+        { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // 10,10
+        { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },      // A,A
         };
 
     ui->setupUi(this);
-
-    // Object creationk
-
 
     QPixmap bgImage(":/table/BlackJackTableMat.png");
 
@@ -152,10 +131,8 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     this->setAutoFillBackground(true);
 
+    ui->CardCountring->setStyleSheet("color: white; background-color: transparent;");
     tableView = new TableView(this);
-
-    // Create all signal/slot connections with c (controller) here
-    // Do not use controller in rest of class, breaks mvc
 }
 
 MainWindow::~MainWindow()

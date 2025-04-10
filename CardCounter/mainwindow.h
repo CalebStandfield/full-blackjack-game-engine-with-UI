@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QPalette>
 #include <QPixmap>
+#include <QWidget>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QTextEdit>
+
 #include "controller.h"
 #include "screens.h"
 #include "tableview.h"
@@ -21,6 +26,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(Controller* c, QWidget *parent = nullptr);
     ~MainWindow();
+
 
 private:
     Ui::MainWindow *ui;
