@@ -36,7 +36,7 @@ void Screens::setUpConnect()
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
-    connect(ui->countCardsTutorialButton,
+    connect(ui->blackjackTutorialButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
@@ -52,11 +52,11 @@ void Screens::setUpConnect()
             &Screens::moveToStartScreen);
 
     //Tutorial Pages
-    connect(ui->blackjackTutorialButton,
+    connect(ui->infographicsButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToInforScreen);
-    connect(ui->menuButton,
+    connect(ui->infoMenuButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToStartScreen);
@@ -85,9 +85,9 @@ void Screens::setUpStartMenuButtons()
 
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
-    ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
+    ui->infographicsButton->setStyleSheet(QPushButtonStyle);
     ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
-    ui->countCardsTutorialButton->setStyleSheet(QPushButtonStyle);
+    ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
 
 }
 
@@ -176,8 +176,8 @@ void Screens::moveToPlayScreen()
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
     } else if (name == "countCardsPlayButton") {
         mode = GAMEPLAYMODE::COUNTCARDS;
-    } else if (name == "countCardsTutorialButton") {
-        mode = GAMEPLAYMODE::COUNTCARDSTUTORIAL;
+    } else {
+        mode = GAMEPLAYMODE::UNSELECTED;
     }
 }
 
@@ -220,9 +220,9 @@ void Screens::setUpBasicStrategyCharts()
     // Set the scene rect to exactly encompass your image
     scene->setSceneRect(imageItem->boundingRect());
 
-    ui->basicStrategyChart->setScene(scene);
-    ui->basicStrategyChart->resetTransform();
-    ui->basicStrategyChart->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    ui->infoBasicStrategyChart->setScene(scene);
+    ui->infoBasicStrategyChart->resetTransform();
+    ui->infoBasicStrategyChart->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void Screens::tableViewCardTest()
