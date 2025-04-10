@@ -57,7 +57,5 @@
     <qresource prefix="/table">
         <file>BlackJackTableMat.png</file>
     </qresource>
-    <qresource prefix="/backGround">
-        <file>cards_pngsource/BackGround.png</file>
-    </qresource>
+    <qresource prefix="/backGround"/>
 </RCC>
