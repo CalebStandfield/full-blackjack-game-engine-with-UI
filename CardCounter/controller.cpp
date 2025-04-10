@@ -41,6 +41,11 @@ void Controller::onDoubleDown()
     checkTurnEnd(model->getPlayer(currentPlayerIndex));
 }
 
+void Controller::onBet(int bet)
+{
+
+}
+
 void Controller::advanceToNextPlayer()
 {
     currentPlayerIndex++;
@@ -71,4 +76,9 @@ void Controller::startRound()
     // check whether current player is an AI or a real player
     // if a real player, send signal to view to activate P1's buttons
     // otherwise, the controller will play as the AI
+}
+
+void Controller::createNewGame(int players, int decks, int initialMoney)
+{
+
 }
