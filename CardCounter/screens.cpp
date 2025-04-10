@@ -18,6 +18,7 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpSettingsPopup();
     setUpBackGround();
     hideSettingsPopup();
+    setUpBasicStrategyCharts();
 
     // Connects
     setUpConnect();
@@ -28,10 +29,6 @@ void Screens::setUpConnect()
 {
     // Gameplay buttons
     connect(ui->blackjackPlayButton,
-            &QPushButton::clicked,
-            this,
-            &Screens::moveToPlayScreen);
-    connect(ui->blackjackTutorialButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
@@ -53,6 +50,17 @@ void Screens::setUpConnect()
             &QPushButton::clicked,
             this,
             &Screens::moveToStartScreen);
+
+    //Tutorial Pages
+    connect(ui->blackjackTutorialButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToInforScreen);
+    connect(ui->menuButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToStartScreen);
+
 
 }
 
@@ -183,7 +191,8 @@ void Screens::showSettingsPopup()
     ui->settingsPopUp->show();
 }
 
-void Screens::applyShadowToWidget(QWidget *widget) {
+void Screens::applyShadowToWidget(QWidget *widget)
+{
     // Create a shadow effect
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect();
 
@@ -193,6 +202,27 @@ void Screens::applyShadowToWidget(QWidget *widget) {
     shadow->setColor(QColor(0, 0, 0, 160));
 
     widget->setGraphicsEffect(shadow);
+}
+
+void Screens::moveToInforScreen()
+{
+    ui->screens->setCurrentIndex(2);
+}
+
+void Screens::setUpBasicStrategyCharts()
+{
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    QPixmap imagePixmap(":/BasicStrategyCharts.png");
+
+    QGraphicsPixmapItem* imageItem = new QGraphicsPixmapItem(imagePixmap);
+    scene->addItem(imageItem);
+
+    // Set the scene rect to exactly encompass your image
+    scene->setSceneRect(imageItem->boundingRect());
+
+    ui->basicStrategyChart->setScene(scene);
+    ui->basicStrategyChart->resetTransform();
+    ui->basicStrategyChart->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
 }
 
 void Screens::tableViewCardTest()
