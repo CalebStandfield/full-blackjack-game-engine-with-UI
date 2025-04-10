@@ -9,8 +9,6 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
     // Set up function calls
 
     screens = new Screens(ui);
-
-    ui->screens->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
