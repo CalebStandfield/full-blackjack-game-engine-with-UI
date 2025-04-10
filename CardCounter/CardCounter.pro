@@ -124,6 +124,7 @@ HEADERS += \
     hand.h \
     mainwindow.h \
     player.h \
+    playerStatus.h \
     rank.h \
     screens.h \
     statistics.h \
