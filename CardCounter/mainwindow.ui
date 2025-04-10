@@ -72,7 +72,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="startMenu">
      <widget class="QPushButton" name="TrainingMode">
@@ -136,7 +136,18 @@ li.checked::marker { content: &quot;\2612&quot;; }
      </widget>
     </widget>
     <widget class="QWidget" name="loadingScreen"/>
-    <widget class="QWidget" name="playScreen"/>
+    <widget class="QWidget" name="playScreen">
+     <widget class="QWidget" name="table" native="true">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>-20</y>
+        <width>800</width>
+        <height>700</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
