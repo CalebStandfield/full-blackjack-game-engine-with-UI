@@ -15,16 +15,20 @@ void GameState::dealInitialCards()
     dealerHand = Hand(0);
     dealerFinished = false;
 
-    // Deal 2 cards to each player and set their status to waiting
+    // Reset player's hand
     for(Player& player : players)
-    {
         player.hand = Hand(player.hand.getBet());
-        player.hand.addCard(deck.getNextCard());
-        player.hand.addCard(deck.getNextCard());
-    }
 
-    dealerHand.addCard(deck.getNextCard());
-    dealerHand.addCard(deck.getNextCard());
+    // Deal 2 cards to each player and set their status to waiting
+    for(int i = 0; i < 2; i++)
+    {
+        for(Player& player : players)
+        {
+            player.hand.addCard(deck.getNextCard());
+        }
+
+        dealerHand.addCard(deck.getNextCard());
+    }
 }
 
 void GameState::hit(int playerIndex)
@@ -64,32 +68,20 @@ void GameState::endRound()
     for(Player& player : players)
     {
         if(isBust(player.hand))
-            player.money -= player.hand.getBet();
+            continue;
 
-        else
+        int playerTotal = player.hand.getTotal();
+        if(dealerBust || playerTotal > dealerTotal)
         {
-            int playerTotal = player.hand.getTotal();
-            if(dealerBust)
-            {
-                // If player gets blackjack, player gets 1.5 times there bet
-                if(playerTotal == 21)
-                    player.money += player.hand.getBet() * 2.5;
-                // Else, player doubles their bet
-                else
-                    player.money += player.hand.getBet() * 2;
-            }
-            else if(playerTotal > dealerTotal)
-            {
-                // If player gets blackjack, player gets 1.5 times there bet
-                if(playerTotal == 21)
-                    player.money += player.hand.getBet() * 2.5;
-                // Else, player doubles their bet
-                else
-                    player.money += player.hand.getBet() * 2;
-            }
-            else if(playerTotal < dealerTotal)
-                player.money -= player.hand.getBet();
+            // If player gets blackjack, player gets 1.5 times their bet
+            if(playerTotal == 21)
+                player.money += player.hand.getBet() * 2.5;
+            // Else, player doubles their bet
+            else
+                player.money += player.hand.getBet() * 2;
         }
+        else if(playerTotal == dealerTotal)
+            player.money += player.hand.getBet();
     }
 }
 
