@@ -1,14 +1,58 @@
 #include "screens.h"
 #include <QPalette>
 #include <QPixmap>
+#include <qdebug.h>
+#include <QGraphicsDropShadowEffect>
 
 Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     : QStackedWidget(parent), ui(ui)
 {
+    // Ensure the start Screen in displayed
+    moveToStartScreen();
+
+    // Set up function calls
     setUpTable();
     setUpQStyleSheets();
     setUpStartMenuButtons();
+    setUpGamePlayButtons();
+    setUpSettingsPopup();
     setUpBackGround();
+    hideSettingsPopup();
+
+    // Connects
+    setUpConnect();
+}
+
+void Screens::setUpConnect()
+{
+    // Gameplay buttons
+    connect(ui->blackjackPlayButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToPlayScreen);
+    connect(ui->blackjackTutorialButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToPlayScreen);
+    connect(ui->countCardsPlayButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToPlayScreen);
+    connect(ui->countCardsTutorialButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToPlayScreen);
+
+    // Settings buttons
+    connect(ui->acceptSettingsButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::hideSettingsPopup);
+    connect(ui->cancelSettingsButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::moveToStartScreen);
+
 }
 
 void Screens::setUpTable()
@@ -36,6 +80,26 @@ void Screens::setUpStartMenuButtons()
     ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
     ui->countCardsTutorialButton->setStyleSheet(QPushButtonStyle);
 
+}
+
+void Screens::setUpSettingsPopup()
+{
+    ui->settingsPopUp->setStyleSheet(QWidgetStyle);
+    applyShadowToWidget(ui->settingsPopUp);
+    ui->acceptSettingsButton->setStyleSheet(QPushButtonStyle);
+    ui->cancelSettingsButton->setStyleSheet(QPushButtonStyle);
+}
+
+void Screens::setUpGamePlayButtons()
+{
+    // Buttons Area
+    ui->gamePlayButtons->setStyleSheet(QWidgetStyle);
+
+    // Buttons
+    ui->hitButton->setStyleSheet(QPushButtonStyle);
+    ui->standButton->setStyleSheet(QPushButtonStyle);
+    ui->doubleButton->setStyleSheet(QPushButtonStyle);
+    ui->splitButton->setStyleSheet(QPushButtonStyle);
 }
 
 void Screens::setUpQStyleSheets()
@@ -80,4 +144,52 @@ void Screens::setUpBackGround()
     palette.setBrush(QPalette::Window, QBrush(bgImage));
     ui->centralwidget->setPalette(palette);
     ui->centralwidget->setAutoFillBackground(true);
+}
+
+void Screens::moveToStartScreen()
+{
+    ui->screens->setCurrentIndex(0);
+    hideSettingsPopup();
+    mode = UNSELECTED;
+}
+
+void Screens::moveToPlayScreen()
+{
+    ui->screens->setCurrentIndex(1);
+    showSettingsPopup();
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+
+    QString name = button->objectName();
+
+    if (name == "blackjackPlayButton") {
+        mode = GAMEPLAYMODE::BLACKJACK;
+    } else if (name == "blackjackTutorialButton") {
+        mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
+    } else if (name == "countCardsPlayButton") {
+        mode = GAMEPLAYMODE::COUNTCARDS;
+    } else if (name == "countCardsTutorialButton") {
+        mode = GAMEPLAYMODE::COUNTCARDSTUTORIAL;
+    }
+}
+
+void Screens::hideSettingsPopup()
+{
+    ui->settingsPopUp->hide();
+}
+
+void Screens::showSettingsPopup()
+{
+    ui->settingsPopUp->show();
+}
+
+void Screens::applyShadowToWidget(QWidget *widget) {
+    // Create a shadow effect
+    QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect();
+
+    // Set how the shadow looks
+    shadow->setBlurRadius(15);
+    shadow->setOffset(5, 5);
+    shadow->setColor(QColor(0, 0, 0, 160));
+
+    widget->setGraphicsEffect(shadow);
 }
