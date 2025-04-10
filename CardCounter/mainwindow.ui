@@ -44,7 +44,7 @@
      <height>700</height>
     </size>
    </property>
-   <widget class="Screens" name="stackedWidget">
+   <widget class="Screens" name="screens">
     <property name="geometry">
      <rect>
       <x>20</x>
