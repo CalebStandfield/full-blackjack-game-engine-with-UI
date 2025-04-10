@@ -47,8 +47,8 @@
    <widget class="Screens" name="screens">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
+      <x>0</x>
+      <y>0</y>
       <width>1200</width>
       <height>700</height>
      </rect>
@@ -79,23 +79,65 @@
      <widget class="QWidget" name="startMenuButtonArea" native="true">
       <property name="geometry">
        <rect>
-        <x>800</x>
+        <x>760</x>
         <y>0</y>
-        <width>380</width>
-        <height>650</height>
+        <width>440</width>
+        <height>700</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>440</width>
+        <height>700</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>440</width>
+        <height>700</height>
+       </size>
       </property>
       <property name="whatsThis">
        <string notr="true"/>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <property name="layoutDirection">
+       <enum>Qt::LayoutDirection::LeftToRight</enum>
+      </property>
+      <layout class="QVBoxLayout" name="startButtonsVerticalLayout">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>20</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>20</number>
+       </property>
        <item>
         <widget class="QLabel" name="startMenuTitleCard">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>135</height>
+          </size>
          </property>
          <property name="text">
           <string/>
@@ -105,10 +147,16 @@
        <item>
         <widget class="QPushButton" name="blackjackPlayButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>135</height>
+          </size>
          </property>
          <property name="text">
           <string>Play Blackjack</string>
@@ -118,10 +166,16 @@
        <item>
         <widget class="QPushButton" name="blackjackTutorialButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>135</height>
+          </size>
          </property>
          <property name="text">
           <string>Blackjack Tutorial</string>
@@ -131,10 +185,16 @@
        <item>
         <widget class="QPushButton" name="countCardsPlayButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>135</height>
+          </size>
          </property>
          <property name="text">
           <string>Count Cards</string>
@@ -144,10 +204,16 @@
        <item>
         <widget class="QPushButton" name="countCardsTutorialButton">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>135</height>
+          </size>
          </property>
          <property name="text">
           <string>Count Cards Tutorial</string>
@@ -155,6 +221,19 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>110</y>
+        <width>321</width>
+        <height>301</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Temporary label Put Title and box 2d animation here</string>
+      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="playScreen">

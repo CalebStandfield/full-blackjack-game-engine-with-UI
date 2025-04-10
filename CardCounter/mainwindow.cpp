@@ -115,8 +115,15 @@ void MainWindow::setUpTable()
 
 void MainWindow::setUpStartMenuButtons()
 {
+    // Button Area
     ui->startMenuButtonArea->setStyleSheet(QWidgetStyle);
+
+    // TitleCard
     ui->startMenuTitleCard->setStyleSheet(QLabelStyle);
+    ui->startMenuTitleCard->setAlignment(Qt::AlignCenter);
+    ui->startMenuTitleCard->setText("Blackjack \nCardCounting");
+
+    // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
     ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
@@ -128,24 +135,24 @@ void MainWindow::setUpQStyleSheets()
 {
     QPushButtonStyle =
         "QPushButton {"
-        "    background-color: #4CAF50;"
+        "    background-color: #404040;"
         "    color: white;"
-        "    border: 2px solid #4CAF50;"
+        "    border: 2px solid #444444;"
         "    border-radius: 5px;"
         "    padding: 10px 20px;"
-        "    font-size: 16px;"
+        "    font-size: 24px;"
         "}"
         "QPushButton:hover {"
-        "    background-color: #45a049;"
+        "    background-color: #505050;"
         "}"
         "QPushButton:pressed {"
-        "    background-color: #388e3c;"
+        "    background-color: #646464;"
         "}";
 
     QLabelStyle =
         "QLabel {"
         "    color: white;"
-        "    font-size: 14px;"
+        "    font-size: 32px;"
         "    font-weight: bold;"
         "    padding: 5px;"
         "}";
