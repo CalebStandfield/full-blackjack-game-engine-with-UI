@@ -102,6 +102,8 @@ private:
      */
     void applyShadowToWidget(QWidget *widget);
 
+    void tableViewCardTest();
+
 private slots:
 public slots:
 
