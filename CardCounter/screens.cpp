@@ -1,4 +1,6 @@
 #include "screens.h"
+#include <QPalette>
+#include <QPixmap>
 
 Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     : QStackedWidget(parent), ui(ui)
@@ -6,6 +8,7 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpTable();
     setUpQStyleSheets();
     setUpStartMenuButtons();
+    setUpBackGround();
 }
 
 void Screens::setUpTable()
@@ -65,4 +68,16 @@ void Screens::setUpQStyleSheets()
         "QWidget {"
         "    background-color: rgba(50, 50, 50, 225);"
         "}";
+}
+
+void Screens::setUpBackGround()
+{
+    QPixmap bgImage(":/table/BlackJackTableMat.png");
+
+    bgImage = bgImage.scaled(ui->centralwidget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(bgImage));
+    ui->centralwidget->setPalette(palette);
+    ui->centralwidget->setAutoFillBackground(true);
 }

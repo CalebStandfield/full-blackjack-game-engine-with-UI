@@ -16,6 +16,10 @@ private:
     Ui::MainWindow *ui;
     TableView *tableView;
 
+    // BackGround Functions
+
+    void setUpBackGround();
+
     // Table Functions
 
     /**
@@ -23,16 +27,12 @@ private:
      */
     void setUpTable();
 
-    // Table Functions End
-
     // StartMenu Functions
 
     /**
      * @brief setUpStartMenuButtons Sets up the button area for the startMenu.
      */
     void setUpStartMenuButtons();
-
-    // StartMenu Functions End
 
     // StyleSheet
 
@@ -55,8 +55,6 @@ private:
      * @brief getQWidgetStylenQString of the general QWidget StyleSheet.
      */
     QString QWidgetStyle;
-
-    // StyleSheet End
 };
 
 #endif // SCREENS_H

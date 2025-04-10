@@ -17,10 +17,12 @@ Deck::Deck(int deckNumber)
 void Deck::createDeck()
 {
     masterDeck.reserve(52);
+    unsigned int i = 0;
 
     for (RANK rank : Rank::allRanks)
         for (SUIT suit : Suit::allSuits)
-            masterDeck.emplace_back(suit, rank);
+            masterDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
+
 }
 
 void Deck::shuffle()

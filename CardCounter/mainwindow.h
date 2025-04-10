@@ -2,8 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QPalette>
-#include <QPixmap>
 #include <QWidget>
 #include <QPushButton>
 #include <QVBoxLayout>

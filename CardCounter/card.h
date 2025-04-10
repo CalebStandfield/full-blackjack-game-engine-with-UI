@@ -3,6 +3,7 @@
 
 #include "suits.h"
 #include "rank.h"
+#include <QtCore/qobject.h>
 
 using Rank::RANK;
 using Suit::SUIT;
@@ -23,8 +24,9 @@ public:
      * @brief Card Constructor which sets the rank and suit of the card
      * @param suit The suit of the card
      * @param rank The rank of the card
+     * @param imagePath The path of the image for the card
      */
-    Card(SUIT suit, RANK rank);
+    Card(SUIT suit, RANK rank, QString imagePath);
 
     /**
      * @brief getSuit Gets the suit of the card
@@ -37,6 +39,21 @@ public:
      * @return Returns the rank of the card as a RANK
      */
     RANK getRank() const;
+
+    /**
+     * @brief getImage Gets the QString path of the image
+     * @return A QString of the path
+     */
+    QString getImagePath() const;
+
+    /**
+     * @brief getImageFromVector Gets the corresponding image path from the private member variable images
+     * The images are layed out in this rank order 2, 3, 4, 5, 6, 7, 8, 9, 10, jack, queen, king, ace.
+     * The images are layoud out in this suit order spades, hearts, clubs, diamonds
+     * @param index The index to get
+     * @return
+     */
+    static QString getImageFromVector(unsigned int index);
 
     /**
      * @brief toString Gives the string output of this card as Rank of Suit
@@ -54,6 +71,16 @@ private:
      * @brief rank The rank of the card
      */
     RANK rank;
+
+    /**
+     * @brief imagePath The image path of the card
+     */
+    QString imagePath;
+
+    /**
+     * @brief images A vector of alll the card images
+     */
+    static std::vector<QString> images;
 };
 
 #endif // CARD_H
