@@ -61,8 +61,12 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
     };
 
     ui->setupUi(this);
+    // Set up function calls
+    setUpTable();
+    setUpQStyleSheets();
+    setUpStartMenuButtons();
 
-    // ui->screens->setCurrentIndex(0);
+    ui->screens->setCurrentIndex(1);
 
     QPixmap bgImage(":/table/BlackJackTableMat.png");
 
@@ -74,24 +78,15 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     this->setAutoFillBackground(true);
 
-    ui->CardCountring->setStyleSheet("color: white; background-color: transparent;");
-
-    // Set up the tableView
-    tableView = new TableView(ui->table);
-    if (!ui->table->layout()) {
-        ui->table->setLayout(new QVBoxLayout());
-    }
-    ui->table->layout()->addWidget(tableView);
-
-    connect(ui->trainingMode,
+    connect(ui->blackjackTutorialButton,
             &QPushButton::clicked,
             this,
             &MainWindow::onTrainingModeClicked);
-    connect(ui->playMode,
+    connect(ui->countCardsPlayButton,
             &QPushButton::clicked,
             this,
             &MainWindow::onPlayModeClicked);
-    connect(ui->tutorialMode,
+    connect(ui->blackjackPlayButton,
             &QPushButton::clicked,
             this,
             &MainWindow::onTutorialModeClicked);
@@ -107,6 +102,58 @@ void MainWindow::onPlayModeClicked() {
 
 void MainWindow::onTutorialModeClicked() {
     //ui->screens->setCurrentIndex(2);
+}
+
+void MainWindow::setUpTable()
+{
+    tableView = new TableView(ui->table);
+    if (!ui->table->layout()) {
+        ui->table->setLayout(new QVBoxLayout());
+    }
+    ui->table->layout()->addWidget(tableView);
+}
+
+void MainWindow::setUpStartMenuButtons()
+{
+    ui->startMenuButtonArea->setStyleSheet(QLabelStyle);
+    ui->startMenuTitleCard->setStyleSheet(QLabelStyle);
+    ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
+    ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
+    ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
+    ui->countCardsTutorialButton->setStyleSheet(QPushButtonStyle);
+
+}
+
+void MainWindow::setUpQStyleSheets()
+{
+    QPushButtonStyle =
+        "QPushButton {"
+        "    background-color: #4CAF50;"
+        "    color: white;"
+        "    border: 2px solid #4CAF50;"
+        "    border-radius: 5px;"
+        "    padding: 10px 20px;"
+        "    font-size: 16px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #45a049;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #388e3c;"
+        "}";
+
+    QLabelStyle =
+        "QLabel {"
+        "    color: white;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    padding: 5px;"
+        "}";
+
+    QWidgetStyle =
+        "QWidget {"
+        "    background-color: rgba(0, 0, 0, 0.2);"
+        "}";
 }
 
 MainWindow::~MainWindow()

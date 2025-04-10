@@ -76,74 +76,95 @@
     </property>
     <widget class="QWidget" name="loadingScreen"/>
     <widget class="QWidget" name="startMenu">
-     <widget class="QPushButton" name="trainingMode">
+     <widget class="QWidget" name="startMenuButtonArea" native="true">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>450</y>
-        <width>181</width>
-        <height>61</height>
+        <x>800</x>
+        <y>0</y>
+        <width>380</width>
+        <height>650</height>
        </rect>
       </property>
-      <property name="text">
-       <string>Training Mode </string>
+      <property name="whatsThis">
+       <string notr="true"/>
       </property>
-     </widget>
-     <widget class="QPushButton" name="playMode">
-      <property name="geometry">
-       <rect>
-        <x>490</x>
-        <y>570</y>
-        <width>181</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Tutorial</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="tutorialMode">
-      <property name="geometry">
-       <rect>
-        <x>490</x>
-        <y>510</y>
-        <width>181</width>
-        <height>61</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Play</string>
-      </property>
-     </widget>
-     <widget class="QTextEdit" name="CardCountring">
-      <property name="geometry">
-       <rect>
-        <x>310</x>
-        <y>110</y>
-        <width>561</width>
-        <height>201</height>
-       </rect>
-      </property>
-      <property name="html">
-       <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:48pt; font-weight:700;&quot;&gt;Card Counting Trainer&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="startMenuTitleCard">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="blackjackPlayButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Play Blackjack</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="blackjackTutorialButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Blackjack Tutorial</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="countCardsPlayButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Count Cards</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="countCardsTutorialButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Count Cards Tutorial</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="playScreen">
      <widget class="QWidget" name="table" native="true">
       <property name="geometry">
        <rect>
-        <x>200</x>
-        <y>-20</y>
-        <width>800</width>
-        <height>700</height>
+        <x>250</x>
+        <y>0</y>
+        <width>700</width>
+        <height>650</height>
        </rect>
       </property>
      </widget>
