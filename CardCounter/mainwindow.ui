@@ -44,7 +44,7 @@
      <height>700</height>
     </size>
    </property>
-   <widget class="Screens" name="screens">
+   <widget class="QStackedWidget" name="screens">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -74,7 +74,6 @@
     <property name="currentIndex">
      <number>1</number>
     </property>
-    <widget class="QWidget" name="loadingScreen"/>
     <widget class="QWidget" name="startMenu">
      <widget class="QWidget" name="startMenuButtonArea" native="true">
       <property name="geometry">
@@ -251,14 +250,6 @@
    </widget>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>Screens</class>
-   <extends>QStackedWidget</extends>
-   <header>screens.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
