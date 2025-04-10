@@ -44,6 +44,20 @@ public slots:
      * @brief startRound The next round starts
      */
     void startRound();
+
+    /**
+     * @brief onBet The current player sends in there bet
+     * @param bet The bet of the player
+     */
+    void onBet(int bet);
+
+    /**
+     * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
+     * @param players The number of players in the game
+     * @param decks The number of decks to play with
+     * @param initialMoney The initial amount of money each player starts with
+     */
+    void createNewGame(int players, int decks, int initialMoney);
 signals:
     /**
      * @brief playerUpdated Signal that a player in the game has updated with their updated info
