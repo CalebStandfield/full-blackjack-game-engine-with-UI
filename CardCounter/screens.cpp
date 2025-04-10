@@ -21,6 +21,7 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
 
     // Connects
     setUpConnect();
+    tableViewCardTest();
 }
 
 void Screens::setUpConnect()
@@ -192,4 +193,10 @@ void Screens::applyShadowToWidget(QWidget *widget) {
     shadow->setColor(QColor(0, 0, 0, 160));
 
     widget->setGraphicsEffect(shadow);
+}
+
+void Screens::tableViewCardTest()
+{
+    QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
+    tableView->addCardAt(tempCard, 300, 300);
 }
