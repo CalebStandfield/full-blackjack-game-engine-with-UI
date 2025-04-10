@@ -4,7 +4,10 @@
 #include "tableview.h"
 #include "ui_mainwindow.h"
 #include <QWidget>
+#include <QGraphicsView>
 #include <QtWidgets/qstackedwidget.h>
+#include <QGraphicsPixmapItem>
+#include <QGraphicsScene>
 
 class Screens : public QStackedWidget
 {
@@ -101,6 +104,16 @@ private:
      * @param widget The widget to give shadow to
      */
     void applyShadowToWidget(QWidget *widget);
+
+    /**
+     * @brief move to the screen that shows infromation about the blackjack charts and how to play
+     */
+    void moveToInforScreen();
+
+    /**
+     * @brief this methods add an image to the window in the tutorial
+     */
+    void setUpBasicStrategyCharts();
 
     void tableViewCardTest();
 
