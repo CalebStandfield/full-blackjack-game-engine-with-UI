@@ -123,6 +123,7 @@ HEADERS += \
     gamestate.h \
     hand.h \
     mainwindow.h \
+    player.h \
     rank.h \
     screens.h \
     statistics.h \

@@ -8,9 +8,9 @@ Deck::Deck(int deckNumber)
 {
     createDeck();
 
-    for(int i = 0; i < deckNumber; i++) {
+    for(int i = 0; i < deckNumber; i++)
         shuffledDeck.insert(shuffledDeck.end(), masterDeck.begin(), masterDeck.end());
-    }
+
     shuffle();
 }
 
