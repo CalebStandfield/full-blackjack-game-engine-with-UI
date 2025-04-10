@@ -76,7 +76,7 @@ private:
     /**
      * @brief model The Gamestate model that handles the players playing blackjack
      */
-    GameState model;
+    GameState *model;
 
     /**
      * @brief currentPlayerIndex The index of the current player in the round
