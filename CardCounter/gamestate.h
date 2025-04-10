@@ -67,11 +67,6 @@ public:
      */
     const Player& getPlayer(int index) const;
 
-    // /**
-    //  * @brief getPlayerMoney Get how much money a player has.
-    //  */
-    // int getPlayerMoney(int index) const;
-
     /**
      * @brief getDealerHand Gets the dealer's current hand
      */

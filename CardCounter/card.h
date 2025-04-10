@@ -18,7 +18,6 @@ class Card
      */
     friend std::ostream& operator<<(std::ostream& os, const Card& card);
 
-    //friend std::string toString(const Card& card);
 public:
     /**
      * @brief Card Constructor which sets the rank and suit of the card

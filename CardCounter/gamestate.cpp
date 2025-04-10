@@ -29,6 +29,7 @@ void GameState::dealInitialCards()
         for(Player& player : players)
         {
             player.hand.addCard(deck.getNextCard());
+            player.status = PLAYERSTATUS::WAITING;
         }
 
         dealerHand.addCard(deck.getNextCard());
@@ -48,9 +49,13 @@ void GameState::hit(int playerIndex)
 void GameState::doubleDown(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
+
+    // Move the doubled money from the player's money to their current bet
     int currentBet = currPlayer.hand.getBet();
     currPlayer.money -= currentBet;
     currPlayer.hand.setBet(currentBet * 2);
+
+    // Do one hit and then stand/check bust
     currPlayer.hand.addCard(deck.getNextCard());
     currPlayer.status = PLAYERSTATUS::STAND;
     if(isBust(currPlayer.hand)){
@@ -83,7 +88,7 @@ void GameState::endRound()
 
     for(Player& player : players)
     {
-        if(isBust(player.hand))
+        if(player.status == PLAYERSTATUS::BUST)
             continue;
 
         int playerTotal = player.hand.getTotal();
@@ -110,11 +115,6 @@ const Player& GameState::getPlayer(int index) const
 {
     return players.at(index);
 }
-
-// int GameState::getPlayerMoney(int index) const
-// {
-//     return players.at(index).money;
-// }
 
 const Hand& GameState::getDealerHand() const
 {
