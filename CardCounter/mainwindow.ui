@@ -75,7 +75,7 @@
      <number>2</number>
     </property>
     <widget class="QWidget" name="startMenu">
-     <widget class="QPushButton" name="TrainingMode">
+     <widget class="QPushButton" name="trainingMode">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -88,7 +88,7 @@
        <string>Training Mode </string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Play">
+     <widget class="QPushButton" name="playMode">
       <property name="geometry">
        <rect>
         <x>490</x>
@@ -101,7 +101,7 @@
        <string>Tutorial</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="Tutorial">
+     <widget class="QPushButton" name="tutorialMode">
       <property name="geometry">
        <rect>
         <x>490</x>

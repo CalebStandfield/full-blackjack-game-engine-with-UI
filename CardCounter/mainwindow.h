@@ -27,6 +27,10 @@ public:
     MainWindow(Controller* c, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void onTrainingModeClicked();
+    void onPlayModeClicked();
+    void onTutorialModeClicked();
+
 
 private:
     Ui::MainWindow *ui;

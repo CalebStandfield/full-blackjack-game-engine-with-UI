@@ -82,6 +82,23 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
         ui->table->setLayout(new QVBoxLayout());
     }
     ui->table->layout()->addWidget(tableView);
+    tableView = new TableView(this);
+
+    connect(ui->trainingMode, &QPushButton::clicked, this, &MainWindow::onTrainingModeClicked);
+    connect(ui->playMode, &QPushButton::clicked, this, &MainWindow::onPlayModeClicked);
+    connect(ui->tutorialMode, &QPushButton::clicked, this, &MainWindow::onTutorialModeClicked);
+}
+
+void MainWindow::onTrainingModeClicked() {
+    ui->screens->setCurrentIndex(0);
+}
+
+void MainWindow::onPlayModeClicked() {
+    ui->screens->setCurrentIndex(1);
+}
+
+void MainWindow::onTutorialModeClicked() {
+    ui->screens->setCurrentIndex(2);
 }
 
 MainWindow::~MainWindow()

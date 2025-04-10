@@ -2,38 +2,22 @@
 
 
 const QString Statistics::HardTable[16][10] = {
-    // Hard 5
-    { "H","H","H","H","H","H","H","H","H","H" },
-    // Hard 6
-    { "H","H","H","H","H","H","H","H","H","H" },
-    // Hard 7
-    { "H","H","H","H","H","H","H","H","H","H" },
-    // Hard 8
-    { "H","H","H","H","H","H","H","H","H","H" },
-    // Hard 9
-    { "H","D","D","D","D","H","H","H","H","H" },
-    // Hard 10
-    { "D","D","D","D","D","D","D","D","H","H" },
-    // Hard 11
-    { "D","D","D","D","D","D","D","D","D","D" },
-    // Hard 12
-    { "H","H","ST","ST","ST","H","H","H","H","H"},
-    // Hard 13
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },
-    // Hard 14
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },
-    // Hard 15
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },
-    // Hard 16
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },
-    // Hard 17
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
-    // Hard 18
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
-    // Hard 19
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
-    // Hard 20
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },
+    { "H","H","H","H","H","H","H","H","H","H" },                // Hard 5
+    { "H","H","H","H","H","H","H","H","H","H" },                // Hard 6
+    { "H","H","H","H","H","H","H","H","H","H" },                // Hard 7
+    { "H","H","H","H","H","H","H","H","H","H" },                // Hard 8
+    { "H","D","D","D","D","H","H","H","H","H" },                // Hard 9
+    { "D","D","D","D","D","D","D","D","H","H" },                // Hard 10
+    { "D","D","D","D","D","D","D","D","D","D" },                // Hard 11
+    { "H","H","ST","ST","ST","H","H","H","H","H"},              // Hard 12
+    { "ST","ST","ST","ST","ST","H","H","H","H","H" },           // Hard 13
+    { "ST","ST","ST","ST","ST","H","H","H","H","H" },           // Hard 14
+    { "ST","ST","ST","ST","ST","H","H","H","H","H" },           // Hard 15
+    { "ST","ST","ST","ST","ST","H","H","H","H","H" },           // Hard 16
+    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // Hard 17
+    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // Hard 18
+    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // Hard 19
+    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // Hard 20
     };
 
 const QString Statistics::SoftHands[8][10] = {
