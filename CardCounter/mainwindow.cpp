@@ -62,6 +62,8 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
 
     ui->setupUi(this);
 
+    // ui->screens->setCurrentIndex(0);
+
     QPixmap bgImage(":/table/BlackJackTableMat.png");
 
     bgImage = bgImage.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
@@ -73,7 +75,13 @@ MainWindow::MainWindow(Controller* c, QWidget *parent)
     this->setAutoFillBackground(true);
 
     ui->CardCountring->setStyleSheet("color: white; background-color: transparent;");
-    tableView = new TableView(this);
+
+    // Set up the tableView
+    tableView = new TableView(ui->table);
+    if (!ui->table->layout()) {
+        ui->table->setLayout(new QVBoxLayout());
+    }
+    ui->table->layout()->addWidget(tableView);
 }
 
 MainWindow::~MainWindow()
