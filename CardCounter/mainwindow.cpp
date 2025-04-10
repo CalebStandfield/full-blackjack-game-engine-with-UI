@@ -115,7 +115,7 @@ void MainWindow::setUpTable()
 
 void MainWindow::setUpStartMenuButtons()
 {
-    ui->startMenuButtonArea->setStyleSheet(QLabelStyle);
+    ui->startMenuButtonArea->setStyleSheet(QWidgetStyle);
     ui->startMenuTitleCard->setStyleSheet(QLabelStyle);
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
@@ -152,7 +152,7 @@ void MainWindow::setUpQStyleSheets()
 
     QWidgetStyle =
         "QWidget {"
-        "    background-color: rgba(0, 0, 0, 0.2);"
+        "    background-color: rgba(50, 50, 50, 225);"
         "}";
 }
 
