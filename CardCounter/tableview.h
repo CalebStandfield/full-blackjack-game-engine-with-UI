@@ -10,8 +10,7 @@ public:
     explicit TableView(QWidget *parent = nullptr);
     ~TableView();
 
-    void addCard(const QString& imagePath);
-    void addCardAt(const QString& imagePath, int x, int y);
+    void addCardAt(const QString& imagePath, int x, int y, qreal rotationAngle);
 
 private:
 

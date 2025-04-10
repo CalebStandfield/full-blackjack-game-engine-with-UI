@@ -15,29 +15,21 @@ TableView::~TableView()
 
 }
 
-void TableView::addCard(const QString& imagePath)
+void TableView::addCardAt(const QString& imagePath, int x, int y, qreal rotationAngle)
 {
     QPixmap cardPixmap(imagePath);
-    QLabel* cardLabel = new QLabel(this);
-    cardLabel->setPixmap(cardPixmap.scaled(100, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    cardLabel->setAlignment(Qt::AlignCenter);
 
-    // Add to layout
-    if (!layout()) {
-        setLayout(new QHBoxLayout());
-    }
-    layout()->addWidget(cardLabel);
-}
+    // Scale first to ensure consistent sizing
+    QPixmap scaledPixmap = cardPixmap.scaled(75, 125, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-void TableView::addCardAt(const QString& imagePath, int x, int y)
-{
-    QPixmap cardPixmap(imagePath);
-    if (cardPixmap.isNull()) {
-        qDebug() << "FAILED TO LOAD IMAGE";
-    }
+    // Then apply rotation
+    QTransform transform;
+    transform.rotate(rotationAngle);
+    QPixmap rotatedPixmap = scaledPixmap.transformed(transform, Qt::SmoothTransformation);
+
     QLabel* cardLabel = new QLabel(this);
-    cardLabel->setPixmap(cardPixmap.scaled(100, 150, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    cardLabel->resize(100, 150);
+    cardLabel->setPixmap(rotatedPixmap);
+    cardLabel->resize(rotatedPixmap.size());
     cardLabel->move(x, y);
-    cardLabel->show(); // Important when not using layouts
+    cardLabel->show();
 }

@@ -198,5 +198,7 @@ void Screens::applyShadowToWidget(QWidget *widget) {
 void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAt(tempCard, 300, 300);
+    tableView->addCardAt(tempCard, 300, 300, 0);
+    tableView->addCardAt(tempCard, 200, 300, 90);
+    tableView->addCardAt(tempCard, 400, 300, 235);
 }
