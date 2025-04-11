@@ -130,7 +130,7 @@ void Controller::dealCards()
 
 void Controller::botMove()
 {
-    QString move = botStrategy->getNextMove(model->getPlayer(currentPlayerIndex).hand, model->getDealerHand().getCards()[1]);
+    MOVE move = botStrategy->getNextMove(model->getPlayer(currentPlayerIndex).hand, model->getDealerHand().getCards()[1]);
 }
 
 void Controller::botBet()
