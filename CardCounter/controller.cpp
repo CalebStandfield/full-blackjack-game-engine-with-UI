@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "statistics.h" // Will be used when implementing bot moves
 
 Controller::Controller(QObject *parent) : QObject{parent}
 {

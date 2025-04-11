@@ -4,7 +4,7 @@
 
 BotStrategy::BotStrategy() {}
 
-QString BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
+MOVE BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
 {
     // Check for a pair, only valid for 2 cards
     if (isPair(playerHand))
@@ -18,20 +18,20 @@ QString BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
     return getHardHandMove(playerHand, dealerCard);
 }
 
-QString BotStrategy::getHardHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getHardHandMove(const Hand& playerHand, const Card& dealerCard)
 {
     int row = playerHand.getTotal() - 5;
     return Statistics::HardTable[row][cardToIndex(dealerCard)];
 }
 
-QString BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard)
 {
     int effective = playerHand.getTotal() - 11;
     int row = effective - 2;
     return Statistics::SoftHands[row][cardToIndex(dealerCard)];
 }
 
-QString BotStrategy::getPairHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getPairHandMove(const Hand& playerHand, const Card& dealerCard)
 {
     int row = cardToIndex(playerHand.getCards()[0]);
     return Statistics::PairHands[row][cardToIndex(dealerCard)];

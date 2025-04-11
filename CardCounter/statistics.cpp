@@ -1,50 +1,49 @@
 #include "statistics.h"
 
+const MOVE Statistics::HardTable[17][10] = {
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 5
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 6
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 7
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 8
+    { MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 9
+    { MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT    }, // Hard 10
+    { MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE }, // Hard 11
+    { MOVE::HIT,    MOVE::HIT,    MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 12
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 13
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 14
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 15
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // Hard 16
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // Hard 17
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // Hard 18
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // Hard 19
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // Hard 20
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }  // Hard 21
+};
 
-const QString Statistics::HardTable[17][10] = {
-    { "H","H","H","H","H","H","H","H","H","H" },            // Hard 5
-    { "H","H","H","H","H","H","H","H","H","H" },            // Hard 6
-    { "H","H","H","H","H","H","H","H","H","H" },            // Hard 7
-    { "H","H","H","H","H","H","H","H","H","H" },            // Hard 8
-    { "H","D","D","D","D","H","H","H","H","H" },            // Hard 9
-    { "D","D","D","D","D","D","D","D","H","H" },            // Hard 10
-    { "D","D","D","D","D","D","D","D","D","D" },            // Hard 11
-    { "H","H","ST","ST","ST","H","H","H","H","H"},          // Hard 12
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },       // Hard 13
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },       // Hard 14
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },       // Hard 15
-    { "ST","ST","ST","ST","ST","H","H","H","H","H" },       // Hard 16
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // Hard 17
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // Hard 18
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // Hard 19
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // Hard 20
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // Hard 21
-    };
+const MOVE Statistics::SoftHands[9][10] = {
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,2
+    { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,3
+    { MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,4
+    { MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,5
+    { MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,6
+    { MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::STAND,  MOVE::STAND,  MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,7
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::DOUBLE, MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // A,8
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }, // A,9
+    { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }  // A,10 (multi-card soft 21)
+};
 
-const QString Statistics::SoftHands[9][10] = {
-    { "H","H","H","D","D","H","H","H","H","H" },            // A,2
-    { "H","H","H","D","D","H","H","H","H","H" },            // A,3
-    { "H","H","D","D","D","H","H","H","H","H" },            // A,4
-    { "H","H","D","D","D","H","H","H","H","H" },            // A,5
-    { "H","D","D","D","D","H","H","H","H","H" },            // A,6
-    { "D","D","D","D","D","ST","ST","H","H","H" },          // A,7
-    { "ST","ST","ST","ST","D","ST","ST","ST","ST","ST" },   // A,8
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // A,9
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },  // A,10
-    };
-
-const QString Statistics::PairHands[10][10] = {
-    { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 2,2
-    { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 3,3
-    { "H","H","H","SP","SP","H","H","H","H","H" },              // 4,4
-    { "D","D","D","D","D","D","D","D","H","H" },                // 5,5
-    { "SP","SP","SP","SP","SP","H","H","H","H","H" },           // 6,6
-    { "SP","SP","SP","SP","SP","SP","H","H","H","H" },          // 7,7
-    { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },      // 8,8
-    { "SP","SP","SP","SP","SP","ST","SP","SP","ST","ST" },      // 9,9
-    { "ST","ST","ST","ST","ST","ST","ST","ST","ST","ST" },      // 10,10
-    { "SP","SP","SP","SP","SP","SP","SP","SP","SP","SP" },      // A,A
-    };
+const MOVE Statistics::PairHands[10][10] = {
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 2,2
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 3,3
+    { MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 4,4
+    { MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,   MOVE::HIT   },   // 5,5
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 6,6
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 7,7
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT },           // 8,8
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::STAND, MOVE::SPLIT, MOVE::SPLIT, MOVE::STAND, MOVE::STAND },           // 9,9
+    { MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND, MOVE::STAND },           // 10,10 (10, J, Q, K)
+    { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT }            // A,A
+};
 
 Statistics::Statistics(QObject *parent)
     : QObject{parent}

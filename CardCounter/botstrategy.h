@@ -3,7 +3,7 @@
 
 #include "hand.h"
 #include "card.h"
-#include <QString>
+#include "statistics.h"
 
 class BotStrategy
 {
@@ -14,9 +14,9 @@ public:
      * @brief getNextMove Determines the recommended move (hit, double, split, or stand) given a player's hand and the dealer's visible card.
      * @param playerHand The player's hand.
      * @param dealerCard The dealer's up card.
-     * @return A QString corresponding to the recommended move (e.g., "H", "D", "SP", "ST").
+     * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND).
      */
-    QString getNextMove(const Hand& playerHand, const Card& dealerCard);
+    MOVE getNextMove(const Hand& playerHand, const Card& dealerCard);
 
 private:
     /**
@@ -33,10 +33,29 @@ private:
      */
     bool isPair(const Hand& hand);
 
-    QString getSoftHandMove(const Hand& playerHand, const Card& dealerCard);
-    QString getHardHandMove(const Hand& playerHand, const Card& dealerCard);
-    QString getPairHandMove(const Hand& playerHand, const Card& dealerCard);
+    /**
+     * @brief getSoftHandMove Determines the recommended move for a soft hand (ace counted as 11)
+     * @param playerHand The player's hand
+     * @param dealerCard The dealer's up card
+     * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
+     */
+    MOVE getSoftHandMove(const Hand& playerHand, const Card& dealerCard);
 
+    /**
+     * @brief getHARDHandMove Determines the recommended move for a hard hand
+     * @param playerHand The player's hand
+     * @param dealerCard The dealer's up card
+     * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
+     */
+    MOVE getHardHandMove(const Hand& playerHand, const Card& dealerCard);
+
+    /**
+     * @brief getPairHandMove Determines the recommended move for a pair hand (Exactly 2 of the same RANK cards)
+     * @param playerHand The player's hand
+     * @param dealerCard The dealer's up card
+     * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
+     */
+    MOVE getPairHandMove(const Hand& playerHand, const Card& dealerCard);
 };
 
 #endif // BOTSTRATEGY_H
