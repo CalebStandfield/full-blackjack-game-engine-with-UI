@@ -19,6 +19,11 @@ void Hand::setBet(int amount)
     bet = amount;
 }
 
+const std::vector<Card>& Hand::getCards() const
+{
+    return cards;
+}
+
 int Hand::getTotal() const
 {
     return calculateTotalAndSoft().first;

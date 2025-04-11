@@ -43,6 +43,12 @@ public:
      */
     void setBet(int amount);
 
+    /**
+     * @brief getCards Gets the cards in the hand
+     * @return A vector of the cards in the hand
+     */
+    const std::vector<Card>& getCards() const;
+
 private:
     /**
      * @brief cards The cards in the hand

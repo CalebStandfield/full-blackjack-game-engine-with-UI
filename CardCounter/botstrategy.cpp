@@ -1,0 +1,51 @@
+#include "botstrategy.h"
+#include "statistics.h"
+#include "rank.h"
+
+BotStrategy::BotStrategy() {}
+
+QString BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
+{
+    // Check for a pair, only valid for 2 cards
+    if (isPair(playerHand))
+        getPairHandMove(playerHand, dealerCard);
+
+    // Check for soft hand
+    if (playerHand.isSoft())
+        return getSoftHandMove(playerHand, dealerCard);
+
+    // Treat as a hard hand
+    return getHardHandMove(playerHand, dealerCard);
+}
+
+QString BotStrategy::getHardHandMove(const Hand& playerHand, const Card& dealerCard)
+{
+    int row = playerHand.getTotal() - 5;
+    return Statistics::HardTable[row][cardToIndex(dealerCard)];
+}
+
+QString BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard)
+{
+    int effective = playerHand.getTotal() - 11;
+    int row = effective - 2;
+    return Statistics::SoftHands[row][cardToIndex(dealerCard)];
+}
+
+QString BotStrategy::getPairHandMove(const Hand& playerHand, const Card& dealerCard)
+{
+    int row = cardToIndex(playerHand.getCards()[0]);
+    return Statistics::PairHands[row][cardToIndex(dealerCard)];
+}
+
+bool BotStrategy::isPair(const Hand &hand)
+{
+    const std::vector<Card>& cards = hand.getCards();
+    if (cards.size() != 2)
+        return false;
+    return (cards[0].getRank() == cards[1].getRank());
+}
+
+int BotStrategy::cardToIndex(const Card &card)
+{
+    return Rank::blackjackValue(card.getRank()) - 2;
+}

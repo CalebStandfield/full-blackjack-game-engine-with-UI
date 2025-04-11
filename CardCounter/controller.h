@@ -5,6 +5,7 @@
 #include "gamestate.h"
 #include "hand.h"
 #include "playerStatus.h"
+#include "botstrategy.h"
 
 using PlayerStatus::PLAYERSTATUS;
 
@@ -117,6 +118,11 @@ private:
     GameState *model;
 
     /**
+     * @brief botPlayer The BotStrategy that determines the bot's move
+     */
+    BotStrategy* botStrategy;
+
+    /**
      * @brief currentPlayerIndex The index of the current player in the round
      */
     int currentPlayerIndex;
@@ -135,6 +141,16 @@ private:
      * @brief checkTurnEnd
      */
     void checkTurnEnd(const Player& player);
+
+    /**
+     * @brief botMove Performs a move for a bot player
+     */
+    void botMove();
+
+    /**
+     * @brief botBet Performs a bet for a bot player
+     */
+    void botBet();
 };
 
 #endif // CONTROLLER_H

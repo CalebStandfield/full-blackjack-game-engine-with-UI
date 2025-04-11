@@ -1,10 +1,14 @@
 #include "controller.h"
 
-Controller::Controller(QObject *parent) : QObject{parent}{}
+Controller::Controller(QObject *parent) : QObject{parent}
+{
+    botStrategy = new BotStrategy();
+}
 
 Controller::~Controller()
 {
     delete model;
+    delete botStrategy;
 }
 
 void Controller::checkTurnEnd(const Player& player){
@@ -13,8 +17,8 @@ void Controller::checkTurnEnd(const Player& player){
         advanceToNextPlayer();
     }
 
-    // if(!player.isUser)
-    // botMove();
+    if(!player.isUser)
+        botMove();
 }
 
 void Controller::onHit()
@@ -71,11 +75,11 @@ void Controller::advanceToNextPlayer()
     emit currentPlayerTurn(currentPlayerIndex);
     model->setPlayerActive(currentPlayerIndex);
 
-    // const Player& player = model->getPlayer(currentPlayerIndex);
+    const Player& player = model->getPlayer(currentPlayerIndex);
     // emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
 
-    // if(!player.isUser)
-    //     botMove();
+    if(!player.isUser)
+         botMove();
 }
 
 void Controller::startBetting()
@@ -95,15 +99,18 @@ void Controller::startBetting()
 void Controller::advanceToNextBet()
 {
     currentPlayerIndex++;
-    if(currentPlayerIndex == model->getPlayerCount()){
+    if(currentPlayerIndex == model->getPlayerCount())
+    {
         emit endBetting();
         dealCards();
         return;
     }
 
-    // if(!model->getPlayer(currentPlayerIndex).isUser)
-    //     botBet();
     emit currentPlayerTurn(currentPlayerIndex);
+
+    if(!(model->getPlayer(currentPlayerIndex).isUser))
+         botBet();
+
 }
 
 void Controller::dealCards()
@@ -118,6 +125,16 @@ void Controller::dealCards()
 
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
     advanceToNextPlayer();
+}
+
+void Controller::botMove()
+{
+    QString move = botStrategy->getNextMove(model->getPlayer(currentPlayerIndex).hand, model->getDealerHand().getCards()[1]);
+}
+
+void Controller::botBet()
+{
+
 }
 
 void Controller::createNewGame(int players, int decks, int initialMoney, int userIndex)
