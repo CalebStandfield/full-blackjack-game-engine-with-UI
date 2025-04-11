@@ -32,7 +32,7 @@ private:
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
      */
-    void setUpConnect();
+    void setUpScreenConnect();
 
     /**
      * @brief setUpBackGround Sets up the general background for the ui
@@ -133,9 +133,6 @@ private:
     void splitButtonOnPress();
 
 signals:
-    // Blackjack game start
-    void blackjackPlayButton();
-
     // Game play buttons
     void sendHitButtonPressed();
     void sendStandbuttonPressed();
