@@ -80,6 +80,16 @@ private:
     QString QWidgetStyle;
 
     /**
+     * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
+     */
+    QString QTextBrowserStyle;
+
+    /**
+     * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
+     */
+    QString QGraphicsViewStyle;
+
+    /**
      * @brief moveToPlayScreen Move from current screen to the play screen
      */
     void moveToPlayScreen();
