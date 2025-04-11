@@ -79,7 +79,7 @@ public:
     void setPlayerActive(int index);
 
     /**
-     * @brief setPlayerActive Sets the bet for the player at given index
+     * @brief setPlayerActive Sets the bet for the player at given index and removes the money from the player
      * @param amount The amount to set the bet to
      */
     void setPlayerBet(int index, int amount);

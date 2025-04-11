@@ -127,6 +127,7 @@ void GameState::setPlayerActive(int index)
 
 void GameState::setPlayerBet(int index, int amount)
 {
+    players[index].money -= amount;
     players[index].hand.setBet(amount);
 }
 

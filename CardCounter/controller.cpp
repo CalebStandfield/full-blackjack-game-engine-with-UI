@@ -130,12 +130,16 @@ void Controller::dealCards()
 
 void Controller::botMove()
 {
+    // Need to fully implement botMove
+
     MOVE move = botStrategy->getNextMove(model->getPlayer(currentPlayerIndex).hand, model->getDealerHand().getCards()[1]);
 }
 
 void Controller::botBet()
 {
-
+    const Player& player = model->getPlayer(currentPlayerIndex);
+    int bet = std::max(player.money / 10, 1);
+    onBet(bet);
 }
 
 void Controller::createNewGame(int players, int decks, int initialMoney, int userIndex)
