@@ -26,6 +26,12 @@ public:
     int getTotal() const;
 
     /**
+     * @brief isSoft Gets if the hand is a soft or a hard hand
+     * @return True if the hand is soft and false if it is a hard hand
+     */
+    bool isSoft() const;
+
+    /**
      * @brief getBet Gets the current ammount bet
      * @return Returns an int of the bet
      */
@@ -47,6 +53,12 @@ private:
      * @brief bet The amount bet on this hand
      */
     int bet;
+
+    /**
+     * @brief calculateTotalAndSoft Calculates the hand's total and determines if it is soft.
+     * @return A pair where the first element is the total value of the hand and the second element is a bool indicating if the hand is soft (true if soft, false if hard).
+     */
+    std::pair<int, bool> calculateTotalAndSoft() const;
 };
 
 #endif // HAND_H

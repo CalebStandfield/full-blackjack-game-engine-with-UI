@@ -1,7 +1,8 @@
 #include "hand.h"
 #include "rank.h"
+#include <utility>
 
-Hand::Hand(int bet): bet(bet) {}
+Hand::Hand(int bet) : bet(bet) {}
 
 void Hand::addCard(const Card& card)
 {
@@ -20,23 +21,37 @@ void Hand::setBet(int amount)
 
 int Hand::getTotal() const
 {
-    int total = 0;
-    int aceCount = 0;
+    return calculateTotalAndSoft().first;
+}
 
+bool Hand::isSoft() const
+{
+    return calculateTotalAndSoft().second;
+}
+
+std::pair<int, bool> Hand::calculateTotalAndSoft() const
+{
+    int total = 0;
+    int softAces = 0;
+
+    // Count total value and number of Aces counted as 11.
     for (const Card& card : cards)
     {
         int value = Rank::blackjackValue(card.getRank());
         if (value == 11)
-            aceCount++;
-
+            softAces++;
         total += value;
     }
 
-    // Adjust ace value to 1 if would bust with value 11
-    while (total > 21 && aceCount > 0) {
+    // Adjust Aces from 11 to 1 if the total exceeds 21.
+    while (total > 21 && softAces > 0)
+    {
         total -= 10;
-        aceCount--;
+        softAces--;
     }
 
-    return total;
+    // The hand is considered soft if at least one Ace is still counted as 11.
+    bool soft = (softAces > 0);
+    return std::make_pair(total, soft);
 }
+
