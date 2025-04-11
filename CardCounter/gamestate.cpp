@@ -3,13 +3,13 @@
 
 using PlayerStatus::PLAYERSTATUS;
 
-GameState::GameState(int playerCount, int deckCount, int initialBet, int initialMoney)
+GameState::GameState(int playerCount, int deckCount, int initialMoney, int userIndex)
     : deck(deckCount), dealerHand(0)
-{
+{    
     // Adds players with default money and bets to the players vector
     for(int i = 0; i < playerCount; i++)
     {
-        players.emplace_back(initialMoney, initialBet);
+        players.emplace_back(initialMoney, initialMoney / 10, i == userIndex);
     }
 }
 
@@ -28,6 +28,9 @@ void GameState::dealInitialCards()
     {
         for(Player& player : players)
         {
+            if(player.status == PLAYERSTATUS::BANKRUPT)
+                continue;
+
             player.hand.addCard(deck.getNextCard());
             player.status = PLAYERSTATUS::WAITING;
         }
@@ -89,7 +92,11 @@ void GameState::endRound()
     for(Player& player : players)
     {
         if(player.status == PLAYERSTATUS::BUST)
+        {
+            if(player.money <= 0)
+                player.status = PLAYERSTATUS::BANKRUPT;
             continue;
+        }
 
         int playerTotal = player.hand.getTotal();
         if(dealerBust || playerTotal > dealerTotal)
@@ -103,12 +110,20 @@ void GameState::endRound()
         }
         else if(playerTotal == dealerTotal)
             player.money += player.hand.getBet();
+
+        if(player.money <= 0)
+            player.status = PLAYERSTATUS::BANKRUPT;
     }
 }
 
 void GameState::setPlayerActive(int index)
 {
     players[index].status = PLAYERSTATUS::ACTIVE;
+}
+
+void GameState::setPlayerBet(int index, int amount)
+{
+    players[index].hand.setBet(amount);
 }
 
 const Player& GameState::getPlayer(int index) const

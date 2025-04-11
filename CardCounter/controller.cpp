@@ -1,11 +1,6 @@
 #include "controller.h"
 
-Controller::Controller(QObject *parent) : QObject{parent}
-{
-    model = new GameState(1);
-    // display characters, then call "start new round"
-    // players start from left of dealer (i.e. right to left) (what order to make players?)
-}
+Controller::Controller(QObject *parent) : QObject{parent}{}
 
 Controller::~Controller()
 {
@@ -43,42 +38,72 @@ void Controller::onDoubleDown()
 
 void Controller::onBet(int bet)
 {
-
+    model->setPlayerBet(currentPlayerIndex, bet);
+    advanceToNextBet();
 }
 
 void Controller::advanceToNextPlayer()
 {
     currentPlayerIndex++;
+    while(currentPlayerIndex < model->getPlayerCount() && model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT)
+    {
+        currentPlayerIndex++;
+    }
+
+    // All players have went, dealer turn
     if(currentPlayerIndex == model->getPlayerCount()){
         model->dealerPlay();
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
         model->endRound();
         emit endRound("The round has ended.");
-        return;
+
+        for(int i = 0; i < model->getPlayerCount(); i++){
+            if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
+                return;
+        }
+        emit gameOver();
     }
+
+    // Switch to next player
     emit nextPlayerTurn(currentPlayerIndex);
     model->setPlayerActive(currentPlayerIndex);
     const Player& player = model->getPlayer(currentPlayerIndex);
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
+
+    // if(!player.isUser)
+    //     botMove();
 }
 
-void Controller::startRound()
+void Controller::startBetting()
 {
-    currentPlayerIndex = 0;
-    // Players each bet at this point, starting from player index 0
+    currentPlayerIndex = -1;
+    advanceToNextBet();
+}
 
+void Controller::advanceToNextBet()
+{
+    currentPlayerIndex++;
+    if(currentPlayerIndex == model->getPlayerCount()){
+        emit endBetting();
+        dealCards();
+        return;
+    }
+
+    // if(!model->getPlayer(currentPlayerIndex).isUser)
+    //     botBet();
+    emit nextPlayerTurn(currentPlayerIndex);
+}
+
+void Controller::dealCards()
+{
     model->dealInitialCards();
     model->setPlayerActive(currentPlayerIndex);
     const Player& player = model->getPlayer(currentPlayerIndex);
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
-
-    // check whether current player is an AI or a real player
-    // if a real player, send signal to view to activate P1's buttons
-    // otherwise, the controller will play as the AI
 }
 
-void Controller::createNewGame(int players, int decks, int initialMoney)
+void Controller::createNewGame(int players, int decks, int initialMoney, int userIndex)
 {
-
+    model = new GameState(players, decks, initialMoney, userIndex);
 }

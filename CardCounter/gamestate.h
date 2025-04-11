@@ -12,10 +12,10 @@ public:
      * @brief Constructs the GameState with a given number of players, a certain number of decks, and an initial bet for each player
      * @param playerCount The number of players in the game
      * @param deckCount The number of decks to use
-     * @param initialBet The initialBet for all players
      * @param initialMoney The initialMoney for all players
+     * @param userindex The index of the real user in the players
      */
-    GameState(int playerCount, int deckCount = 1, int initialBet = 10, int initialMoney = 100);
+    GameState(int playerCount, int deckCount, int initialMoney, int userIndex);
 
     /**
      * @brief dealInitialCards Deals two cards to each player and two to the dealer
@@ -77,6 +77,12 @@ public:
      * @param index The player to set to ACTIVE
      */
     void setPlayerActive(int index);
+
+    /**
+     * @brief setPlayerActive Sets the bet for the player at given index
+     * @param amount The amount to set the bet to
+     */
+    void setPlayerBet(int index, int amount);
 
 private:
     /**

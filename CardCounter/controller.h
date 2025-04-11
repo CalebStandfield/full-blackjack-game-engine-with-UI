@@ -41,9 +41,14 @@ public slots:
     void onDoubleDown();
 
     /**
-     * @brief startRound The next round starts
+     * @brief startRound The next round of betting starts
      */
-    void startRound();
+    void startBetting();
+
+    /**
+     * @brief dealCards Deals out the initial cards and moves to the first player's turn
+     */
+    void dealCards();
 
     /**
      * @brief onBet The current player sends in there bet
@@ -56,8 +61,9 @@ public slots:
      * @param players The number of players in the game
      * @param decks The number of decks to play with
      * @param initialMoney The initial amount of money each player starts with
+     * @param userIndex The index of the user in the players
      */
-    void createNewGame(int players, int decks, int initialMoney);
+    void createNewGame(int players, int decks, int initialMoney, int userIndex);
 signals:
     /**
      * @brief playerUpdated Signal that a player in the game has updated with their updated info
@@ -99,6 +105,11 @@ signals:
      */
     void gameOver();
 
+    /**
+     * @brief endBetting Signal for the betting phase to be over
+     */
+    void endBetting();
+
 private:
     /**
      * @brief model The Gamestate model that handles the players playing blackjack
@@ -114,6 +125,11 @@ private:
      * @brief advanceToNextPlayer Move to the next player's turn
      */
     void advanceToNextPlayer();
+
+    /**
+     * @brief advanceToNextBet Move to the next player's turn in betting
+     */
+    void advanceToNextBet();
 
     /**
      * @brief checkTurnEnd

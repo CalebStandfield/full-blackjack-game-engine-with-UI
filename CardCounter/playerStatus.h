@@ -9,7 +9,8 @@ enum class PLAYERSTATUS {
     ACTIVE,
     BUST,
     STAND,
-    WAITING
+    WAITING,
+    BANKRUPT
 };
 
 /**
@@ -28,6 +29,8 @@ inline std::string toString(PLAYERSTATUS playerStatus)
         return "Waiting";
     case PLAYERSTATUS::STAND:
         return "Stand";
+    case PLAYERSTATUS::BANKRUPT:
+        return "Bankrupt";
     }
 
     return "Unknown player status";
@@ -50,7 +53,8 @@ inline constexpr PLAYERSTATUS allPlayerStatus[] = {
     PLAYERSTATUS::STAND,
     PLAYERSTATUS::ACTIVE,
     PLAYERSTATUS::WAITING,
-    PLAYERSTATUS::BUST
+    PLAYERSTATUS::BUST,
+    PLAYERSTATUS::BANKRUPT
 };
 
 }
