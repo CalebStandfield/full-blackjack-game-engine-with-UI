@@ -224,7 +224,7 @@ void Screens::applyShadowToWidget(QWidget *widget)
 
 void Screens::moveToInforScreen()
 {
-    ui->screens->setCurrentIndex(3);
+    ui->screens->setCurrentIndex(2);
 }
 
 void Screens::setUpBasicStrategyCharts()

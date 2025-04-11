@@ -452,7 +452,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="basicStrategyChartScreen">
-    <widget class="QWidget" name="countCardsScreen"/>
      <widget class="QPushButton" name="infoMenuButton">
       <property name="geometry">
        <rect>
