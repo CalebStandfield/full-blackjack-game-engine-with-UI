@@ -52,7 +52,7 @@ void Screens::setUpConnect()
             &Screens::moveToStartScreen);
 
     //Tutorial Pages
-    connect(ui->infographicsButton,
+    connect(ui->basicStrategyChartButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToInforScreen);
@@ -91,7 +91,7 @@ void Screens::setUpStartMenuButtons()
 
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
-    ui->infographicsButton->setStyleSheet(QPushButtonStyle);
+    ui->basicStrategyChartButton->setStyleSheet(QPushButtonStyle);
     ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
 
@@ -146,6 +146,18 @@ void Screens::setUpQStyleSheets()
     QWidgetStyle =
         "QWidget {"
         "    background-color: rgba(50, 50, 50, 225);"
+        "}";
+
+    QTextBrowserStyle =
+        "QTextBrowser {"
+        "    background-color: #404040;"
+        "    border-radius: 15px;"
+        "    color: white;"
+        "}";
+
+    QGraphicsViewStyle =
+        "QGraphicsView {"
+        "    background-color: #404040;"
         "}";
 }
 
@@ -217,18 +229,20 @@ void Screens::moveToInforScreen()
 
 void Screens::setUpBasicStrategyCharts()
 {
+    // Set up the basic strategy charts
+    QPixmap originalPixmap(":/BasicStrategyCharts.png");
+    QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem(originalPixmap);
+    imageItem->setScale(0.48);
     QGraphicsScene* scene = new QGraphicsScene(this);
-    QPixmap imagePixmap(":/BasicStrategyCharts.png");
-
-    QGraphicsPixmapItem* imageItem = new QGraphicsPixmapItem(imagePixmap);
     scene->addItem(imageItem);
+    scene->setSceneRect(imageItem->sceneBoundingRect());
+    ui->basicStrategyChart->setScene(scene);
+    ui->basicStrategyChart->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->basicStrategyChart->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->basicStrategyChart->setStyleSheet(QGraphicsViewStyle);
 
-    // Set the scene rect to exactly encompass your image
-    scene->setSceneRect(imageItem->boundingRect());
-
-    ui->infoBasicStrategyChart->setScene(scene);
-    ui->infoBasicStrategyChart->resetTransform();
-    ui->infoBasicStrategyChart->fitInView(scene->sceneRect(), Qt::KeepAspectRatio);
+    //Set up for the textBrowser
+    ui->infoTextBrowser->setStyleSheet(QTextBrowserStyle);
 }
 
 void Screens::tableViewCardTest()
