@@ -171,8 +171,8 @@ void Screens::setUpQStyleSheets()
         "    border-radius: 5px;"
         "    width: 20px;"
         "    height: 20px;"
-        "    margin-top: 0px;"  // Adjust this margin for centering
-        "    margin-left: -10px;" // Center handle horizontally
+        "    margin-top: 0px;"
+        "    margin-left: -10px;"
         "}"
         "QSlider::handle:horizontal:hover {"
         "    background: #e0e0e0;"
@@ -186,7 +186,6 @@ void Screens::setUpQStyleSheets()
         "    background: #f0f0f0;"
         "    border-radius: 5px;"
         "}";
-
 
     QLabelStyle =
         "QLabel {"
@@ -309,7 +308,10 @@ void Screens::setUpBasicStrategyCharts()
 void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(400, 200), 45);
+    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(350, 300), 0);
+    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 0), 0);
+    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 400), 0);
+    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 600), 0);
 }
 
 void Screens::hitButtonOnPress()
