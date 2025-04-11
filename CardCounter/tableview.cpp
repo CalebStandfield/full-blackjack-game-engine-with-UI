@@ -15,10 +15,6 @@ TableView::TableView(QWidget *parent)
 void TableView::addCardAnimated(const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
     QPixmap cardPixmap(imagePath);
-    if (cardPixmap.isNull()) {
-        qDebug() << "Failed to load image:" << imagePath;
-        return;
-    }
 
     // Scale the card
     QPixmap scaledPixmap = cardPixmap.scaled(75, 125, Qt::KeepAspectRatio, Qt::SmoothTransformation);

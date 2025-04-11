@@ -61,6 +61,12 @@ void Screens::setUpConnect()
             this,
             &Screens::moveToStartScreen);
 
+    // Gameplay Buttons
+    connect(ui->hitButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::tableViewCardTest);
+
 
 }
 
@@ -206,7 +212,7 @@ void Screens::applyShadowToWidget(QWidget *widget)
 
 void Screens::moveToInforScreen()
 {
-    ui->screens->setCurrentIndex(2);
+    ui->screens->setCurrentIndex(3);
 }
 
 void Screens::setUpBasicStrategyCharts()
@@ -228,5 +234,5 @@ void Screens::setUpBasicStrategyCharts()
 void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(400, 200), 0);
+    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(400, 200), 45);
 }

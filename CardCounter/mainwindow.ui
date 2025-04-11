@@ -72,7 +72,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="startMenu">
      <widget class="QWidget" name="startMenuButtonArea" native="true">
@@ -235,7 +235,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="playScreen">
+    <widget class="QWidget" name="blackjackScreen">
      <widget class="QWidget" name="table" native="true">
       <property name="geometry">
        <rect>
@@ -451,6 +451,7 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="countCardsScreen"/>
     <widget class="QWidget" name="infographicScreen">
      <widget class="QPushButton" name="infoMenuButton">
       <property name="geometry">
