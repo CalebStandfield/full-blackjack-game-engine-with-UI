@@ -16,12 +16,6 @@ GameState::GameState(int playerCount, int deckCount, int initialMoney, int userI
 void GameState::dealInitialCards()
 {
     deck.shuffle();
-    dealerHand = Hand(0);
-    dealerFinished = false;
-
-    // Reset player's hand
-    for(Player& player : players)
-        player.hand = Hand(player.hand.getBet());
 
     // Deal 2 cards to each player and set their status to waiting
     for(int i = 0; i < 2; i++)
@@ -37,6 +31,16 @@ void GameState::dealInitialCards()
 
         dealerHand.addCard(deck.getNextCard());
     }
+}
+
+void GameState::clearHands()
+{
+    dealerHand = Hand(0);
+    dealerFinished = false;
+
+    // Reset player's hand
+    for(Player& player : players)
+        player.hand = Hand(player.hand.getBet());
 }
 
 void GameState::hit(int playerIndex)

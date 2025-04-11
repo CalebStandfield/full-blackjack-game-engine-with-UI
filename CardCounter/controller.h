@@ -83,10 +83,10 @@ signals:
     void dealerUpdated(const Hand& hand, int total);
 
     /**
-     * @brief nextPlayerTurn Signal that it is the next player's turn
+     * @brief currentPlayerTurn Signal that it is the next player's turn
      * @param nextPlayerIndex The index of the next player that is up now
      */
-    void nextPlayerTurn(int nextPlayerIndex);
+    void currentPlayerTurn(int nextPlayerIndex);
 
     /**
      * @brief endRound Signal that the round has ended

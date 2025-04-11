@@ -84,6 +84,11 @@ public:
      */
     void setPlayerBet(int index, int amount);
 
+    /**
+     * @brief clearHands Resets the players and dealer hands to empty
+     */
+    void clearHands();
+
 private:
     /**
      * @brief players The players in the game

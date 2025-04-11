@@ -12,6 +12,9 @@ void Controller::checkTurnEnd(const Player& player){
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
         advanceToNextPlayer();
     }
+
+    // if(!player.isUser)
+    // botMove();
 }
 
 void Controller::onHit()
@@ -65,10 +68,11 @@ void Controller::advanceToNextPlayer()
     }
 
     // Switch to next player
-    emit nextPlayerTurn(currentPlayerIndex);
+    emit currentPlayerTurn(currentPlayerIndex);
     model->setPlayerActive(currentPlayerIndex);
-    const Player& player = model->getPlayer(currentPlayerIndex);
-    emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
+
+    // const Player& player = model->getPlayer(currentPlayerIndex);
+    // emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
 
     // if(!player.isUser)
     //     botMove();
@@ -77,6 +81,14 @@ void Controller::advanceToNextPlayer()
 void Controller::startBetting()
 {
     currentPlayerIndex = -1;
+
+    // Clear all hands and update view
+    model->clearHands();
+    for(int i = 0; i < model->getPlayerCount(); i++){
+        const Player& player = model->getPlayer(i);
+        emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
+    }
+
     advanceToNextBet();
 }
 
@@ -91,16 +103,21 @@ void Controller::advanceToNextBet()
 
     // if(!model->getPlayer(currentPlayerIndex).isUser)
     //     botBet();
-    emit nextPlayerTurn(currentPlayerIndex);
+    emit currentPlayerTurn(currentPlayerIndex);
 }
 
 void Controller::dealCards()
 {
+    currentPlayerIndex =  -1;
     model->dealInitialCards();
-    model->setPlayerActive(currentPlayerIndex);
-    const Player& player = model->getPlayer(currentPlayerIndex);
-    emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
+
+    for(int i = 0; i < model->getPlayerCount(); i++){
+        const Player& player = model->getPlayer(i);
+        emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
+    }
+
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
+    advanceToNextPlayer();
 }
 
 void Controller::createNewGame(int players, int decks, int initialMoney, int userIndex)
