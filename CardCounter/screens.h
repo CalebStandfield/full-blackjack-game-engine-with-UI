@@ -127,6 +127,21 @@ private:
 
     void tableViewCardTest();
 
+    void hitButtonOnPress();
+    void standButtonOnPress();
+    void doubleButtonOnPress();
+    void splitButtonOnPress();
+
+signals:
+    // Blackjack game start
+    void blackjackPlayButton();
+
+    // Game play buttons
+    void sendHitButtonPressed();
+    void sendStandbuttonPressed();
+    void sendDoubleButtonPressed();
+    void sendSplitButtonPressed();
+
 
 private slots:
 public slots:

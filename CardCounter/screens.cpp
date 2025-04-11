@@ -190,6 +190,7 @@ void Screens::moveToPlayScreen()
 
     if (name == "blackjackPlayButton") {
         mode = GAMEPLAYMODE::BLACKJACK;
+        emit blackjackPlayButton();
     } else if (name == "blackjackTutorialButton") {
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
     } else if (name == "countCardsPlayButton") {
@@ -249,4 +250,29 @@ void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
     tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(400, 200), 45);
+}
+
+void Screens::blackjackPlayButton()
+{
+
+}
+
+void Screens::hitButtonOnPress()
+{
+    emit sendHitButtonPressed();
+}
+
+void Screens::standButtonOnPress()
+{
+    emit sendStandbuttonPressed();
+}
+
+void Screens::doubleButtonOnPress()
+{
+    emit sendDoubleButtonPressed();
+}
+
+void Screens::splitButtonOnPress()
+{
+    emit sendSplitButtonPressed();
 }
