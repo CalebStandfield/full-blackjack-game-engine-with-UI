@@ -1,20 +1,30 @@
 #ifndef TABLEVIEW_H
 #define TABLEVIEW_H
 
-#include <QtWidgets/qwidget.h>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QGraphicsPixmapItem>
+#include <QPropertyAnimation>
 
-class TableView : public QWidget
-{
+class TableView : public QGraphicsView {
     Q_OBJECT
 public:
     explicit TableView(QWidget *parent = nullptr);
-    ~TableView();
-
-    void addCardAt(const QString& imagePath, int x, int y, qreal rotationAngle);
+    void addCardAnimated(const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
+    void clearTable();
 
 private:
+    QGraphicsScene* scene;
+    QGraphicsPixmapItem* tableBackground;
+};
 
-signals:
+// ---- Internal AnimatableCardItem Class ----
+class AnimatableCardItem : public QObject, public QGraphicsPixmapItem {
+    Q_OBJECT
+    Q_PROPERTY(QPointF pos READ pos WRITE setPos)
+public:
+    AnimatableCardItem(const QPixmap& pixmap, QGraphicsItem* parent = nullptr)
+        : QObject(), QGraphicsPixmapItem(pixmap, parent) {}
 };
 
 #endif // TABLEVIEW_H

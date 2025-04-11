@@ -1,35 +1,46 @@
 #include "tableview.h"
-#include <QPainter>
-#include <QPixmap>
-#include <QtWidgets/qboxlayout.h>
-#include <qlabel.h>
 
 TableView::TableView(QWidget *parent)
-    : QWidget{parent}
-{
+    : QGraphicsView(parent), scene(new QGraphicsScene(this)) {
 
+    setScene(scene);
+    setRenderHint(QPainter::Antialiasing);
+
+    QPixmap tablePixmap(":/cardImages/table.png");  // Your table image path
+    tableBackground = scene->addPixmap(tablePixmap);
+    tableBackground->setZValue(0);
+    scene->setSceneRect(tablePixmap.rect());
 }
 
-TableView::~TableView()
-{
-
-}
-
-void TableView::addCardAt(const QString& imagePath, int x, int y, qreal rotationAngle)
+void TableView::addCardAnimated(const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
     QPixmap cardPixmap(imagePath);
 
-    // Scale first to ensure consistent sizing
+    // Scale the card
     QPixmap scaledPixmap = cardPixmap.scaled(75, 125, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    // Then apply rotation
-    QTransform transform;
-    transform.rotate(rotationAngle);
-    QPixmap rotatedPixmap = scaledPixmap.transformed(transform, Qt::SmoothTransformation);
+    auto* cardItem = new AnimatableCardItem(scaledPixmap);
+    cardItem->setPos(startPos);
+    cardItem->setRotation(rotationAngle); // Set rotation here
+    // cardItem->setTransformOriginPoint(cardSize.width() / 2, cardSize.height() / 2);
+    cardItem->setTransformOriginPoint(75 / 2, 125 / 2);
+    cardItem->setZValue(1);
+    scene->addItem(cardItem);
 
-    QLabel* cardLabel = new QLabel(this);
-    cardLabel->setPixmap(rotatedPixmap);
-    cardLabel->resize(rotatedPixmap.size());
-    cardLabel->move(x, y);
-    cardLabel->show();
+    // Animate position
+    QPropertyAnimation* anim = new QPropertyAnimation(cardItem, "pos");
+    anim->setDuration(600);
+    anim->setStartValue(startPos);
+    anim->setEndValue(endPos);
+    anim->setEasingCurve(QEasingCurve::OutQuad);
+    anim->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+void TableView::clearTable() {
+    for (auto* item : scene->items()) {
+        if (item != tableBackground) {
+            scene->removeItem(item);
+            delete item;
+        }
+    }
 }

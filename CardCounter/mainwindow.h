@@ -21,11 +21,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(Controller* c, QWidget *parent = nullptr);
+    MainWindow(Controller* controller, QWidget *parent = nullptr);
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+    Controller *controller;
     Screens *screens;
+
+    void setUpMainWindowConnect();
 };
 #endif // MAINWINDOW_H

@@ -72,7 +72,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="startMenu">
      <widget class="QWidget" name="startMenuButtonArea" native="true">
@@ -201,7 +201,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="infographicsButton">
+        <widget class="QPushButton" name="basicStrategyChartButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -215,7 +215,7 @@
           </size>
          </property>
          <property name="text">
-          <string>Inforgraphics</string>
+          <string>Basic Strategy Charts</string>
          </property>
         </widget>
        </item>
@@ -235,7 +235,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="playScreen">
+    <widget class="QWidget" name="blackjackScreen">
      <widget class="QWidget" name="table" native="true">
       <property name="geometry">
        <rect>
@@ -526,12 +526,12 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="infographicScreen">
+    <widget class="QWidget" name="basicStrategyChartScreen">
      <widget class="QPushButton" name="infoMenuButton">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>0</y>
+        <y>10</y>
         <width>100</width>
         <height>32</height>
        </rect>
@@ -540,23 +540,23 @@
        <string>Menu</string>
       </property>
      </widget>
-     <widget class="QGraphicsView" name="infoBasicStrategyChart">
+     <widget class="QGraphicsView" name="basicStrategyChart">
       <property name="geometry">
        <rect>
-        <x>670</x>
-        <y>10</y>
-        <width>451</width>
-        <height>661</height>
+        <x>730</x>
+        <y>130</y>
+        <width>341</width>
+        <height>451</height>
        </rect>
       </property>
      </widget>
      <widget class="QTextBrowser" name="infoTextBrowser">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>120</y>
+        <x>70</x>
+        <y>110</y>
         <width>601</width>
-        <height>491</height>
+        <height>501</height>
        </rect>
       </property>
       <property name="html">

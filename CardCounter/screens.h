@@ -32,7 +32,7 @@ private:
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
      */
-    void setUpConnect();
+    void setUpScreenConnect();
 
     /**
      * @brief setUpBackGround Sets up the general background for the ui
@@ -94,6 +94,16 @@ private:
      * @brief getQSliderStylenQString of the general QWidget StyleSheet
      */
     QString QSliderStyle;
+    
+    /** 
+     * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
+     */
+    QString QTextBrowserStyle;
+
+    /**
+     * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
+     */
+    QString QGraphicsViewStyle;
 
     /**
      * @brief moveToPlayScreen Move from current screen to the play screen
@@ -132,6 +142,19 @@ private:
     void setUpBasicStrategyCharts();
 
     void tableViewCardTest();
+
+    void hitButtonOnPress();
+    void standButtonOnPress();
+    void doubleButtonOnPress();
+    void splitButtonOnPress();
+
+signals:
+    // Game play buttons
+    void sendHitButtonPressed();
+    void sendStandbuttonPressed();
+    void sendDoubleButtonPressed();
+    void sendSplitButtonPressed();
+
 
 private slots:
     void updateBetLabelText(int value);
