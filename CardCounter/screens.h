@@ -32,7 +32,7 @@ private:
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
      */
-    void setUpConnect();
+    void setUpScreenConnect();
 
     /**
      * @brief setUpBackGround Sets up the general background for the ui
@@ -48,6 +48,12 @@ private:
      * @brief setUpStartMenuButtons Sets up the button area for the startMenu
      */
     void setUpStartMenuButtons();
+
+    /**
+     * @brief setUpBettingMenu Sets up the area where you select your bet amount
+     */
+    void setUpBettingMenu();
+
 
     /**
      * @brief setUpGamePlayButtons Sets up the game play buttons
@@ -75,11 +81,21 @@ private:
     QString QLabelStyle;
 
     /**
+     * @brief getQBetLableStyle QString of the betLabel QLabel StyleSheet
+     */
+    QString QBetLabelStyle;
+
+    /**
      * @brief getQWidgetStylenQString of the general QWidget StyleSheet
      */
     QString QWidgetStyle;
 
     /**
+     * @brief getQSliderStylenQString of the general QWidget StyleSheet
+     */
+    QString QSliderStyle;
+    
+    /** 
      * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
      */
     QString QTextBrowserStyle;
@@ -127,8 +143,21 @@ private:
 
     void tableViewCardTest();
 
+    void hitButtonOnPress();
+    void standButtonOnPress();
+    void doubleButtonOnPress();
+    void splitButtonOnPress();
+
+signals:
+    // Game play buttons
+    void sendHitButtonPressed();
+    void sendStandbuttonPressed();
+    void sendDoubleButtonPressed();
+    void sendSplitButtonPressed();
+
 
 private slots:
+    void updateBetLabelText(int value);
 public slots:
 
 };
