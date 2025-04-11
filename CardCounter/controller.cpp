@@ -16,6 +16,7 @@ void Controller::checkTurnEnd(const Player& player){
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
         advanceToNextPlayer();
+        return;
     }
 
     if(!player.isUser)
@@ -37,7 +38,7 @@ void Controller::onStand()
 void Controller::onDoubleDown()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    if(player.money < player.hand.getBet() * 2){
+    if(player.money < player.hand.getBet()){
         return;
     }
     model->doubleDown(currentPlayerIndex);
@@ -130,9 +131,26 @@ void Controller::dealCards()
 
 void Controller::botMove()
 {
-    // Need to fully implement botMove
+    const Player& player = model->getPlayer(currentPlayerIndex);
+    MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
-    MOVE move = botStrategy->getNextMove(model->getPlayer(currentPlayerIndex).hand, model->getDealerHand().getCards()[1]);
+    if(move == MOVE::HIT)
+        onHit();
+    else if(move == MOVE::DOUBLE)
+    {
+        // If not enough money to double down, hit instead
+        if(player.money < player.hand.getBet()){
+            onHit();
+        }
+        else
+            onDoubleDown();
+    }
+    else if(move == MOVE::SPLIT)
+    {
+        // Call onSplit once implemented
+    }
+    else
+        onStand();
 }
 
 void Controller::botBet()
@@ -144,5 +162,8 @@ void Controller::botBet()
 
 void Controller::createNewGame(int players, int decks, int initialMoney, int userIndex)
 {
+    if(model != nullptr)
+        delete model;
+
     model = new GameState(players, decks, initialMoney, userIndex);
 }
