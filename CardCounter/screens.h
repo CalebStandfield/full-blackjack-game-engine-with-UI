@@ -50,6 +50,12 @@ private:
     void setUpStartMenuButtons();
 
     /**
+     * @brief setUpBettingMenu Sets up the area where you select your bet amount
+     */
+    void setUpBettingMenu();
+
+
+    /**
      * @brief setUpGamePlayButtons Sets up the game play buttons
      */
     void setUpGamePlayButtons();
@@ -75,9 +81,19 @@ private:
     QString QLabelStyle;
 
     /**
+     * @brief getQBetLableStyle QString of the betLabel QLabel StyleSheet
+     */
+    QString QBetLabelStyle;
+
+    /**
      * @brief getQWidgetStylenQString of the general QWidget StyleSheet
      */
     QString QWidgetStyle;
+
+    /**
+     * @brief getQSliderStylenQString of the general QWidget StyleSheet
+     */
+    QString QSliderStyle;
 
     /**
      * @brief moveToPlayScreen Move from current screen to the play screen
@@ -118,6 +134,7 @@ private:
     void tableViewCardTest();
 
 private slots:
+    void updateBetLabelText(int value);
 public slots:
 
 };

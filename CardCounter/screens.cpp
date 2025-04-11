@@ -19,6 +19,8 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpBackGround();
     hideSettingsPopup();
     setUpBasicStrategyCharts();
+    setUpBettingMenu();
+
 
     // Connects
     setUpConnect();
@@ -111,6 +113,22 @@ void Screens::setUpGamePlayButtons()
     ui->splitButton->setStyleSheet(QPushButtonStyle);
 }
 
+void Screens::setUpBettingMenu()
+{
+    ui->bettingArea->setStyleSheet(QWidgetStyle);
+    ui->betSlider->setStyleSheet(QSliderStyle);
+    ui->betLabel->setStyleSheet(QBetLabelStyle);
+    ui->allInButton->setStyleSheet(QPushButtonStyle);
+    ui->halfButton->setStyleSheet(QPushButtonStyle);
+    ui->fiveDollarButton->setStyleSheet(QPushButtonStyle);
+    connect(ui->betSlider, &QSlider::valueChanged, this, &Screens::updateBetLabelText);
+}
+
+void Screens::updateBetLabelText(int value)
+{
+    ui->betLabel->setText("Bet Amount: $" + QString::number(value));
+}
+
 void Screens::setUpQStyleSheets()
 {
     QPushButtonStyle =
@@ -129,10 +147,53 @@ void Screens::setUpQStyleSheets()
         "    background-color: #646464;"
         "}";
 
+    QSliderStyle =
+        "QSlider {"
+        "    background: white;"
+        "    border-radius: 5px;"
+        "    height: 10px;"
+        "}"
+        "QSlider::groove:horizontal {"
+        "    border: 1px solid #ccc;"
+        "    height: 10px;"
+        "    background: #f0f0f0;"
+        "    border-radius: 5px;"
+        "}"
+        "QSlider::handle:horizontal {"
+        "    background: white;"
+        "    border: 1px solid #aaa;"
+        "    border-radius: 5px;"
+        "    width: 20px;"
+        "    height: 20px;"
+        "    margin-top: 0px;"  // Adjust this margin for centering
+        "    margin-left: -10px;" // Center handle horizontally
+        "}"
+        "QSlider::handle:horizontal:hover {"
+        "    background: #e0e0e0;"
+        "    border-color: #888;"
+        "}"
+        "QSlider::sub-page:horizontal {"
+        "    background: #ddd;"
+        "    border-radius: 5px;"
+        "}"
+        "QSlider::add-page:horizontal {"
+        "    background: #f0f0f0;"
+        "    border-radius: 5px;"
+        "}";
+
+
     QLabelStyle =
         "QLabel {"
         "    color: white;"
         "    font-size: 32px;"
+        "    font-weight: bold;"
+        "    padding: 5px;"
+        "}";
+
+    QBetLabelStyle =
+        "QLabel {"
+        "    color: white;"
+        "    font-size: 15px;"
         "    font-weight: bold;"
         "    padding: 5px;"
         "}";
@@ -232,3 +293,5 @@ void Screens::tableViewCardTest()
     tableView->addCardAt(tempCard, 200, 300, 90);
     tableView->addCardAt(tempCard, 400, 300, 235);
 }
+
+
