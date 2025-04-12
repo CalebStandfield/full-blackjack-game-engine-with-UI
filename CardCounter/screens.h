@@ -3,11 +3,15 @@
 
 #include "tableview.h"
 #include "ui_mainwindow.h"
+#include "hand.h"
+#include "playerStatus.h"
 #include <QWidget>
 #include <QGraphicsView>
 #include <QtWidgets/qstackedwidget.h>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+
+using PlayerStatus::PLAYERSTATUS;
 
 class Screens : public QStackedWidget
 {
@@ -126,6 +130,11 @@ private:
     void showSettingsPopup();
 
     /**
+     * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
+     */
+    void acceptSettingsButtonPressed();
+
+    /**
      * @brief applyShadowToWidget Applies a shadow effect for more depth for the passed in widget
      * @param widget The widget to give shadow to
      */
@@ -143,22 +152,96 @@ private:
 
     void tableViewCardTest();
 
+    /**
+     * @brief hitButtonOnPress Logic for when the user presses hit
+     */
     void hitButtonOnPress();
+
+    /**
+     * @brief standButtonOnPress Logic for when the user presses stnad
+     */
     void standButtonOnPress();
+
+    /**
+     * @brief doubleButtonOnPress Logic for when the user presses double
+     */
     void doubleButtonOnPress();
+
+    /**
+     * @brief splitButtonOnPress Logic for when the user presses split
+     */
     void splitButtonOnPress();
 
 signals:
+
+    // Settings accept
+
+    /**
+     * @brief sendSettingsAccepted Singal to send for when the suer has accepted the settings
+     */
+    void sendSettingsAccepted(unsigned int numberOfPlayers, unsigned int numberOfDecks, unsigned int numberOfChips, int playerIndex);
+
+    // Betting
+
+    /**
+     * @brief sendGameSetupCompleteStartBetting
+     */
+    void sendGameSetupCompleteStartBetting();
+
     // Game play buttons
+
+    /**
+     * @brief sendHitButtonPressed Signal to send for when the user presses hit
+     */
     void sendHitButtonPressed();
+
+    /**
+     * @brief sendStandbuttonPressed Signal to send for when the user presses stand
+     */
     void sendStandbuttonPressed();
+
+    /**
+     * @brief sendDoubleButtonPressed Signal to send for when the user presses double
+     */
     void sendDoubleButtonPressed();
+
+    /**
+     * @brief sendSplitButtonPressed Signal to send for when the user presses split
+     */
     void sendSplitButtonPressed();
 
 
 private slots:
     void updateBetLabelText(int value);
 public slots:
+    /**
+     * @brief playerUpdated Slot for receiving information about an updated player with their updated info
+     * @param playerIndex The player that has updated
+     * @param hand The new hand for the player
+     * @param total The total value of their cards
+     * @param money The money they have left
+     * @param status The status of the player
+     */
+    void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
+
+    /**
+     * @brief dealerUpdated Slot for receiving updated dealer info
+     * @param hand The new hand of the dealer
+     * @param total The total value of their cards
+     */
+    void dealerUpdated(const Hand& hand, int total);
+
+    // used for changing POV
+    /**
+     * @brief currentPlayerTurn Slot for changing to the player at given index
+     * @param nextPlayerIndex The index of the next player that is up now
+     */
+    void currentPlayerTurn(int nextPlayerIndex);
+
+    /**
+     * @brief endBetting Slot for changing from betting phase to playing phase
+     */
+    void endBetting();
 
 };
 

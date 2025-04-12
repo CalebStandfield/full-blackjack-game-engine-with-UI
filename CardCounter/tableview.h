@@ -6,6 +6,9 @@
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
 
+// Forward declaration
+class AnimatableCardItem;
+
 class TableView : public QGraphicsView {
     Q_OBJECT
 public:
@@ -16,6 +19,8 @@ public:
 private:
     QGraphicsScene* scene;
     QGraphicsPixmapItem* tableBackground;
+
+    void applyShadowToWidget(AnimatableCardItem *card);
 };
 
 // ---- Internal AnimatableCardItem Class ----

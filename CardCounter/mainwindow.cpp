@@ -38,4 +38,39 @@ void MainWindow::setUpMainWindowConnect()
     //         controller,
     //         &Controller::);
 
+    // Settings
+    connect(screens,
+            &Screens::sendSettingsAccepted,
+            controller,
+            &Controller::createNewGame);
+
+    // Setup complete
+    connect(screens,
+            &Screens::sendGameSetupCompleteStartBetting,
+            controller,
+            &Controller::startBetting);
+
+    // Controller -> Screens
+
+    // Updating Hands
+    connect(controller,
+            &Controller::playerUpdated,
+            screens,
+            &Screens::playerUpdated);
+    connect(controller,
+            &Controller::dealerUpdated,
+            screens,
+            &Screens::dealerUpdated);
+
+    // POV updater
+    connect(controller,
+            &Controller::currentPlayerTurn,
+            screens,
+            &Screens::currentPlayerTurn);
+
+    // Phase changing
+    connect(controller,
+            &Controller::endBetting,
+            screens,
+            &Screens::endBetting);
 }

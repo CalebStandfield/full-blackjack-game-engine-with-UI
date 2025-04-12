@@ -72,7 +72,7 @@ signals:
      * @param hand The new hand for the player
      * @param total The total value of their cards
      * @param money The money they have left
-     * @param status The status of the player (busted or stood)
+     * @param status The status of the player
      */
     void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
 

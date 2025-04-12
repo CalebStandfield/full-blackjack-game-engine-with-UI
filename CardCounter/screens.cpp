@@ -48,6 +48,10 @@ void Screens::setUpScreenConnect()
             &QPushButton::clicked,
             this,
             &Screens::hideSettingsPopup);
+    connect(ui->acceptSettingsButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::acceptSettingsButtonPressed);
     connect(ui->cancelSettingsButton,
             &QPushButton::clicked,
             this,
@@ -308,10 +312,8 @@ void Screens::setUpBasicStrategyCharts()
 void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(350, 300), 0);
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 0), 0);
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 400), 0);
-    tableView->addCardAnimated(tempCard, QPointF(0, 0), QPointF(0, 600), 0);
+    tableView->addCardAnimated(tempCard, QPointF(300, 50), QPointF(300, 300), 0);
+
 }
 
 void Screens::hitButtonOnPress()
@@ -332,6 +334,43 @@ void Screens::doubleButtonOnPress()
 void Screens::splitButtonOnPress()
 {
     emit sendSplitButtonPressed();
+}
+
+void Screens::acceptSettingsButtonPressed()
+{
+    // TODO
+    // Get settings
+    // Need to randomize table seatings
+    // Get the user index
+    // Reenable gameplay buttons
+    emit sendSettingsAccepted(1, 1, 1, 1);
+    // timer between start and bet/anims
+    emit sendGameSetupCompleteStartBetting();
+}
+
+void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
+{
+    //TODO
+    //Player hand updated visually, multiple cards can be changed at once (may need to compare with currently displayed cards)
+}
+
+void Screens::dealerUpdated(const Hand& hand, int total)
+{
+    //TODO
+    //Dealer hand updated visually
+}
+
+void Screens::currentPlayerTurn(int nextPlayerIndex)
+{
+    //TODO
+    //Change POV to player at received index
+}
+
+void Screens::endBetting()
+{
+    //TODO
+    //Deactivate betting
+    //Reactivate hit/stand/double/split
 }
 
 

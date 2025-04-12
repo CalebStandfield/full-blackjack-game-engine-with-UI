@@ -471,77 +471,70 @@
      <widget class="QWidget" name="bettingArea" native="true">
       <property name="geometry">
        <rect>
-        <x>970</x>
-        <y>100</y>
-        <width>191</width>
-        <height>301</height>
+        <x>920</x>
+        <y>40</y>
+        <width>251</width>
+        <height>251</height>
        </rect>
       </property>
-      <widget class="QSlider" name="betSlider">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>160</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-      </widget>
-      <widget class="QLabel" name="betLabel">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>50</y>
-         <width>181</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Bet Amount = $0</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="allInButton">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>80</y>
-         <width>151</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>All In</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="halfButton">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>150</y>
-         <width>151</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Half</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="fiveDollarButton">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>220</y>
-         <width>151</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>$5</string>
-       </property>
-      </widget>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="betLabel">
+         <property name="layoutDirection">
+          <enum>Qt::LayoutDirection::RightToLeft</enum>
+         </property>
+         <property name="text">
+          <string>Bet Amount = $0</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSlider" name="betSlider">
+         <property name="orientation">
+          <enum>Qt::Orientation::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="allInButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>All In</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="halfButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Half</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="fiveDollarButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>$5</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
     <widget class="QWidget" name="basicStrategyChartScreen">
