@@ -106,7 +106,7 @@ void GameState::endRound()
         if(dealerBust || playerTotal > dealerTotal)
         {
             // If player gets blackjack, player gets 1.5 times their bet
-            if(playerTotal == 21)
+            if(playerTotal == 21 && player.hand.getCards().size() == 2)
                 player.money += player.hand.getBet() * 2.5;
             // Else, player doubles their bet
             else
