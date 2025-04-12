@@ -115,7 +115,7 @@ private:
     /**
      * @brief model The Gamestate model that handles the players playing blackjack
      */
-    GameState *model;
+    GameState *model = nullptr;
 
     /**
      * @brief botPlayer The BotStrategy that determines the bot's move

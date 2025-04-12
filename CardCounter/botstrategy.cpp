@@ -8,7 +8,7 @@ MOVE BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
 {
     // Check for a pair, only valid for 2 cards
     if (isPair(playerHand))
-        getPairHandMove(playerHand, dealerCard);
+        return getPairHandMove(playerHand, dealerCard);
 
     // Check for soft hand
     if (playerHand.isSoft())
