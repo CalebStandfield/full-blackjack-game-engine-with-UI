@@ -520,9 +520,6 @@ void Screens::acceptSettingsButtonPressed()
         players.emplace_back(initialMoney, 1, i == playerIndex);
     }
 
-    // Get settings
-    // Reenable gameplay buttons
-
     emit sendSettingsAccepted(players, deckCount, 0);
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
