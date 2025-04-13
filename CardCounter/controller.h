@@ -62,7 +62,7 @@ public slots:
      * @param players The number of players in the game
      * @param decks The number of decks to play with
      */
-    void createNewGame(std::vector<Player>& players, int decks);
+    void createNewGame(std::vector<Player> players, int decks);
 signals:
     /**
      * @brief playerUpdated Signal that a player in the game has updated with their updated info
