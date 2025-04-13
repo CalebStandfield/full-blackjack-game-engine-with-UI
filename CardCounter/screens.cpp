@@ -456,11 +456,13 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::dealerUpdated(const Hand& hand, int total)
 {
-    if (!showDealerCard)
+    int prevHandSize = dealerHand.getCards().size();
+    dealerHand = hand;
+
+    if (!showDealerCard && dealerHand.getCards().size() > 0)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/back_of_card.png");
     }
-    int prevHandSize = dealerHand.getCards().size();
 
     bool firstLoop = true;
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
@@ -475,7 +477,6 @@ void Screens::dealerUpdated(const Hand& hand, int total)
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
     }
-    dealerHand = hand;
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
