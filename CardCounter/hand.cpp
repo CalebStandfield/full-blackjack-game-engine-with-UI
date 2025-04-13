@@ -2,6 +2,8 @@
 #include "rank.h"
 #include <utility>
 
+Hand::Hand() : Hand(0) {};
+
 Hand::Hand(int bet) : bet(bet) {}
 
 Hand::Hand(const Hand& hand)

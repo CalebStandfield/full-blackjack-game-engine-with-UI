@@ -7,6 +7,12 @@
 class Hand
 {
 public:
+
+    /**
+     * @brief Hand Constructor that creates a new empty hand with a bet of 0
+     */
+    Hand();
+
     /**
      * @brief Hand Constructor that creates a new empty hand with the initial bet
      * @param bet The initial bet for the hand
