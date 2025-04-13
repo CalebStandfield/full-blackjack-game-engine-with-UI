@@ -26,7 +26,7 @@ void MainWindow::setUpMainWindowConnect()
             controller,
             &Controller::onHit);
     connect(screens,
-            &Screens::sendStandbuttonPressed,
+            &Screens::sendStandButtonPressed,
             controller,
             &Controller::onStand);
     connect(screens,

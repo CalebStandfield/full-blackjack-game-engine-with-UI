@@ -96,6 +96,11 @@ private:
     QString QPushButtonStyle;
 
     /**
+     * @brief QPushButtonDisabledStyle QString of the disabled version of a QPushButton StyleSheet
+     */
+    QString QPushButtonDisabledStyle;
+
+    /**
      * @brief getQLableStyle QString of the general QLabel StyleSheet
      */
     QString QLabelStyle;
@@ -169,26 +174,32 @@ private:
     void tableViewCardTest();
 
     /**
-     * @brief hitButtonOnPress Logic for when the user presses hit
+     * @brief onPressHitButton Logic for when the user presses hit
      */
-    void hitButtonOnPress();
+    void onPressHitButton();
 
     /**
-     * @brief standButtonOnPress Logic for when the user presses stnad
+     * @brief onPressStandButton Logic for when the user presses stnad
      */
-    void standButtonOnPress();
+    void onPressStandButton();
 
     /**
-     * @brief doubleButtonOnPress Logic for when the user presses double
+     * @brief onPressDoubleButton Logic for when the user presses double
      */
-    void doubleButtonOnPress();
+    void onPressDoubleButton();
 
     /**
-     * @brief splitButtonOnPress Logic for when the user presses split
+     * @brief onPressSplitButton Logic for when the user presses split
      */
-    void splitButtonOnPress();
+    void onPressSplitButton();
 
-    void placedBetButtonOnPress();
+    void onPressPlacedBetButton();
+
+    void onPressBettingAmountButtons();
+
+    void toggleEnabledGamePlayButtons(bool enabled);
+
+    void toggleEnabledQPushButton(QPushButton *button, bool enabled);
 
 signals:
 
@@ -214,9 +225,9 @@ signals:
     void sendHitButtonPressed();
 
     /**
-     * @brief sendStandbuttonPressed Signal to send for when the user presses stand
+     * @brief sendStandButtonPressed Signal to send for when the user presses stand
      */
-    void sendStandbuttonPressed();
+    void sendStandButtonPressed();
 
     /**
      * @brief sendDoubleButtonPressed Signal to send for when the user presses double
@@ -232,7 +243,7 @@ signals:
 
 
 private slots:
-    void updateBetLabelText(int value);
+    void updateBetLabelText(unsigned int  value);
 
     void dealCard(int seatIndex, QString imagePath);
 public slots:

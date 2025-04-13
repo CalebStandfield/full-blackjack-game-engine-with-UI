@@ -652,7 +652,7 @@
         <x>950</x>
         <y>0</y>
         <width>250</width>
-        <height>300</height>
+        <height>310</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -682,7 +682,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>$5</string>
+          <string>Minimum ($1)</string>
          </property>
         </widget>
        </item>

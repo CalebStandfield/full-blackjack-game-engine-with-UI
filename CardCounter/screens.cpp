@@ -72,19 +72,37 @@ void Screens::setUpScreenConnect()
     connect(ui->hitButton,
             &QPushButton::clicked,
             this,
-            &Screens::hitButtonOnPress);
+            &Screens::onPressHitButton);
     connect(ui->standButton,
             &QPushButton::clicked,
             this,
-            &Screens::standButtonOnPress);
+            &Screens::onPressStandButton);
+    connect(ui->doubleButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressDoubleButton);
 
     // Betting Buttons
     connect(ui->placeBetButton,
             &QPushButton::clicked,
             this,
-            &Screens::placedBetButtonOnPress);
-
-
+            &Screens::onPressPlacedBetButton);
+    connect(ui->betSlider,
+            &QSlider::valueChanged,
+            this,
+            &Screens::updateBetLabelText);
+    connect(ui->minimumBettingButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressBettingAmountButtons);
+    connect(ui->halfButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressBettingAmountButtons);
+    connect(ui->allInButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressBettingAmountButtons);
 }
 
 void Screens::setUpTable()
@@ -145,12 +163,12 @@ void Screens::setUpBettingMenu()
     ui->allInButton->setStyleSheet(QPushButtonStyle);
     ui->halfButton->setStyleSheet(QPushButtonStyle);
     ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
-    ui->placeBetButton->setStyleSheet(QPushButtonStyle);
-    connect(ui->betSlider, &QSlider::valueChanged, this, &Screens::updateBetLabelText);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 }
 
-void Screens::updateBetLabelText(int value)
+void Screens::updateBetLabelText(unsigned int value)
 {
+    toggleEnabledQPushButton(ui->placeBetButton, true);
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
 }
 
@@ -170,6 +188,16 @@ void Screens::setUpQStyleSheets()
         "}"
         "QPushButton:pressed {"
         "    background-color: #646464;"
+        "}";
+
+    QPushButtonDisabledStyle =
+        "QPushButton:disabled {"
+        "    background-color: #2a2a2a;"
+        "    color: #888888;"
+        "    border: 2px solid #333333;"
+        "    border-radius: 5px;"
+        "    padding: 10px 20px;"
+        "    font-size: 24px;"
         "}";
 
     QSliderStyle =
@@ -269,19 +297,28 @@ void Screens::moveToStartScreen()
 
 void Screens::moveToPlayScreen()
 {
+    toggleEnabledGamePlayButtons(false);
     ui->screens->setCurrentIndex(1);
+    ui->bettingArea->hide();
     showSettingsPopup();
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
     QString name = button->objectName();
 
-    if (name == "blackjackPlayButton") {
+    if (name == "blackjackPlayButton")
+    {
         mode = GAMEPLAYMODE::BLACKJACK;
-    } else if (name == "blackjackTutorialButton") {
+    }
+    else if (name == "blackjackTutorialButton")
+    {
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
-    } else if (name == "countCardsPlayButton") {
+    }
+    else if (name == "countCardsPlayButton")
+    {
         mode = GAMEPLAYMODE::COUNTCARDS;
-    } else {
+    }
+    else
+    {
         mode = GAMEPLAYMODE::UNSELECTED;
     }
 }
@@ -339,30 +376,53 @@ void Screens::tableViewCardTest()
 
 }
 
-void Screens::hitButtonOnPress()
+void Screens::onPressHitButton()
 {
     emit sendHitButtonPressed();
 }
 
-void Screens::standButtonOnPress()
+void Screens::onPressStandButton()
 {
-    emit sendStandbuttonPressed();
+    emit sendStandButtonPressed();
 }
 
-void Screens::doubleButtonOnPress()
+void Screens::onPressDoubleButton()
 {
     emit sendDoubleButtonPressed();
 }
 
-void Screens::splitButtonOnPress()
+void Screens::onPressSplitButton()
 {
     emit sendSplitButtonPressed();
 }
 
-void Screens::placedBetButtonOnPress()
+void Screens::onPressPlacedBetButton()
 {
-    currentBet = 1; // DELETE LATER
+    ui->bettingArea->hide();
     emit sendOnBet(currentBet);
+}
+
+void Screens::onPressBettingAmountButtons()
+{
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
+
+    QString name = button->objectName();
+
+    if (name == "allInButton")
+    {
+        currentBet = players[playerIndex].money;
+    }
+    else if (name == "halfButton") {
+        currentBet = players[playerIndex].money / 2;
+    }
+    else
+    {
+        // Called when the minimum button is pressed
+        currentBet = 1;
+    }
+    ui->betSlider->setValue(currentBet);
+    updateBetLabelText(currentBet);
+    toggleEnabledQPushButton(ui->placeBetButton, true);
 }
 
 void Screens::acceptSettingsButtonPressed()
@@ -374,14 +434,15 @@ void Screens::acceptSettingsButtonPressed()
     deckCount = 1;
     initialMoney = 1000;
 
+    ui->bettingArea->show();
+    ui->betSlider->setMaximum(initialMoney);
+
     //playerIndex = QRandomGenerator::global()->bounded(playerCount);
     playerIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == playerIndex);
     }
-
-    dealerHand = Hand(0);
 
     // Get settings
     // Reenable gameplay buttons
@@ -394,30 +455,39 @@ void Screens::acceptSettingsButtonPressed()
 void Screens::dealCard(int seatIndex, QString imagePath)
 {
     QString cardPNG = imagePath;
-    if (seatIndex == 0)
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(955, 250), -20); // far right
+    QPointF startPos(555, 50);
+    QPointF endPos;
+    qreal rotation = 0;
+
+    switch (seatIndex) {
+    case 0:
+        endPos = QPointF(955, 250); // far right
+        rotation = -20;
+        break;
+    case 1:
+        endPos = QPointF(755, 330); // middle right
+        rotation = -10;
+        break;
+    case 2:
+        endPos = QPointF(555, 400); // middle
+        rotation = 0;
+        break;
+    case 3:
+        endPos = QPointF(355, 330); // middle left
+        rotation = 10;
+        break;
+    case 4:
+        endPos = QPointF(155, 250); // far left
+        rotation = 20;
+        break;
+    default:
+        startPos = QPointF(555, 0);
+        endPos = QPointF(555, 50);
+        rotation = 0;
+        break;
     }
-    else if (seatIndex == 1)
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(755, 330), -10); // middle right
-    }
-    else if (seatIndex == 2)
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(555, 400), 0); // middle
-    }
-    else if (seatIndex == 3)
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(355, 330), 10); // middle left
-    }
-    else if (seatIndex == 4)
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(155, 250), 20); // far left
-    }
-    else
-    {
-        tableView->addCardAnimated(cardPNG, QPointF(555, 0), QPointF(555, 50), 0); // far left
-    }
+
+    tableView->addCardAnimated(cardPNG, startPos, endPos, rotation);
 
 
 }
@@ -492,9 +562,28 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
 
 void Screens::endBetting()
 {
-    //TODO
-    //Deactivate betting
-    //Reactivate hit/stand/double/split
+    ui->bettingArea->hide();
+    toggleEnabledGamePlayButtons(true);
 }
 
+void Screens::toggleEnabledGamePlayButtons(bool enabled)
+{
+    toggleEnabledQPushButton(ui->hitButton, enabled);
+    toggleEnabledQPushButton(ui->standButton, enabled);
+    toggleEnabledQPushButton(ui->doubleButton, enabled);
+    toggleEnabledQPushButton(ui->splitButton, enabled);
+
+}
+
+void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
+{
+    if (enabled)
+    {
+        button->setStyleSheet(QPushButtonStyle);
+        button->setEnabled(enabled);
+        return;
+    }
+    button->setStyleSheet(QPushButtonDisabledStyle);
+    button->setEnabled(enabled);
+}
 
