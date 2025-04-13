@@ -487,10 +487,6 @@ void Screens::onEditChipCountLineEdit()
 {
     QString input = ui->chipCountSettingsLineEdit->text();
 
-    // Allow empty input so user can type freely
-    // if (input.isEmpty())
-    //     return;
-
     bool ok;
     int value = input.toInt(&ok);
 
