@@ -36,6 +36,14 @@ private:
 
     std::vector<Player> players;
 
+    unsigned int playerIndex;
+
+    unsigned int initialMoney;
+
+    unsigned int playerCount;
+
+    unsigned int deckCount;
+
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
      */
@@ -182,7 +190,7 @@ signals:
     /**
      * @brief sendSettingsAccepted Singal to send for when the suer has accepted the settings
      */
-    void sendSettingsAccepted(unsigned int numberOfPlayers, unsigned int numberOfDecks, unsigned int numberOfChips, int playerIndex);
+    void sendSettingsAccepted(std::vector<Player>& players, int decks);
 
     // Betting
 

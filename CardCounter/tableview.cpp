@@ -35,7 +35,7 @@ void TableView::addCardAnimated(const QString& imagePath, QPointF startPos, QPoi
 
     // Animate position
     QPropertyAnimation* anim = new QPropertyAnimation(cardItem, "pos");
-    anim->setDuration(2000);
+    anim->setDuration(600);
     anim->setStartValue(startPos);
     anim->setEndValue(endPos);
     anim->setEasingCurve(QEasingCurve::OutQuad);

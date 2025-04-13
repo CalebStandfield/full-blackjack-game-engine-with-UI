@@ -3,6 +3,7 @@
 #include <QPixmap>
 #include <qdebug.h>
 #include <QGraphicsDropShadowEffect>
+#include <QRandomGenerator>
 
 Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     : QStackedWidget(parent), ui(ui)
@@ -215,7 +216,6 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 30);"
         "    padding: 10px;"
         "    color: white;"
-        "    font-family: 'Segoe UI', 'Arial', sans-serif;"
         "    font-size: 14px;"
         "}"
         "QScrollBar:vertical, QScrollBar:horizontal {"
@@ -356,13 +356,19 @@ void Screens::splitButtonOnPress()
 void Screens::acceptSettingsButtonPressed()
 {
     // TODO
-    // Get settings
-    // Need to randomize table seatings
-    // Get the user index
-    // Reenable gameplay buttons
-    emit sendSettingsAccepted(1, 1, 1, 1);
+    // playerIndex = QRandomGenerator::global()->bounded(playerCount);
+
+    // for (unsigned int i = 0; i < playerCount; i++) {
+    //     players.emplace_back(initialMoney, 1, i == playerIndex);
+    // }
+
+    // // Get settings
+    // // Reenable gameplay buttons
+
+
+    // emit sendSettingsAccepted(players, deckCount);
     // timer between start and bet/anims
-    emit sendGameSetupCompleteStartBetting();
+    // emit sendGameSetupCompleteStartBetting();
 }
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
