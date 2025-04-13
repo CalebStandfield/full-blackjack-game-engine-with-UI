@@ -50,6 +50,13 @@ void MainWindow::setUpMainWindowConnect()
             controller,
             &Controller::startBetting);
 
+
+    // Betting
+    connect(screens,
+            &Screens::sendOnBet,
+            controller,
+            &Controller::onBet);
+
     // Controller -> Screens
 
     // Updating Hands
