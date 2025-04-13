@@ -32,22 +32,51 @@ private:
         UNSELECTED
     };
 
+    /**
+     * @brief mode The mode the user has selected
+     */
     GAMEPLAYMODE mode;
 
+    /**
+     * @brief players A vector of all the players in the game
+     */
     std::vector<Player> players;
 
+    /**
+     * @brief dealerHand The dealers cards
+     */
     Hand dealerHand;
 
+    /**
+     * @brief playerIndex An int to signify who the user is
+     */
     unsigned int playerIndex;
 
+    /**
+     * @brief initialMoney The amount of money put up by the player
+     */
     unsigned int initialMoney;
 
+    /**
+     * @brief currentBet The currecnt bet of the player
+     */
     int currentBet;
 
+    /**
+     * @brief playerCount The desiered number of players by the user
+     * @default 1 There must be at least 1 player
+     */
     unsigned int playerCount = 1;
 
+    /**
+     * @brief deckCount The disred number of decks by the user
+     * @default 1 There must be at least 1 deck
+     */
     unsigned int deckCount = 1;
 
+    /**
+     * @brief showDealerCard A bool for when to display the dealer card
+     */
     bool showDealerCard;
 
     /**
@@ -193,14 +222,32 @@ private:
      */
     void onPressSplitButton();
 
+    /**
+     * @brief onPressPlacedBetButton Logic for when the user places their bet
+     */
     void onPressPlacedBetButton();
 
+    /**
+     * @brief onPressBettingAmountButtons Logic for when the user clicks "all In", "half" "minimum bet"
+     */
     void onPressBettingAmountButtons();
 
+    /**
+     * @brief onEditChipCountLineEdit Logic for when the user edits the line edit signifying how much money to play with
+     */
     void onEditChipCountLineEdit();
 
+    /**
+     * @brief toggleEnabledGamePlayButtons Toggles the GamePlay buttons and their style
+     * @param enabled A bool for if they should look/be enabled or disabled
+     */
     void toggleEnabledGamePlayButtons(bool enabled);
 
+    /**
+     * @brief toggleEnabledQPushButton Toggles the button passed in to disabled or enabled
+     * @param button The button to toggle
+     * @param enabled A bool for if the button should look/be enabled or disabled
+     */
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
 
 signals:
@@ -247,10 +294,23 @@ signals:
     void sendOnBet(int playerBet);
 
 private slots:
+    /**
+     * @brief dealCard
+     * @param seatIndex
+     * @param imagePath
+     */
     void dealCard(int seatIndex, QString imagePath);
 
+    /**
+     * @brief updateBetLabelText Updates the betting lable for the betting view
+     * @param value The value to set the label to display
+     */
     void updateBetLabelText(unsigned int  value);
 
+    /**
+     * @brief updateSettingsSlider Updates the slider that calls this method to the value
+     * @param value The value to set the slider value to
+     */
     void updateSettingsSlider(unsigned int value);
 public slots:
     /**
@@ -282,6 +342,10 @@ public slots:
      */
     void endBetting();
 
+    /**
+     * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card
+     * @param flipped A bool for if to flip or not
+     */
     void updateShowDealerCardBool(bool flipped);
 
 };
