@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <random>
 
-Deck::Deck(int deckNumber)
+Deck::Deck(int deckNumber, int deterministic) : deterministic(deterministic)
 {
     createDeck();
 
@@ -27,9 +27,20 @@ void Deck::createDeck()
 
 void Deck::shuffle()
 {
-    std::default_random_engine rand(std::random_device{}());
-    std::shuffle(shuffledDeck.begin(), shuffledDeck.end(), rand);
-    currentDeckIndex = 0;
+    if(deterministic == 0)
+    {
+        std::default_random_engine rand(std::random_device{}());
+        std::shuffle(shuffledDeck.begin(), shuffledDeck.end(), rand);
+        currentDeckIndex = 0;
+    }
+    else if(deterministic == 1)
+    {
+        // Implement determined shuffle for single player
+    }
+    else
+    {
+        // Implement determined shuffle for multiple players
+    }
 }
 
 Card Deck::getNextCard()

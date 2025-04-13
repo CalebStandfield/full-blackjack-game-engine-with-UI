@@ -196,8 +196,11 @@ signals:
 
     /**
      * @brief sendSettingsAccepted Singal to send for when the suer has accepted the settings
+     * @param players The number of players in the game
+     * @param decks The number of decks to play with
+     * @param deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
      */
-    void sendSettingsAccepted(std::vector<Player>& players, int decks);
+    void sendSettingsAccepted(std::vector<Player>& players, int decks, int deterministic);
 
     // Betting
 

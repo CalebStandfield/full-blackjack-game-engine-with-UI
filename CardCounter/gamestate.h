@@ -12,8 +12,9 @@ public:
      * @brief Constructs the GameState with a given number of players, a certain number of decks, and an initial bet for each player
      * @param players A vector of all of the players in the game
      * @param deckCount The number of decks to use
+     * @param deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
      */
-    GameState(std::vector<Player> players, int deckCount);
+    GameState(std::vector<Player> players, int deckCount, int deterministic);
 
     /**
      * @brief dealInitialCards Deals two cards to each player and two to the dealer

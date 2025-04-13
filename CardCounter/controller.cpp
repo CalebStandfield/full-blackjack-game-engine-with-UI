@@ -176,10 +176,10 @@ void Controller::botBet()
         onBet(bet);});
 }
 
-void Controller::createNewGame(std::vector<Player> players, int decks)
+void Controller::createNewGame(std::vector<Player> players, int decks, int deterministic)
 {
     if(model != nullptr)
         delete model;
 
-    model = new GameState(players, decks);
+    model = new GameState(players, decks, deterministic);
 }

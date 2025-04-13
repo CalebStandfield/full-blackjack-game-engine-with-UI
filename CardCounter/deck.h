@@ -10,13 +10,19 @@ public:
     /**
      * @brief Deck The constructor for the deck class
      * @param deckNumber The number of decks to use in the shuffled deck
+     * @param deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
      */
-    Deck(int deckNumber = 1);
+    Deck(int deckNumber = 1, int deterministic = 0);
 
     /**
      * Shuffles the shuffleDeck so it is randomized
      */
     void shuffle();
+
+    /**
+     * @brief deterministicShuffle
+     */
+    void deterministicShuffle();
 
     /**
      * @brief getNextCard Gets the next card in the shuffled deck and moves the index to the next card
@@ -45,6 +51,11 @@ private:
      * @brief shuffledDeckIndex The current index in the shuffled deck
      */
     int currentDeckIndex = 0;
+
+    /**
+     * @brief deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
+     */
+    int deterministic;
 
     /**
      * @brief createDeck Creates a full 52 card deck in number order. Suit goes
