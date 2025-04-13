@@ -1,5 +1,6 @@
 #include "controller.h"
-#include "statistics.h" // Will be used when implementing bot moves
+#include "statistics.h"
+#include <QTimer>
 
 Controller::Controller(QObject *parent) : QObject{parent}
 {
@@ -141,30 +142,36 @@ void Controller::botMove()
     MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
     if(move == MOVE::HIT)
-        onHit();
+        QTimer::singleShot(1000, this, [=]() {
+            onHit();});
     else if(move == MOVE::DOUBLE)
     {
         // If not enough money to double down, hit instead
         if(player.money < player.hand.getBet()){
-            onHit();
+            QTimer::singleShot(1000, this, [=]() {
+                onHit();});
         }
         else
-            onDoubleDown();
+            QTimer::singleShot(1000, this, [=]() {
+                onDoubleDown();});
     }
     else if(move == MOVE::SPLIT)
     {
         // Call onSplit once implemented
-        onHit();
+        QTimer::singleShot(1000, this, [=]() {
+            onHit();});
     }
     else
-        onStand();
+        QTimer::singleShot(1000, this, [=]() {
+            onStand();});
 }
 
 void Controller::botBet()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    int bet = std::max(player.money / 10, 1);
-    onBet(bet);
+    int bet = std::max(player.money / 10, 1);    
+    QTimer::singleShot(100, this, [=]() {
+        onBet(bet);});
 }
 
 void Controller::createNewGame(std::vector<Player> players, int decks)

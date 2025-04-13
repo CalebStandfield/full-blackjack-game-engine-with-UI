@@ -73,6 +73,10 @@ void Screens::setUpScreenConnect()
             &QPushButton::clicked,
             this,
             &Screens::hitButtonOnPress);
+    connect(ui->standButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::standButtonOnPress);
 
     // Betting Buttons
     connect(ui->placeBetButton,
@@ -370,7 +374,8 @@ void Screens::acceptSettingsButtonPressed()
     deckCount = 1;
     initialMoney = 1000;
 
-    playerIndex = QRandomGenerator::global()->bounded(playerCount);
+    //playerIndex = QRandomGenerator::global()->bounded(playerCount);
+    playerIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == playerIndex);
@@ -425,7 +430,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
         bool firstLoop = true;
-        for (int i = prevHandSize + 1; i < hand.getCards().size(); i++)
+        for (int i = prevHandSize; i < static_cast<int>(hand.getCards().size()); i++)
         {
             if (firstLoop)
             {
@@ -439,7 +444,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
         }
     }
-
+    players[playerIndex].hand = hand;
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)

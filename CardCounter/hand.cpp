@@ -4,6 +4,28 @@
 
 Hand::Hand(int bet) : bet(bet) {}
 
+Hand::Hand(const Hand& hand)
+{
+    this->bet = hand.getBet();
+
+    for(const Card& card : hand.getCards())
+    {
+        cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());
+    }
+}
+
+Hand& Hand::operator=(const Hand hand)
+{
+    this->bet = hand.getBet();
+
+    cards.clear();
+    for(const Card& card : hand.getCards())
+    {
+        cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());
+    }
+    return *this;
+}
+
 void Hand::addCard(const Card& card)
 {
     cards.push_back(card);

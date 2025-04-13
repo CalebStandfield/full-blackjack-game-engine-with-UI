@@ -14,6 +14,19 @@ public:
     Hand(int bet);
 
     /**
+     * @brief Hand Constructor that copies another hand
+     * @param other The hand to copy
+     */
+    Hand(const Hand& other);
+
+    /**
+     * @brief operator = Assignment operator to set the current hand to the other hand
+     * @param other The hand to copy
+     * @return A reference to the new hand
+     */
+    Hand& operator=(const Hand other);
+
+    /**
      * @brief addCard Adds a card to the hand
      * @param card The card to add
      */
