@@ -61,10 +61,8 @@ public slots:
      * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
      * @param players The number of players in the game
      * @param decks The number of decks to play with
-     * @param initialMoney The initial amount of money each player starts with
-     * @param userIndex The index of the user in the players
      */
-    void createNewGame(int players, int decks, int initialMoney, int userIndex);
+    void createNewGame(std::vector<Player>& players, int decks);
 signals:
     /**
      * @brief playerUpdated Signal that a player in the game has updated with their updated info

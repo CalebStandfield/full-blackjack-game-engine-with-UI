@@ -10,12 +10,10 @@ class GameState
 public:
     /**
      * @brief Constructs the GameState with a given number of players, a certain number of decks, and an initial bet for each player
-     * @param playerCount The number of players in the game
+     * @param players A reference to a vector of all of the players in the game
      * @param deckCount The number of decks to use
-     * @param initialMoney The initialMoney for all players
-     * @param userindex The index of the real user in the players
      */
-    GameState(int playerCount, int deckCount, int initialMoney, int userIndex);
+    GameState(std::vector<Player>& players, int deckCount);
 
     /**
      * @brief dealInitialCards Deals two cards to each player and two to the dealer

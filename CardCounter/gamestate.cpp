@@ -3,15 +3,7 @@
 
 using PlayerStatus::PLAYERSTATUS;
 
-GameState::GameState(int playerCount, int deckCount, int initialMoney, int userIndex)
-    : deck(deckCount), dealerHand(0)
-{    
-    // Adds players with default money and bets to the players vector
-    for(int i = 0; i < playerCount; i++)
-    {
-        players.emplace_back(initialMoney, initialMoney / 10, i == userIndex);
-    }
-}
+GameState::GameState(std::vector<Player>& players, int deckCount) : players(players), deck(deckCount), dealerHand(0) {}
 
 void GameState::dealInitialCards()
 {
