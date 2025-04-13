@@ -4,6 +4,7 @@
 #include <qdebug.h>
 #include <QGraphicsDropShadowEffect>
 #include <QRandomGenerator>
+#include <QTimer>
 
 Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     : QStackedWidget(parent), ui(ui)
@@ -21,7 +22,6 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     hideSettingsPopup();
     setUpBasicStrategyCharts();
     setUpBettingMenu();
-
 
     // Connects
     setUpScreenConnect();
@@ -72,7 +72,7 @@ void Screens::setUpScreenConnect()
     connect(ui->hitButton,
             &QPushButton::clicked,
             this,
-            &Screens::tableViewCardTest);
+            &Screens::hitButtonOnPress);
 
     // Betting Buttons
     connect(ui->placeBetButton,
@@ -330,13 +330,8 @@ void Screens::setUpBasicStrategyCharts()
 
 void Screens::tableViewCardTest()
 {
-    QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(555, 400), 0);
-    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(355, 330), 0);
-    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(755, 330), 0);
-    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(955, 250), 0);
-    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(155, 250), 0);
 
+    // TEST FUNCTION
 
 }
 
@@ -389,8 +384,61 @@ void Screens::acceptSettingsButtonPressed()
     emit sendGameSetupCompleteStartBetting();
 }
 
+void Screens::dealCard(int seatIndex, QString imagePath)
+{
+    QString cardPNG = imagePath;
+    if (seatIndex == 0)
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(955, 250), -20); // far right
+    }
+    else if (seatIndex == 1)
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(755, 330), -10); // middle right
+    }
+    else if (seatIndex == 2)
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(555, 400), 0); // middle
+    }
+    else if (seatIndex == 3)
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(355, 330), 10); // middle left
+    }
+    else if (seatIndex == 4)
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(155, 250), 20); // far left
+    }
+
+}
+
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
+    if (hand.getCards().size() == 0)
+    {
+        tableView->clearTable();
+    }
+    else if (hand.getCards().size() == 1)
+    {
+        // do split logic
+    }
+    else if (hand.getCards().size() >= 2)
+    {
+        int prevHandSize = players[playerIndex].hand.getCards().size();
+
+        bool firstLoop = true;
+        for (int i = prevHandSize + 1; i < hand.getCards().size(); i++)
+        {
+            if (firstLoop)
+            {
+                dealCard(playerIndex, hand.getCards()[i].getImagePath());
+                firstLoop = false;
+                continue;
+            }
+            QTimer::singleShot(3000, this, [=]() {
+                dealCard(playerIndex, hand.getCards()[i].getImagePath());
+            });
+
+        }
+    }
 
 }
 

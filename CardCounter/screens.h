@@ -229,6 +229,8 @@ signals:
 
 private slots:
     void updateBetLabelText(int value);
+
+    void dealCard(int seatIndex, QString imagePath);
 public slots:
     /**
      * @brief playerUpdated Slot for receiving information about an updated player with their updated info
