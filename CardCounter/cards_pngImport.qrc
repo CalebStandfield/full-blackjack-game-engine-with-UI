@@ -52,13 +52,14 @@
         <file>cards_pngsource/queen_of_diamonds.png</file>
         <file>cards_pngsource/queen_of_hearts.png</file>
         <file>cards_pngsource/queen_of_spades.png</file>
+        <file>back_of_card.png</file>
     </qresource>
     <qresource prefix="/cash"/>
     <qresource prefix="/table">
         <file>BlackJackTableMat.png</file>
     </qresource>
     <qresource prefix="/backGround"/>
-    <qresource prefix="/">
+    <qresource prefix="/StrategyCharts">
         <file>BasicStrategyCharts.png</file>
     </qresource>
 </RCC>

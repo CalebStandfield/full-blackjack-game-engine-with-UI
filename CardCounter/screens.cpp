@@ -381,6 +381,8 @@ void Screens::acceptSettingsButtonPressed()
         players.emplace_back(initialMoney, 1, i == playerIndex);
     }
 
+    dealerHand = Hand(0);
+
     // Get settings
     // Reenable gameplay buttons
 
@@ -412,6 +414,11 @@ void Screens::dealCard(int seatIndex, QString imagePath)
     {
         tableView->addCardAnimated(cardPNG, QPointF(555, 50), QPointF(155, 250), 20); // far left
     }
+    else
+    {
+        tableView->addCardAnimated(cardPNG, QPointF(555, 0), QPointF(555, 50), 0); // far left
+    }
+
 
 }
 
@@ -449,8 +456,35 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::dealerUpdated(const Hand& hand, int total)
 {
-    //TODO
-    //Dealer hand updated visually
+    qDebug() << showDealerCard;
+    if (!showDealerCard)
+    {
+        dealCard(-1, ":/cardImages/back_of_card.png");
+
+    }
+    int prevHandSize = dealerHand.getCards().size();
+
+    bool firstLoop = true;
+    for (int i = prevHandSize; i < static_cast<int>(hand.getCards().size()); i++)
+    {
+        if (firstLoop)
+        {
+            dealCard(-1, hand.getCards()[i].getImagePath());
+            firstLoop = false;
+            continue;
+        }
+        QTimer::singleShot(3000, this, [=]() {
+            dealCard(-1, hand.getCards()[i].getImagePath());
+        });
+
+    }
+    dealerHand = hand;
+
+}
+
+void Screens::updateShowDealerCardBool(bool flipped)
+{
+    showDealerCard = flipped;
 }
 
 void Screens::currentPlayerTurn(int nextPlayerIndex)

@@ -68,7 +68,7 @@ std::vector<QString> Card::images = {
     ":/cardImages/cards_pngsource/ace_of_spades.png",
     ":/cardImages/cards_pngsource/ace_of_hearts.png",
     ":/cardImages/cards_pngsource/ace_of_clubs.png",
-    ":/cardImages/cards_pngsource/ace_of_diamonds.png",
+    ":/cardImages/cards_pngsource/ace_of_diamonds.png"
 };
 
 SUIT Card::getSuit() const

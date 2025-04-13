@@ -36,6 +36,8 @@ private:
 
     std::vector<Player> players;
 
+    Hand dealerHand;
+
     unsigned int playerIndex;
 
     unsigned int initialMoney;
@@ -45,6 +47,8 @@ private:
     unsigned int playerCount;
 
     unsigned int deckCount;
+
+    bool showDealerCard;
 
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
@@ -260,6 +264,8 @@ public slots:
      * @brief endBetting Slot for changing from betting phase to playing phase
      */
     void endBetting();
+
+    void updateShowDealerCardBool(bool flipped);
 
 };
 
