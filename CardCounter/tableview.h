@@ -20,6 +20,8 @@ private:
     QGraphicsScene* scene;
     QGraphicsPixmapItem* tableBackground;
 
+    void setPlayerTextPositionsOnTable();
+
     void applyShadowToWidget(AnimatableCardItem *card);
 };
 

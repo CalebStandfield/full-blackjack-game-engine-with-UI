@@ -1,6 +1,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
+#include "player.h"
 #include "tableview.h"
 #include "ui_mainwindow.h"
 #include "hand.h"
@@ -32,6 +33,8 @@ private:
     };
 
     GAMEPLAYMODE mode;
+
+    std::vector<Player> players;
 
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
