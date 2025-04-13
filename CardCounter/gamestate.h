@@ -66,6 +66,7 @@ public:
      */
     const Player& getPlayer(int index) const;
 
+
     /**
      * @brief getDealerHand Gets the dealer's current hand
      */

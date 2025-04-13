@@ -48,9 +48,9 @@ private:
     Hand dealerHand;
 
     /**
-     * @brief playerIndex An int to signify who the user is
+     * @brief userIndex An int to signify who the user is
      */
-    unsigned int playerIndex;
+    unsigned int userIndex;
 
     /**
      * @brief initialMoney The amount of money put up by the player

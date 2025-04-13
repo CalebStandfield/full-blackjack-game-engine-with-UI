@@ -478,10 +478,10 @@ void Screens::onPressBettingAmountButtons()
 
     if (name == "allInButton")
     {
-        currentBet = players[playerIndex].money;
+        currentBet = players[userIndex].money;
     }
     else if (name == "halfButton") {
-        currentBet = players[playerIndex].money / 2;
+        currentBet = players[userIndex].money / 2;
     }
     else
     {
@@ -490,7 +490,6 @@ void Screens::onPressBettingAmountButtons()
     }
     ui->betSlider->setValue(currentBet);
     updateBetLabelText(currentBet);
-    toggleEnabledQPushButton(ui->placeBetButton, true);
 }
 
 void Screens::onEditChipCountLineEdit()
@@ -524,15 +523,17 @@ void Screens::acceptSettingsButtonPressed()
     ui->betSlider->setMaximum(initialMoney);
 
     //playerIndex = QRandomGenerator::global()->bounded(playerCount);
-    playerIndex = 0;
+    userIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
-        players.emplace_back(initialMoney, 1, i == playerIndex);
+        players.emplace_back(initialMoney, 1, i == userIndex);
     }
 
     emit sendSettingsAccepted(players, deckCount, 0);
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
+
+    toggleEnabledGamePlayButtons(false);
 }
 
 void Screens::dealCard(int seatIndex, QString imagePath)
@@ -630,6 +631,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
     }
+    toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
