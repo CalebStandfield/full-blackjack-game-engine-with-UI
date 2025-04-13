@@ -43,6 +43,11 @@ void Hand::setBet(int amount)
     bet = amount;
 }
 
+void Hand::setCardImagePath(int index, QString imagePath)
+{
+    cards[index].setImagePath(imagePath);
+}
+
 const std::vector<Card>& Hand::getCards() const
 {
     return cards;

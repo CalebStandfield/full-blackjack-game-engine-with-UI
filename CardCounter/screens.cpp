@@ -456,30 +456,26 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::dealerUpdated(const Hand& hand, int total)
 {
-    qDebug() << showDealerCard;
     if (!showDealerCard)
     {
-        dealCard(-1, ":/cardImages/back_of_card.png");
-
+        dealerHand.setCardImagePath(0, ":/cardImages/back_of_card.png");
     }
     int prevHandSize = dealerHand.getCards().size();
 
     bool firstLoop = true;
-    for (int i = prevHandSize; i < static_cast<int>(hand.getCards().size()); i++)
+    for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
         if (firstLoop)
         {
-            dealCard(-1, hand.getCards()[i].getImagePath());
+            dealCard(-1, dealerHand.getCards()[i].getImagePath());
             firstLoop = false;
             continue;
         }
         QTimer::singleShot(3000, this, [=]() {
-            dealCard(-1, hand.getCards()[i].getImagePath());
+            dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
-
     }
     dealerHand = hand;
-
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)

@@ -86,6 +86,11 @@ QString Card::getImagePath() const
     return imagePath;
 }
 
+void Card::setImagePath(QString imagePath)
+{
+    this->imagePath = imagePath;
+}
+
 QString Card::getImageFromVector(unsigned int index)
 {
     return images[index];

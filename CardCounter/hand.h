@@ -63,6 +63,13 @@ public:
     void setBet(int amount);
 
     /**
+     * @brief setCardImagePath Sets the card at the current index to the new card
+     * @param index The index to change in cards
+     * @param imagePath The new image path
+     */
+    void setCardImagePath(int index, QString imagePath);
+
+    /**
      * @brief getCards Gets the cards in the hand
      * @return A vector of the cards in the hand
      */

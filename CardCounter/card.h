@@ -46,6 +46,12 @@ public:
     QString getImagePath() const;
 
     /**
+     * @brief setImagePath Sets the QString path of the image
+     * @param imagePath The new imagePath
+     */
+    void setImagePath(QString imagePath);
+
+    /**
      * @brief getImageFromVector Gets the corresponding image path from the private member variable images
      * The images are layed out in this rank order 2, 3, 4, 5, 6, 7, 8, 9, 10, jack, queen, king, ace.
      * The images are layoud out in this suit order spades, hearts, clubs, diamonds
