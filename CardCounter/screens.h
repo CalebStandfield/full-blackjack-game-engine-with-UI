@@ -328,6 +328,12 @@ public slots:
     void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
 
     /**
+     * @brief allPlayersUpdated Slot for receiving all of the updated players to display
+     * @param players The vector containing all of the players
+     */
+    void allPlayersUpdated(const std::vector<Player>& players);
+
+    /**
      * @brief dealerUpdated Slot for receiving updated dealer info
      * @param hand The new hand of the dealer
      * @param total The total value of their cards

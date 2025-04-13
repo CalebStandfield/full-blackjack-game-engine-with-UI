@@ -116,6 +116,12 @@ signals:
      */
     void endBetting();
 
+    /**
+     * @brief updateAllPlayers Signal to update all of the players in the game
+     * @param players The vector of players to update in the view
+     */
+    void updateAllPlayers(const std::vector<Player>& players);
+
 private:
     /**
      * @brief model The Gamestate model that handles the players playing blackjack

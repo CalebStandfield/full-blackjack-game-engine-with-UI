@@ -124,11 +124,7 @@ void Controller::dealCards()
     currentPlayerIndex =  -1;
     model->dealInitialCards();
 
-    for(int i = 0; i < model->getPlayerCount(); i++){
-        const Player& player = model->getPlayer(i);
-        emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
-    }
-
+    emit updateAllPlayers(model->getAllPlayers());
     emit showDealerCard(false);
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
 
@@ -144,7 +140,7 @@ void Controller::botMove()
     const Player& player = model->getPlayer(currentPlayerIndex);
     MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
-    unsigned int waitTime = 500;
+    unsigned int waitTime = 1000;
 
     if(move == MOVE::HIT)
         QTimer::singleShot(waitTime, this, [=]() {

@@ -138,4 +138,8 @@ int GameState::getPlayerCount() const
     return static_cast<int>(players.size());
 }
 
+const std::vector<Player> GameState::getAllPlayers() const
+{
+    return players;
+}
 

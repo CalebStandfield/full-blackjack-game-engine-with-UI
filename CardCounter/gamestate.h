@@ -89,6 +89,12 @@ public:
      */
     void clearHands();
 
+    /**
+     * @brief getAllPlayers Returns a constant of all players in the model
+     * @return A vector containing all of the players in the game
+     */
+    const std::vector<Player> getAllPlayers() const;
+
 private:
     /**
      * @brief players The players in the game
