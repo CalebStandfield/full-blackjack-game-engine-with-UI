@@ -63,6 +63,7 @@ void Controller::advanceToNextPlayer()
     // All players have went, dealer turn
     if(currentPlayerIndex >= model->getPlayerCount()){
         model->dealerPlay();
+        emit showDealerCard(true);
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
         model->endRound();
         emit endRound("The round has ended.");
@@ -127,6 +128,7 @@ void Controller::dealCards()
         emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
     }
 
+    emit showDealerCard(false);
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
 
     if(model->getDealerHand().getTotal() == 21) {

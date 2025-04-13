@@ -68,6 +68,10 @@ void MainWindow::setUpMainWindowConnect()
             &Controller::dealerUpdated,
             screens,
             &Screens::dealerUpdated);
+    connect(controller,
+            &Controller::showDealerCard,
+            screens,
+            &Screens::updateShowDealerCardBool);
 
     // POV updater
     connect(controller,

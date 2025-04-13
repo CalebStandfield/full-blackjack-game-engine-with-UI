@@ -88,6 +88,12 @@ signals:
     void currentPlayerTurn(int nextPlayerIndex);
 
     /**
+     * @brief flipDealerCard Signal to flip over the dealer's first card
+     * @param showCard True if to show dealer cards, false to hide it
+     */
+    void showDealerCard(bool showCard);
+
+    /**
      * @brief endRound Signal that the round has ended
      * @param roundSummary A brief summary of the round to display
      */
