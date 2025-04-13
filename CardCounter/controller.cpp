@@ -154,6 +154,7 @@ void Controller::botMove()
     else if(move == MOVE::SPLIT)
     {
         // Call onSplit once implemented
+        onHit();
     }
     else
         onStand();
