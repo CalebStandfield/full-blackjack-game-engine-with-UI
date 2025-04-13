@@ -61,8 +61,9 @@ public slots:
      * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
      * @param players The number of players in the game
      * @param decks The number of decks to play with
+     * @param deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
      */
-    void createNewGame(std::vector<Player> players, int decks);
+    void createNewGame(std::vector<Player> players, int decks, int deterministic = 0);
 signals:
     /**
      * @brief playerUpdated Signal that a player in the game has updated with their updated info

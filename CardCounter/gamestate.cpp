@@ -3,7 +3,7 @@
 
 using PlayerStatus::PLAYERSTATUS;
 
-GameState::GameState(std::vector<Player> players, int deckCount) : players(players), deck(deckCount), dealerHand(0) {}
+GameState::GameState(std::vector<Player> players, int deckCount, int deterministic) : players(players), deck(deckCount, deterministic), dealerHand(0) {}
 
 void GameState::dealInitialCards()
 {
