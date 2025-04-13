@@ -250,6 +250,8 @@ private:
      */
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
 
+    void onPressNextRound();
+
 signals:
 
     // Settings accept
@@ -292,6 +294,8 @@ signals:
     void sendSplitButtonPressed();
 
     void sendOnBet(int playerBet);
+
+    void sendNewRound();
 
 private slots:
     /**

@@ -57,6 +57,13 @@ void MainWindow::setUpMainWindowConnect()
             controller,
             &Controller::onBet);
 
+    // Next round
+    connect(screens,
+            &Screens::sendNewRound,
+            controller,
+            &Controller::startBetting);
+
+
     // Controller -> Screens
 
     // Updating Hands

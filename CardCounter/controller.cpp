@@ -97,6 +97,7 @@ void Controller::startBetting()
         const Player& player = model->getPlayer(i);
         emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
     }
+    emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
 
     advanceToNextBet();
 }
@@ -143,28 +144,30 @@ void Controller::botMove()
     const Player& player = model->getPlayer(currentPlayerIndex);
     MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
+    unsigned int waitTime = 500;
+
     if(move == MOVE::HIT)
-        QTimer::singleShot(1000, this, [=]() {
+        QTimer::singleShot(waitTime, this, [=]() {
             onHit();});
     else if(move == MOVE::DOUBLE)
     {
         // If not enough money to double down, hit instead
         if(player.money < player.hand.getBet()){
-            QTimer::singleShot(1000, this, [=]() {
+            QTimer::singleShot(waitTime, this, [=]() {
                 onHit();});
         }
         else
-            QTimer::singleShot(1000, this, [=]() {
+            QTimer::singleShot(waitTime, this, [=]() {
                 onDoubleDown();});
     }
     else if(move == MOVE::SPLIT)
     {
         // Call onSplit once implemented
-        QTimer::singleShot(1000, this, [=]() {
+        QTimer::singleShot(waitTime, this, [=]() {
             onHit();});
     }
     else
-        QTimer::singleShot(1000, this, [=]() {
+        QTimer::singleShot(waitTime, this, [=]() {
             onStand();});
 }
 

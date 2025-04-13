@@ -115,6 +115,16 @@ void Screens::setUpScreenConnect()
             &QPushButton::clicked,
             this,
             &Screens::onPressBettingAmountButtons);
+
+    // Continue or leave
+    connect(ui->backToMainMenuFromPlay,
+            &QPushButton::clicked,
+            this,
+            [this] () {ui->screens->setCurrentIndex(0);});
+    connect(ui->nextRound,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressNextRound);
 }
 
 void Screens::setUpTable()
@@ -588,7 +598,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            QTimer::singleShot(3000, this, [=]() {
+            QTimer::singleShot(1000, this, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());
             });
 
@@ -604,7 +614,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
 
     if (!showDealerCard && dealerHand.getCards().size() > 0)
     {
-        dealerHand.setCardImagePath(0, ":/cardImages/back_of_card.png");
+        dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
 
     bool firstLoop = true;
@@ -658,5 +668,12 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     }
     button->setStyleSheet(QPushButtonDisabledStyle);
     button->setEnabled(enabled);
+}
+
+void Screens::onPressNextRound()
+{
+    tableView->clearTable();
+    emit sendNewRound();
+    ui->bettingArea->show();
 }
 
