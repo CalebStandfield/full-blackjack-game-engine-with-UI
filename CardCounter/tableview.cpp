@@ -8,9 +8,14 @@ TableView::TableView(QWidget *parent)
     setRenderHint(QPainter::Antialiasing);
 
     QPixmap tablePixmap(":/table/BlackJackTableMat.png"); // GET A DIFFERENT IMAGE
+
+    tablePixmap = tablePixmap.scaled(1200, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     tableBackground = scene->addPixmap(tablePixmap);
     tableBackground->setZValue(0);
     scene->setSceneRect(tablePixmap.rect());
+    this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 }
 
 void TableView::addCardAnimated(const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)

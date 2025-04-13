@@ -82,7 +82,10 @@ void Screens::setUpTable()
     if (!ui->table->layout()) {
         ui->table->setLayout(new QVBoxLayout());
     }
+    ui->table->setStyleSheet(QWidgetStyle);
+
     ui->table->layout()->addWidget(tableView);
+
 }
 
 void Screens::setUpStartMenuButtons()
@@ -130,7 +133,7 @@ void Screens::setUpBettingMenu()
     ui->betLabel->setStyleSheet(QBetLabelStyle);
     ui->allInButton->setStyleSheet(QPushButtonStyle);
     ui->halfButton->setStyleSheet(QPushButtonStyle);
-    ui->fiveDollarButton->setStyleSheet(QPushButtonStyle);
+    ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
     connect(ui->betSlider, &QSlider::valueChanged, this, &Screens::updateBetLabelText);
 }
 
@@ -159,36 +162,34 @@ void Screens::setUpQStyleSheets()
 
     QSliderStyle =
         "QSlider {"
-        "    background: white;"
-        "    border-radius: 5px;"
-        "    height: 10px;"
+        "    background: transparent;"
+        "    height: 12px;"
         "}"
         "QSlider::groove:horizontal {"
-        "    border: 1px solid #ccc;"
-        "    height: 10px;"
-        "    background: #f0f0f0;"
-        "    border-radius: 5px;"
+        "    background: rgba(80, 80, 80, 180);"
+        "    border: 1px solid rgba(255, 255, 255, 20);"
+        "    height: 6px;"
+        "    border-radius: 3px;"
         "}"
         "QSlider::handle:horizontal {"
-        "    background: white;"
-        "    border: 1px solid #aaa;"
-        "    border-radius: 5px;"
-        "    width: 20px;"
-        "    height: 20px;"
-        "    margin-top: 0px;"
-        "    margin-left: -10px;"
+        "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #aaaaaa, stop:1 #dddddd);"
+        "    border: 1px solid #444;"
+        "    width: 14px;"
+        "    height: 14px;"
+        "    margin: -4px 0;"
+        "    border-radius: 7px;"
         "}"
         "QSlider::handle:horizontal:hover {"
-        "    background: #e0e0e0;"
-        "    border-color: #888;"
+        "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #cccccc, stop:1 #eeeeee);"
+        "    border: 1px solid #666;"
         "}"
         "QSlider::sub-page:horizontal {"
-        "    background: #ddd;"
-        "    border-radius: 5px;"
+        "    background: rgba(160, 160, 160, 150);"
+        "    border-radius: 3px;"
         "}"
         "QSlider::add-page:horizontal {"
-        "    background: #f0f0f0;"
-        "    border-radius: 5px;"
+        "    background: rgba(60, 60, 60, 100);"
+        "    border-radius: 3px;"
         "}";
 
     QLabelStyle =
@@ -210,6 +211,17 @@ void Screens::setUpQStyleSheets()
     QWidgetStyle =
         "QWidget {"
         "    background-color: rgba(50, 50, 50, 225);"
+        "    border-radius: 15px;"
+        "    border: 1px solid rgba(255, 255, 255, 30);"
+        "    padding: 10px;"
+        "    color: white;"
+        "    font-family: 'Segoe UI', 'Arial', sans-serif;"
+        "    font-size: 14px;"
+        "}"
+        "QScrollBar:vertical, QScrollBar:horizontal {"
+        "    height: 0px;"
+        "    width: 0px;"
+        "    background: transparent;"
         "}";
 
     QTextBrowserStyle =
@@ -312,7 +324,12 @@ void Screens::setUpBasicStrategyCharts()
 void Screens::tableViewCardTest()
 {
     QString tempCard = ":/cardImages/cards_pngsource/2_of_spades.png";
-    tableView->addCardAnimated(tempCard, QPointF(300, 50), QPointF(300, 300), 0);
+    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(555, 400), 0);
+    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(355, 330), 0);
+    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(755, 330), 0);
+    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(955, 250), 0);
+    tableView->addCardAnimated(tempCard, QPointF(555, 50), QPointF(155, 250), 0);
+
 
 }
 
