@@ -40,6 +40,8 @@ private:
 
     unsigned int initialMoney;
 
+    int currentBet;
+
     unsigned int playerCount;
 
     unsigned int deckCount;
@@ -68,7 +70,6 @@ private:
      * @brief setUpBettingMenu Sets up the area where you select your bet amount
      */
     void setUpBettingMenu();
-
 
     /**
      * @brief setUpGamePlayButtons Sets up the game play buttons
@@ -183,6 +184,8 @@ private:
      */
     void splitButtonOnPress();
 
+    void placedBetButtonOnPress();
+
 signals:
 
     // Settings accept
@@ -220,6 +223,8 @@ signals:
      * @brief sendSplitButtonPressed Signal to send for when the user presses split
      */
     void sendSplitButtonPressed();
+
+    void sendOnBet(int playerBet);
 
 
 private slots:

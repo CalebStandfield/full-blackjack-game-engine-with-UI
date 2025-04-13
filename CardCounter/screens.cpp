@@ -74,6 +74,12 @@ void Screens::setUpScreenConnect()
             this,
             &Screens::tableViewCardTest);
 
+    // Betting Buttons
+    connect(ui->placeBetButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::placedBetButtonOnPress);
+
 
 }
 
@@ -135,6 +141,7 @@ void Screens::setUpBettingMenu()
     ui->allInButton->setStyleSheet(QPushButtonStyle);
     ui->halfButton->setStyleSheet(QPushButtonStyle);
     ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
+    ui->placeBetButton->setStyleSheet(QPushButtonStyle);
     connect(ui->betSlider, &QSlider::valueChanged, this, &Screens::updateBetLabelText);
 }
 
@@ -353,28 +360,38 @@ void Screens::splitButtonOnPress()
     emit sendSplitButtonPressed();
 }
 
+void Screens::placedBetButtonOnPress()
+{
+    currentBet = 1; // DELETE LATER
+    emit sendOnBet(currentBet);
+}
+
 void Screens::acceptSettingsButtonPressed()
 {
     // TODO
-    // playerIndex = QRandomGenerator::global()->bounded(playerCount);
 
-    // for (unsigned int i = 0; i < playerCount; i++) {
-    //     players.emplace_back(initialMoney, 1, i == playerIndex);
-    // }
+    // FAKE NUMBERS DELETE NUMBER
+    playerCount = 5;
+    deckCount = 1;
+    initialMoney = 1000;
 
-    // // Get settings
-    // // Reenable gameplay buttons
+    playerIndex = QRandomGenerator::global()->bounded(playerCount);
 
+    for (unsigned int i = 0; i < playerCount; i++) {
+        players.emplace_back(initialMoney, 1, i == playerIndex);
+    }
 
-    // emit sendSettingsAccepted(players, deckCount);
+    // Get settings
+    // Reenable gameplay buttons
+
+    emit sendSettingsAccepted(players, deckCount);
     // timer between start and bet/anims
-    // emit sendGameSetupCompleteStartBetting();
+    emit sendGameSetupCompleteStartBetting();
 }
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
-    //TODO
-    //Player hand updated visually, multiple cards can be changed at once (may need to compare with currently displayed cards)
+
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
