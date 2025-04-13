@@ -599,7 +599,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            QTimer::singleShot(1000, this, [=]() {
+            QTimer::singleShot(850, this, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());
             });
 
@@ -614,12 +614,16 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
     // Need to implement
     // Updates all players in order with a time delay
+    unsigned int waitTime = 0;
+
     for(int i = 0; i < static_cast<int>(players.size()); i++)
     {
-        QTimer::singleShot(1000, this, [=]() {
+        QTimer::singleShot(waitTime, this, [=]() {
             playerUpdated(i, players[i].hand, players[i].hand.getTotal(), players[i].money, players[i].status);
         });
+        waitTime += 1500;
     }
+
 
 }
 
