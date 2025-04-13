@@ -439,6 +439,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
         }
     }
+    players[playerIndex].hand = hand;
 
 }
 
