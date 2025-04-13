@@ -44,9 +44,9 @@ private:
 
     int currentBet;
 
-    unsigned int playerCount;
+    unsigned int playerCount = 1;
 
-    unsigned int deckCount;
+    unsigned int deckCount = 1;
 
     bool showDealerCard;
 
@@ -197,6 +197,8 @@ private:
 
     void onPressBettingAmountButtons();
 
+    void onEditChipCountLineEdit();
+
     void toggleEnabledGamePlayButtons(bool enabled);
 
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
@@ -244,11 +246,12 @@ signals:
 
     void sendOnBet(int playerBet);
 
-
 private slots:
+    void dealCard(int seatIndex, QString imagePath);
+
     void updateBetLabelText(unsigned int  value);
 
-    void dealCard(int seatIndex, QString imagePath);
+    void updateSettingsSlider(unsigned int value);
 public slots:
     /**
      * @brief playerUpdated Slot for receiving information about an updated player with their updated info

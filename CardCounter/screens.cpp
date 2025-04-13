@@ -57,6 +57,18 @@ void Screens::setUpScreenConnect()
             &QPushButton::clicked,
             this,
             &Screens::moveToStartScreen);
+    connect(ui->playerCountSettingsSlider,
+            &QSlider::valueChanged,
+            this,
+            &Screens::updateSettingsSlider);
+    connect(ui->deckCountSettingsSlider,
+            &QSlider::valueChanged,
+            this,
+            &Screens::updateSettingsSlider);
+    connect(ui->chipCountSettingsLineEdit,
+            &QLineEdit::textChanged,
+            this,
+            &Screens::onEditChipCountLineEdit);
 
     //Tutorial Pages
     connect(ui->basicStrategyChartButton,
@@ -139,8 +151,35 @@ void Screens::setUpSettingsPopup()
 {
     ui->settingsPopUp->setStyleSheet(QWidgetStyle);
     applyShadowToWidget(ui->settingsPopUp);
-    ui->acceptSettingsButton->setStyleSheet(QPushButtonStyle);
+
+    // Make font smaller for text boxes
+    QString tempQLabelStyle =
+        "QLabel {"
+        "    color: white;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    padding: 5px;"
+        "}";
+
+    // Labels
+    ui->settingsMenuTitle->setStyleSheet(QLabelStyle);
+
+    ui->playerCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
+
+    ui->deckCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
+
+    ui->chipCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
+
+    // Sliders
+    ui->playerCountSettingsSlider->setStyleSheet(QSliderStyle);
+
+    ui->deckCountSettingsSlider->setStyleSheet(QSliderStyle);
+
+    toggleEnabledQPushButton(ui->acceptSettingsButton, false);
     ui->cancelSettingsButton->setStyleSheet(QPushButtonStyle);
+
+    // LineEdit
+    ui->chipCountSettingsLineEdit->setPlaceholderText("Enter chip count: (minimum $1)");
 }
 
 void Screens::setUpGamePlayButtons()
@@ -170,6 +209,25 @@ void Screens::updateBetLabelText(unsigned int value)
 {
     toggleEnabledQPushButton(ui->placeBetButton, true);
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
+}
+
+void Screens::updateSettingsSlider(unsigned int value)
+{
+    QSlider *slider = qobject_cast<QSlider *>(sender());
+
+    QString name = slider->objectName();
+
+    if (name == "playerCountSettingsSlider")
+    {
+        ui->playerCountTextSettingsLabel->setText("Player Count: " + QString::number(value));
+        playerCount =  value;
+    }
+    else if (name == "deckCountSettingsSlider")
+    {
+        ui->deckCountTextSettingsLabel->setText("Deck Count: " + QString::number(value));
+        playerCount = value;
+    }
+
 }
 
 void Screens::setUpQStyleSheets()
@@ -425,15 +483,37 @@ void Screens::onPressBettingAmountButtons()
     toggleEnabledQPushButton(ui->placeBetButton, true);
 }
 
+void Screens::onEditChipCountLineEdit()
+{
+    QString input = ui->chipCountSettingsLineEdit->text();
+
+    // Allow empty input so user can type freely
+    // if (input.isEmpty())
+    //     return;
+
+    bool ok;
+    int value = input.toInt(&ok);
+
+    if (!ok || value < 1) {
+        value = 1;
+    } else if (value > 1000000) {
+        value = 1000000;
+    }
+
+    if (input.isEmpty())
+    {
+        toggleEnabledQPushButton(ui->acceptSettingsButton, false);
+        return;
+    }
+
+    // Set the clamped value back into the line edit
+    ui->chipCountSettingsLineEdit->setText(QString::number(value));
+    initialMoney = value;
+    toggleEnabledQPushButton(ui->acceptSettingsButton, true);
+}
+
 void Screens::acceptSettingsButtonPressed()
 {
-    // TODO
-
-    // FAKE NUMBERS DELETE NUMBER
-    playerCount = 5;
-    deckCount = 1;
-    initialMoney = 1000;
-
     ui->bettingArea->show();
     ui->betSlider->setMaximum(initialMoney);
 
