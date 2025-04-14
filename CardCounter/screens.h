@@ -82,7 +82,7 @@ private:
     /**
      * @brief setUpConnect Sets up all the connect functions for this class
      */
-    void setUpScreenConnect();
+    void setUpScreenConnects();
 
     /**
      * @brief setUpBackGround Sets up the general background for the ui

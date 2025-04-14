@@ -24,11 +24,11 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpBettingMenu();
 
     // Connects
-    setUpScreenConnect();
+    setUpScreenConnects();
     tableViewCardTest();
 }
 
-void Screens::setUpScreenConnect()
+void Screens::setUpScreenConnects()
 {
     // Gameplay buttons
     connect(ui->blackjackPlayButton,
@@ -136,7 +136,6 @@ void Screens::setUpTable()
     ui->table->setStyleSheet(QWidgetStyle);
 
     ui->table->layout()->addWidget(tableView);
-
 }
 
 void Screens::setUpStartMenuButtons()
@@ -343,122 +342,6 @@ void Screens::setUpQStyleSheets()
         "    background-color: transparent;"
         "    border: none;"
         "}";
-
-    // QWidgetStyle =
-    //     "QWidget {"
-    //     "    background-color: rgba(10, 10, 10, 245);"
-    //     "    border-radius: 20px;"
-    //     "    border: 1px solid rgba(255, 255, 255, 15);"
-    //     "    padding: 16px;"
-    //     "    color: white;"
-    //     "    font-size: 16px;"
-    //     "}";
-
-    // QStackedWidgetStyle =
-    //     "QStackedWidget {"
-    //     "    background-color: qradialgradient(cx:0.5, cy:0.5, radius:1.0, fx:0.5, fy:0.5, stop:0 rgba(30, 30, 30, 220), stop:1 rgba(0, 0, 0, 255));"
-    //     "    border: 1px solid rgba(255, 255, 255, 15);"
-    //     "    border-radius: 20px;"
-    //     "    color: white;"
-    //     "}";
-
-    // QPushButtonStyle =
-    //     "QPushButton {"
-    //     "    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #222, stop:1 #333);"
-    //     "    color: white;"
-    //     "    border: 1px solid rgba(255, 255, 255, 0.2);"
-    //     "    border-radius: 12px;"
-    //     "    padding: 12px 24px;"
-    //     "    font-size: 24px;"
-    //     "    font-weight: 600;"
-    //     "}"
-    //     "QPushButton:hover {"
-    //     "    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #444, stop:1 #555);"
-    //     "    border: 1px solid rgba(255, 255, 255, 0.35);"
-    //     "}"
-    //     "QPushButton:pressed {"
-    //     "    background-color: #111;"
-    //     "    border: 1px solid #aaa;"
-    //     "    padding-left: 14px;"
-    //     "    padding-top: 14px;"
-    //     "}";
-
-    // QPushButtonDisabledStyle =
-    //     "QPushButton:disabled {"
-    //     "    background-color: #161616;"
-    //     "    color: #555;"
-    //     "    border: 1px solid rgba(255, 255, 255, 0.1);"
-    //     "    border-radius: 12px;"
-    //     "    padding: 12px 24px;"
-    //     "    font-size: 24px;"
-    //     "}";
-
-    // QSliderStyle =
-    //     "QSlider {"
-    //     "    background: transparent;"
-    //     "    height: 18px;"
-    //     "}"
-    //     "QSlider::groove:horizontal {"
-    //     "    background: rgba(100, 100, 100, 60);"
-    //     "    border: 1px solid rgba(255, 255, 255, 15);"
-    //     "    height: 8px;"
-    //     "    border-radius: 4px;"
-    //     "}"
-    //     "QSlider::handle:horizontal {"
-    //     "    background: radial-gradient(circle, #aaa, #888);"
-    //     "    border: 1px solid #aaa;"
-    //     "    width: 20px;"
-    //     "    height: 20px;"
-    //     "    margin: -6px 0;"
-    //     "    border-radius: 10px;"
-    //     "}"
-    //     "QSlider::handle:horizontal:hover {"
-    //     "    background: radial-gradient(circle, #fff, #aaa);"
-    //     "    border: 1px solid #ccc;"
-    //     "}"
-    //     "QSlider::sub-page:horizontal {"
-    //     "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #aaa, stop:1 #666);"
-    //     "    border-radius: 4px;"
-    //     "}"
-    //     "QSlider::add-page:horizontal {"
-    //     "    background: rgba(30, 30, 30, 150);"
-    //     "    border-radius: 4px;"
-    //     "}";
-
-    // QLabelStyle =
-    //     "QLabel {"
-    //     "    color: white;"
-    //     "    font-size: 30px;"
-    //     "    font-weight: bold;"
-    //     "    padding: 6px;"
-    //     "}";
-
-    // QBetLabelStyle =
-    //     "QLabel {"
-    //     "    color: #ffffaa;"
-    //     "    font-size: 16px;"
-    //     "    font-weight: bold;"
-    //     "    padding: 4px;"
-    //     "    background-color: rgba(0, 0, 0, 0);"
-    //     "    border: none;"
-    //     "    border-radius: 0px;"
-    //     "    qproperty-alignment: AlignCenter;"
-    //     "}";
-
-    // QTextBrowserStyle =
-    //     "QTextBrowser {"
-    //     "    background-color: rgba(64, 64, 64, 220);"
-    //     "    border-radius: 12px;"
-    //     "    padding: 10px;"
-    //     "    color: white;"
-    //     "    font-size: 12px;"
-    //     "}";
-
-    // QGraphicsViewStyle =
-    //     "QGraphicsView {"
-    //     "    background-color: transparent;"
-    //     "    border: none;"
-    //     "}";
 }
 
 void Screens::setUpBackGround()
@@ -648,17 +531,21 @@ void Screens::acceptSettingsButtonPressed()
         players.emplace_back(initialMoney, 1, i == userIndex);
     }
 
+    tableView->createPlayerCardContainers(playerCount);
+
     emit sendSettingsAccepted(players, deckCount, 0);
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
 
     toggleEnabledGamePlayButtons(false);
+
+    tableView->createDealerPile();
 }
 
 void Screens::dealCard(int seatIndex, QString imagePath)
 {
     QString cardPNG = imagePath;
-    QPointF startPos(555, 50);
+    QPointF startPos(500, 49);
     QPointF endPos;
     qreal rotation = 0;
 
@@ -690,22 +577,20 @@ void Screens::dealCard(int seatIndex, QString imagePath)
         break;
     }
 
-    tableView->addCardAnimated(cardPNG, startPos, endPos, rotation);
-
-
+    tableView->addCardAnimated(seatIndex, cardPNG, startPos, endPos, rotation);
 }
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
     if (hand.getCards().size() == 0)
     {
-        tableView->clearTable();
+        return;
     }
     else if (hand.getCards().size() == 1)
     {
         // do split logic
     }
-    else if (hand.getCards().size() >= 2)
+    else
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
@@ -742,8 +627,6 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         });
         waitTime += 1500;
     }
-
-
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -795,7 +678,6 @@ void Screens::toggleEnabledGamePlayButtons(bool enabled)
     toggleEnabledQPushButton(ui->standButton, enabled);
     toggleEnabledQPushButton(ui->doubleButton, enabled);
     toggleEnabledQPushButton(ui->splitButton, enabled);
-
 }
 
 void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
@@ -814,6 +696,8 @@ void Screens::onPressNextRound()
 {
     tableView->clearTable();
     emit sendNewRound();
+
+    tableView->createDealerPile();
     ui->bettingArea->show();
 }
 

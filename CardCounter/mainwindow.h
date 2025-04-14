@@ -29,6 +29,6 @@ private:
     Controller *controller;
     Screens *screens;
 
-    void setUpMainWindowConnect();
+    void setUpMainWindowConnects();
 };
 #endif // MAINWINDOW_H

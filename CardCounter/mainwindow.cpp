@@ -10,7 +10,7 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 
     screens = new Screens(ui);
 
-    setUpMainWindowConnect();
+    setUpMainWindowConnects();
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +18,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::setUpMainWindowConnect()
+void MainWindow::setUpMainWindowConnects()
 {
     // Blackjack game buttons
     connect(screens,
