@@ -119,6 +119,8 @@ private:
      */
     void setUpQStyleSheets();
 
+    QString QStackedWidgetStyle;
+
     /**
      * @brief QPushButtonStylef QString of the general QPushButton StyleSheet
      */
