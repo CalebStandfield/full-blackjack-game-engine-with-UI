@@ -571,7 +571,6 @@ void Screens::dealCard(int seatIndex, QString imagePath)
         rotation = 20;
         break;
     default:
-        startPos = QPointF(555, 0);
         endPos = QPointF(555, 50);
         rotation = 0;
         break;
