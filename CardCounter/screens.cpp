@@ -346,16 +346,26 @@ void Screens::setUpQStyleSheets()
 
 void Screens::setUpBackGround()
 {
-    QPixmap bgImage(":/table/BlackJackTableMat.png");
+    QPixmap bgImage(":/backGround/brown_wooden_background.png");
 
     bgImage = bgImage.scaled(ui->centralwidget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
 
-    QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(bgImage));
-    ui->centralwidget->setPalette(palette);
+    QPalette bgPalette;
+    bgPalette.setBrush(QPalette::Window, QBrush(bgImage));
+    ui->centralwidget->setPalette(bgPalette);
     ui->centralwidget->setAutoFillBackground(true);
 
+    QPixmap widgetImage(":/backGround/start_menu_screen.png");
+
+    widgetImage = widgetImage.scaled(ui->startMenuMainWidget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPalette widgetPalette;
+    widgetPalette.setBrush(QPalette::Window, QBrush(widgetImage));
+    ui->startMenuMainWidget->setPalette(widgetPalette);
+    ui->startMenuMainWidget->setAutoFillBackground(true);
+
     ui->screens->setStyleSheet(QStackedWidgetStyle);
+
+
 }
 
 void Screens::moveToStartScreen()

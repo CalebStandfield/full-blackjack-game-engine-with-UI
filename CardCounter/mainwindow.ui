@@ -227,17 +227,14 @@
        </item>
       </layout>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QWidget" name="startMenuMainWidget" native="true">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>110</y>
-        <width>321</width>
-        <height>301</height>
+        <x>0</x>
+        <y>0</y>
+        <width>770</width>
+        <height>700</height>
        </rect>
-      </property>
-      <property name="text">
-       <string>Temporary label Put Title and box 2d animation here</string>
       </property>
      </widget>
     </widget>
