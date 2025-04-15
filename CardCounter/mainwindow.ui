@@ -6,20 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
-    <height>700</height>
+    <width>1400</width>
+    <height>800</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>1200</width>
-    <height>700</height>
+    <width>1400</width>
+    <height>800</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1200</width>
-    <height>700</height>
+    <width>1400</width>
+    <height>800</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -34,14 +40,14 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>1200</width>
-     <height>700</height>
+     <width>1400</width>
+     <height>800</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>1200</width>
-     <height>700</height>
+     <width>1400</width>
+     <height>800</height>
     </size>
    </property>
    <widget class="QStackedWidget" name="screens">
@@ -49,8 +55,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1200</width>
-      <height>700</height>
+      <width>1400</width>
+      <height>800</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -61,27 +67,45 @@
     </property>
     <property name="minimumSize">
      <size>
-      <width>1200</width>
-      <height>700</height>
+      <width>1400</width>
+      <height>800</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>1200</width>
-      <height>700</height>
+      <width>1400</width>
+      <height>800</height>
      </size>
     </property>
     <property name="currentIndex">
      <number>1</number>
     </property>
     <widget class="QWidget" name="startMenu">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
      <widget class="QWidget" name="startMenuButtonArea" native="true">
       <property name="geometry">
        <rect>
-        <x>760</x>
+        <x>960</x>
         <y>0</y>
         <width>440</width>
-        <height>700</height>
+        <height>800</height>
        </rect>
       </property>
       <property name="sizePolicy">
@@ -93,13 +117,13 @@
       <property name="minimumSize">
        <size>
         <width>440</width>
-        <height>700</height>
+        <height>800</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
         <width>440</width>
-        <height>700</height>
+        <height>800</height>
        </size>
       </property>
       <property name="whatsThis">
@@ -232,46 +256,64 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>760</width>
-        <height>700</height>
+        <width>960</width>
+        <height>800</height>
        </rect>
       </property>
      </widget>
     </widget>
     <widget class="QWidget" name="blackjackScreen">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
      <widget class="QWidget" name="table" native="true">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1200</width>
-        <height>600</height>
+        <width>1230</width>
+        <height>630</height>
        </rect>
       </property>
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
       <property name="minimumSize">
        <size>
-        <width>1200</width>
-        <height>600</height>
+        <width>1230</width>
+        <height>630</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>1200</width>
-        <height>600</height>
+        <width>1230</width>
+        <height>630</height>
        </size>
       </property>
      </widget>
      <widget class="QWidget" name="gamePlayButtons" native="true">
       <property name="geometry">
        <rect>
-        <x>250</x>
-        <y>600</y>
+        <x>225</x>
+        <y>710</y>
         <width>700</width>
         <height>90</height>
        </rect>
@@ -391,8 +433,8 @@
      <widget class="QWidget" name="settingsPopUp" native="true">
       <property name="geometry">
        <rect>
-        <x>390</x>
-        <y>75</y>
+        <x>363</x>
+        <y>100</y>
         <width>425</width>
         <height>400</height>
        </rect>
@@ -626,7 +668,7 @@
      <widget class="QWidget" name="bettingArea" native="true">
       <property name="geometry">
        <rect>
-        <x>950</x>
+        <x>1150</x>
         <y>0</y>
         <width>250</width>
         <height>330</height>
@@ -707,9 +749,9 @@
      <widget class="QWidget" name="continueToNextRound" native="true">
       <property name="geometry">
        <rect>
-        <x>960</x>
-        <y>600</y>
-        <width>225</width>
+        <x>1150</x>
+        <y>720</y>
+        <width>250</width>
         <height>80</height>
        </rect>
       </property>
@@ -721,13 +763,13 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>225</width>
+        <width>250</width>
         <height>80</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>225</width>
+        <width>250</width>
         <height>80</height>
        </size>
       </property>
@@ -786,6 +828,24 @@
      </widget>
     </widget>
     <widget class="QWidget" name="basicStrategyChartScreen">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>1400</width>
+       <height>800</height>
+      </size>
+     </property>
      <widget class="QPushButton" name="infoMenuButton">
       <property name="geometry">
        <rect>
@@ -825,23 +885,23 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;How to Read a Basic Strategy Chart&lt;/span&gt;&lt;/h3&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;A basic strategy chart for Blackjack summarizes the mathematically best decisions for every possible hand you can have versus every possible dealer upcard. These charts are usually divided into three main sections:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;left column&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; lists your hand total (for example, 9, 10, 11, etc.).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;top row&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; shows the dealer’s upcard (2–10 or Ace).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;H&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Hit&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (ask for another card).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Stand&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (keep your current hand).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Double Down&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (double your bet and receive exactly one more card; if doubling is not allowed, usually treat the action as Hit).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;SP:&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; Split (divide your pair into two separate hands).&lt;/span&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;How to Read a Basic Strategy Chart&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A basic strategy chart for Blackjack summarizes the mathematically best decisions for every possible hand you can have versus every possible dealer upcard. These charts are usually divided into three main sections:&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;left column&lt;/span&gt; lists your hand total (for example, 9, 10, 11, etc.).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;top row&lt;/span&gt; shows the dealer’s upcard (2–10 or Ace).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;H&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Hit&lt;/span&gt; (ask for another card).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;S&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Stand&lt;/span&gt; (keep your current hand).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;D&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Double Down&lt;/span&gt; (double your bet and receive exactly one more card; if doubling is not allowed, usually treat the action as Hit).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;SP:&lt;/span&gt; Split (divide your pair into two separate hands).&lt;/p&gt;
 &lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Hard Totals: &lt;/span&gt;Hands that do not include an Ace counted as 11—or, in other words, hands without a “soft” Ace.&lt;/li&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Soft Totals: &lt;/span&gt;Hands that include an Ace that can be counted as 11 without busting (for instance, A-6 counted as 7 or 17).&lt;/li&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pairs: &lt;/span&gt;Hands that consist of two cards of the same rank (for example, two 8’s).&lt;/li&gt;&lt;/ol&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;Why It Matters&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;Using a basic strategy chart means you're making decisions based on extensive mathematical analysis. Mastering it equates to near-perfect Blackjack play, reducing the house edge to about 0.05. In practical terms, with a $100 wager per hour, you're likely to lose roughly $5 over time.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Hard Totals: &lt;/span&gt;Hands that do not include an Ace counted as 11—or, in other words, hands without a “soft” Ace.&lt;/li&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Soft Totals: &lt;/span&gt;Hands that include an Ace that can be counted as 11 without busting (for instance, A-6 counted as 7 or 17).&lt;/li&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pairs: &lt;/span&gt;Hands that consist of two cards of the same rank (for example, two 8’s).&lt;/li&gt;&lt;/ol&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Why It Matters&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Using a basic strategy chart means you're making decisions based on extensive mathematical analysis. Mastering it equates to near-perfect Blackjack play, reducing the house edge to about 0.05. In practical terms, with a $100 wager per hour, you're likely to lose roughly $5 over time.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>

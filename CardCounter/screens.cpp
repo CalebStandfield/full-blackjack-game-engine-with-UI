@@ -701,9 +701,9 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
             timer->scheduleSingleShot(waitTime, [=]() {
                 playerUpdated(i, tempHand, tempHand.getTotal(), players[i].money, players[i].status);
             });
-            waitTime += 1000;
+            waitTime += 800;
         }
-        waitTime += 1000;
+        waitTime += 800;
     }
 
 
@@ -722,11 +722,11 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
-    unsigned int waitTime = 1000 * players.size();
+    unsigned int waitTime = 800 * players.size();
 
     if (showDealerCard)
     {
-        waitTime = 1000;
+        waitTime = 800;
 
         QString imagePath = dealerHand.getCards().at(0).getImagePath();
         tableView->revealDealerCard(imagePath);
@@ -737,7 +737,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
-        waitTime = (waitTime * 2) + 1000;
+        waitTime = (waitTime * 2) + 800;
     }
 }
 
