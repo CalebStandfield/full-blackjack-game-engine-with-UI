@@ -40,6 +40,25 @@ void TableView::createPlayerCardContainers(unsigned int playerCount)
 
 void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
+    qDebug() << endPos.x() << endPos.y();
+
+    if (playerIndex == -1)
+    {
+        endPos = QPointF(
+            endPos.x() + dealerCards.size() * 20,
+            endPos.y()
+            );
+    }
+    else
+    {
+        endPos = QPointF(
+            endPos.x() + playerCards[playerIndex].size() * 7,
+            endPos.y() - playerCards[playerIndex].size() * 7
+            );
+
+    }
+
+    qDebug() << endPos.x() << endPos.y();
 
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
 

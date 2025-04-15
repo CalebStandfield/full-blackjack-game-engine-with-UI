@@ -691,27 +691,27 @@ void Screens::dealCard(int seatIndex, QString imagePath)
 
     switch (seatIndex) {
     case 0:
-        endPos = QPointF(955, 250); // far right
+        endPos = QPointF(950, 250); // far right
         rotation = -20;
         break;
     case 1:
-        endPos = QPointF(755, 330); // middle right
+        endPos = QPointF(750, 350); // middle right
         rotation = -10;
         break;
     case 2:
-        endPos = QPointF(555, 400); // middle
+        endPos = QPointF(550, 400); // middle
         rotation = 0;
         break;
     case 3:
-        endPos = QPointF(355, 330); // middle left
+        endPos = QPointF(350, 350); // middle left
         rotation = 10;
         break;
     case 4:
-        endPos = QPointF(155, 250); // far left
+        endPos = QPointF(150, 250); // far left
         rotation = 20;
         break;
     default:
-        endPos = QPointF(555, 50);
+        endPos = QPointF(550, 50);
         rotation = 0;
         break;
     }
