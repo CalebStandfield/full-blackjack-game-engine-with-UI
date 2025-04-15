@@ -6,6 +6,7 @@
 #include "hand.h"
 #include "playerStatus.h"
 #include "botstrategy.h"
+#include "timermanager.h"
 
 using PlayerStatus::PLAYERSTATUS;
 
@@ -45,6 +46,11 @@ public slots:
      * @brief startRound The next round of betting starts
      */
     void startBetting();
+
+    /**
+     * @brief onStopEverything Stops all play and single shot calls
+     */
+    void onStopEverything();
 
     /**
      * @brief dealCards Deals out the initial cards and moves to the first player's turn
@@ -137,6 +143,11 @@ private:
      * @brief botPlayer The BotStrategy that determines the bot's move
      */
     BotStrategy* botStrategy;
+
+    /**
+     * @brief timer The timer class to schedule all single shot calls
+     */
+    TimerManager* timer;
 
     /**
      * @brief currentPlayerIndex The index of the current player in the round

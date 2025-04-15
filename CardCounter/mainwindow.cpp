@@ -68,6 +68,12 @@ void MainWindow::setUpMainWindowConnects()
             controller,
             &Controller::startBetting);
 
+    // Leave game
+    connect(screens,
+            &Screens::sendStopEverything,
+            controller,
+            &Controller::onStopEverything);
+
 
     // Controller -> Screens
 

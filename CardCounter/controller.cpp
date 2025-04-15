@@ -5,12 +5,14 @@
 Controller::Controller(QObject *parent) : QObject{parent}
 {
     botStrategy = new BotStrategy();
+    timer = new TimerManager();
 }
 
 Controller::~Controller()
 {
     delete model;
     delete botStrategy;
+    delete timer;
 }
 
 void Controller::checkTurnEnd(const Player& player){
@@ -147,29 +149,29 @@ void Controller::botMove()
     {
         // If not enough money to double down, hit instead
         if(player.money < player.hand.getBet()){
-            QTimer::singleShot(waitTime, this, [=]() {
+            timer->scheduleSingleShot(waitTime, [=]() {
                 onHit();});
         }
         else
-            QTimer::singleShot(waitTime, this, [=]() {
+            timer->scheduleSingleShot(waitTime, [=]() {
                 onDoubleDown();});
     }
     else if(move == MOVE::SPLIT)
     {
         // Call onSplit once implemented
-        QTimer::singleShot(waitTime, this, [=]() {
+        timer->scheduleSingleShot(waitTime, [=]() {
             onHit();});
     }
     else
-        QTimer::singleShot(waitTime, this, [=]() {
+        timer->scheduleSingleShot(waitTime, [=]() {
             onStand();});
 }
 
 void Controller::botBet()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    int bet = std::max(player.money / 10, 1);    
-    QTimer::singleShot(100, this, [=]() {
+    int bet = std::max(player.money / 10, 1);
+    timer->scheduleSingleShot(100, [=]() {
         onBet(bet);});
 }
 
@@ -177,6 +179,11 @@ void Controller::createNewGame(std::vector<Player> players, int decks, int deter
 {
     if(model != nullptr)
         delete model;
-
+    timer->cancelAllTimers();
     model = new GameState(players, decks, deterministic);
+}
+
+void Controller::onStopEverything()
+{
+    timer->cancelAllTimers();
 }

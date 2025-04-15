@@ -331,15 +331,22 @@ signals:
      */
     void sendOnBet(int playerBet);
 
+    // During game play
+    /**
+     * @brief dealAnimationComplete Signal to send for when the deal animation is complete
+     */
+    void dealAnimationComplete();
+
+    // End game
     /**
      * @brief sendNewRound Signal to send for when the user presses new round
      */
     void sendNewRound();
 
     /**
-     * @brief dealAnimationComplete Signal to send for when the deal animation is complete
+     * @brief sendStopEverything Signal to send for when the user leaves the game
      */
-    void dealAnimationComplete();
+    void sendStopEverything();
 
 private slots:
     /**

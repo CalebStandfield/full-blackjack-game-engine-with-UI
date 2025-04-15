@@ -554,6 +554,9 @@ void Screens::moveToStartScreen()
 void Screens::moveToPlayScreen()
 {
     toggleEnabledGamePlayButtons(false);
+    tableView->clearTable();
+    toggleEnabledQPushButton(ui->nextRound, false);
+
     ui->screens->setCurrentIndex(1);
     ui->bettingArea->hide();
     showSettingsPopup();
@@ -900,10 +903,8 @@ void Screens::onPressNextRound()
 
 void Screens::onPressMainMenuButton()
 {
-    // TODO
-    // Implement signal to tell model to reset
-    // Stop in progress card animation
+    emit sendStopEverything();
     timer->cancelAllTimers();
-    tableView->clearTable();
+    players.clear();
     ui->screens->setCurrentIndex(0);
 }
