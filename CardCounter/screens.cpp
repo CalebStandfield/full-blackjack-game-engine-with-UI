@@ -661,11 +661,11 @@ void Screens::dealCard(int seatIndex, QString imagePath)
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
-    if (hand.getCards().size() == 1)
+    if(hand.getCards().size() == 1)
     {
-        // do split logic
+        dealCard(playerIndex, hand.getCards()[0].getImagePath());
     }
-    else if (hand.getCards().size() >= 2)
+    else if(hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
@@ -690,16 +690,24 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
     unsigned int waitTime = 0;
+    Hand tempHand;
 
-    for(int i = 0; i < static_cast<int>(players.size()); i++)
+    for(int j = 0; j < 2; j++)
     {
-        timer->scheduleSingleShot(waitTime, [=]() {
-            playerUpdated(i, players[i].hand, players[i].hand.getTotal(), players[i].money, players[i].status);
-        });
-        waitTime += 1500;
+        for(int i = 0; i < static_cast<int>(players.size()); i++)
+        {
+            tempHand = Hand(players[i].hand.getBet());
+            tempHand.addCard(players[i].hand.getCards()[j]);
+            timer->scheduleSingleShot(waitTime, [=]() {
+                playerUpdated(i, tempHand, tempHand.getTotal(), players[i].money, players[i].status);
+            });
+            waitTime += 1000;
+        }
+        waitTime += 1000;
     }
 
-    timer->scheduleSingleShot(waitTime + 2000, [=]() {
+
+    timer->scheduleSingleShot(waitTime, [=]() {
         emit dealAnimationComplete();
         toggleEnabledGamePlayButtons(true);
     });
@@ -714,7 +722,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
-    unsigned int waitTime = 1500 * players.size();
+    unsigned int waitTime = 1000 * players.size();
 
     if (showDealerCard)
     {
@@ -729,7 +737,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
-        waitTime += 1000;
+        waitTime = (waitTime * 2) + 1000;
     }
 }
 
