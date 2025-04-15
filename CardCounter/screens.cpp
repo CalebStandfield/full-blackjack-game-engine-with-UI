@@ -846,6 +846,7 @@ void Screens::onPressNextRound()
     toggleEnabledGamePlayButtons(false);
 
     tableView->createDealerPile();
+    ui->betSlider->setMaximum(players[userIndex].money);
     ui->bettingArea->show();
 }
 
