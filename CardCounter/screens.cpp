@@ -664,6 +664,16 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
     if(hand.getCards().size() == 1)
     {
         dealCard(playerIndex, hand.getCards()[0].getImagePath());
+        players[playerIndex].hand.addCard(hand.getCards()[0]);
+
+        // if(players[playerIndex].isUser)
+        // {
+        //     qDebug() << "After hand update: ";
+        //     for(const Card& card : players[playerIndex].hand.getCards())
+        //     {
+        //         qDebug() << Rank::toString(card.getRank());
+        //     }
+        // }
     }
     else if(hand.getCards().size() >= 2)
     {
@@ -678,11 +688,11 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            timer->scheduleSingleShot(850, [=]() {
+            timer->scheduleSingleShot(800, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());});
         }
+        players[playerIndex].hand = hand;
     }
-    players[playerIndex].hand = hand;
     players[playerIndex].money = money;
     players[playerIndex].status = status;
 }
@@ -691,7 +701,6 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
     unsigned int waitTime = 0;
     Hand tempHand;
-
     for(int j = 0; j < 2; j++)
     {
         for(int i = 0; i < static_cast<int>(players.size()); i++)
@@ -705,7 +714,6 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         }
         waitTime += 800;
     }
-
 
     timer->scheduleSingleShot(waitTime, [=]() {
         emit dealAnimationComplete();
