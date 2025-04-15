@@ -8,7 +8,7 @@ TableView::TableView(QWidget *parent)
     setScene(scene);
     setRenderHint(QPainter::Antialiasing);
 
-    QPixmap tablePixmap(":/table/BlackJackTableMat.png"); // GET A DIFFERENT IMAGE
+    QPixmap tablePixmap(":/table/blackjack_table.png");
 
     tablePixmap = tablePixmap.scaled(1200, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     tableBackground = scene->addPixmap(tablePixmap);

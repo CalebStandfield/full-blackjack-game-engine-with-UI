@@ -161,6 +161,8 @@ private:
      */
     QString QGraphicsViewStyle;
 
+    QString QLineEditStyle;
+
     /**
      * @brief moveToPlayScreen Move from current screen to the play screen
      */
