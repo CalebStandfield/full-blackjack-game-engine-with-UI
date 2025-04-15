@@ -11,6 +11,7 @@
 #include <QtWidgets/qstackedwidget.h>
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
+#include "timermanager.h"
 
 using PlayerStatus::PLAYERSTATUS;
 
@@ -20,9 +21,12 @@ class Screens : public QStackedWidget
 public:
     explicit Screens(Ui::MainWindow *ui, QWidget *parent = nullptr);
 
+    ~Screens();
+
 private:
     Ui::MainWindow *ui;
     TableView *tableView;
+    TimerManager* timer;
 
     enum GAMEPLAYMODE {
         BLACKJACK,
@@ -119,6 +123,9 @@ private:
      */
     void setUpQStyleSheets();
 
+    /**
+     * @brief QStackedWidgetStyle QString of the general widget StyleSheet
+     */
     QString QStackedWidgetStyle;
 
     /**
@@ -167,10 +174,13 @@ private:
     QString QTextBrowserStyle;
 
     /**
-     * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
+     * @brief getQWidgetStyle QString of the general QTextBrowser StyleSheet
      */
     QString QGraphicsViewStyle;
 
+    /**
+     * @brief QLineEditStyle QString of the general QLine StyleSheet
+     */
     QString QLineEditStyle;
 
     /**
@@ -237,6 +247,11 @@ private:
     void onPressSplitButton();
 
     /**
+     * @brief onPressMainMenuButton Logic for when the user presses Main Menu
+     */
+    void onPressMainMenuButton();
+
+    /**
      * @brief onPressPlacedBetButton Logic for when the user places their bet
      */
     void onPressPlacedBetButton();
@@ -264,6 +279,9 @@ private:
      */
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
 
+    /**
+     * @brief onPressNextRound Handles pressing the next round button
+     */
     void onPressNextRound();
 
 signals:
@@ -307,10 +325,20 @@ signals:
      */
     void sendSplitButtonPressed();
 
+    /**
+     * @brief sendOnBet Signal to send for when the user presses sendBet
+     * @param playerBet The amount to bet
+     */
     void sendOnBet(int playerBet);
 
+    /**
+     * @brief sendNewRound Signal to send for when the user presses new round
+     */
     void sendNewRound();
 
+    /**
+     * @brief dealAnimationComplete Signal to send for when the deal animation is complete
+     */
     void dealAnimationComplete();
 
 private slots:
@@ -379,7 +407,6 @@ public slots:
      * @param flipped A bool for if to flip or not
      */
     void updateShowDealerCardBool(bool flipped);
-
 };
 
 #endif // SCREENS_H

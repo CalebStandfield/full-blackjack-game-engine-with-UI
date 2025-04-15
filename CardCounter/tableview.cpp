@@ -40,8 +40,6 @@ void TableView::createPlayerCardContainers(unsigned int playerCount)
 
 void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
-    qDebug() << endPos.x() << endPos.y();
-
     if (playerIndex == -1)
     {
         endPos = QPointF(
@@ -57,9 +55,6 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
             );
 
     }
-
-    qDebug() << endPos.x() << endPos.y();
-
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
 
     QParallelAnimationGroup* anim = createAnimationCardItem(cardItem, startPos, endPos, 90, rotationAngle);

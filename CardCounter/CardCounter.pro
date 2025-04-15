@@ -67,7 +67,8 @@ SOURCES += \
     screens.cpp \
     statistics.cpp \
     statsview.cpp \
-    tableview.cpp
+    tableview.cpp \
+    timermanager.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -132,7 +133,8 @@ HEADERS += \
     statistics.h \
     statsview.h \
     suits.h \
-    tableview.h
+    tableview.h \
+    timermanager.h
 
 FORMS += \
     mainwindow.ui

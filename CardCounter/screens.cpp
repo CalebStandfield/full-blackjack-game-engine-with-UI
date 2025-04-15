@@ -26,6 +26,15 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     // Connects
     setUpScreenConnects();
     tableViewCardTest();
+
+    // Set up timer
+    timer = new TimerManager();
+}
+
+Screens::~Screens()
+{
+    delete timer;
+    delete tableView;
 }
 
 void Screens::setUpScreenConnects()
@@ -120,7 +129,7 @@ void Screens::setUpScreenConnects()
     connect(ui->backToMainMenuFromPlay,
             &QPushButton::clicked,
             this,
-            [this] () {ui->screens->setCurrentIndex(0);});
+            &Screens::onPressMainMenuButton);
     connect(ui->nextRound,
             &QPushButton::clicked,
             this,
@@ -775,10 +784,8 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            QTimer::singleShot(850, this, [=]() {
-                dealCard(playerIndex, hand.getCards()[i].getImagePath());
-            });
-
+            timer->scheduleSingleShot(850, [=]() {
+                dealCard(playerIndex, hand.getCards()[i].getImagePath());});
         }
     }
     players[playerIndex].hand = hand;
@@ -792,13 +799,13 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 
     for(int i = 0; i < static_cast<int>(players.size()); i++)
     {
-        QTimer::singleShot(waitTime, this, [=]() {
+        timer->scheduleSingleShot(waitTime, [=]() {
             playerUpdated(i, players[i].hand, players[i].hand.getTotal(), players[i].money, players[i].status);
         });
         waitTime += 1500;
     }
 
-    QTimer::singleShot(waitTime + 2000, this, [=]() {
+    timer->scheduleSingleShot(waitTime + 2000, [=]() {
         emit dealAnimationComplete();
         toggleEnabledGamePlayButtons(true);
     });
@@ -819,7 +826,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         if(showDealerCard)
             waitTime = 0;
-        QTimer::singleShot(waitTime, this, [=]() {
+        timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
         waitTime += 1000;
@@ -891,3 +898,12 @@ void Screens::onPressNextRound()
     ui->bettingArea->show();
 }
 
+void Screens::onPressMainMenuButton()
+{
+    // TODO
+    // Implement signal to tell model to reset
+    // Stop in progress card animation
+    timer->cancelAllTimers();
+    tableView->clearTable();
+    ui->screens->setCurrentIndex(0);
+}
