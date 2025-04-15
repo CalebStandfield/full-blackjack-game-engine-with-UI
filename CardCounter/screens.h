@@ -301,6 +301,8 @@ signals:
 
     void sendNewRound();
 
+    void dealAnimationComplete();
+
 private slots:
     /**
      * @brief dealCard
@@ -355,6 +357,12 @@ public slots:
      * @brief endBetting Slot for changing from betting phase to playing phase
      */
     void endBetting();
+
+    /**
+     * @brief endRound SLot for the round ending
+     * @param message The message to display of the round
+     */
+    void endRound(QString message);
 
     /**
      * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card

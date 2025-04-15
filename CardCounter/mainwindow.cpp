@@ -50,6 +50,11 @@ void MainWindow::setUpMainWindowConnects()
             controller,
             &Controller::startBetting);
 
+    // Round starting
+    connect(screens,
+            &Screens::dealAnimationComplete,
+            controller,
+            &Controller::onDealingAnimationComplete);
 
     // Betting
     connect(screens,
@@ -95,4 +100,8 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::endBetting,
             screens,
             &Screens::endBetting);
+    connect(controller,
+            &Controller::endRound,
+            screens,
+            &Screens::endRound);
 }

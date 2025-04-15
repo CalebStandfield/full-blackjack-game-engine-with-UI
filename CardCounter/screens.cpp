@@ -26,6 +26,8 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     // Connects
     setUpScreenConnects();
     tableViewCardTest();
+
+    toggleEnabledQPushButton(ui->nextRound, false);
 }
 
 void Screens::setUpScreenConnects()
@@ -760,6 +762,11 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         });
         waitTime += 1500;
     }
+
+    QTimer::singleShot(waitTime + 2000, this, [=]() {
+        emit dealAnimationComplete();
+        toggleEnabledGamePlayButtons(true);
+    });
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -771,21 +778,17 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
+    unsigned int waitTime = 1500 * players.size();
 
-    bool firstLoop = true;
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
-        if (firstLoop)
-        {
-            dealCard(-1, dealerHand.getCards()[i].getImagePath());
-            firstLoop = false;
-            continue;
-        }
-        QTimer::singleShot(3000, this, [=]() {
+        if(showDealerCard)
+            waitTime = 0;
+        QTimer::singleShot(waitTime, this, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
+        waitTime += 1000;
     }
-    toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
@@ -806,7 +809,6 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
 void Screens::endBetting()
 {
     ui->bettingArea->hide();
-    //toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::toggleEnabledGamePlayButtons(bool enabled)
@@ -829,11 +831,19 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     button->setEnabled(enabled);
 }
 
+void Screens::endRound(QString message)
+{
+    toggleEnabledQPushButton(ui->nextRound, true);
+    toggleEnabledGamePlayButtons(false);
+}
+
 void Screens::onPressNextRound()
 {
     tableView->clearTable();
 
     emit sendNewRound();
+    toggleEnabledQPushButton(ui->nextRound, false);
+    toggleEnabledGamePlayButtons(false);
 
     tableView->createDealerPile();
     ui->bettingArea->show();
