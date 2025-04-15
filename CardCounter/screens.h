@@ -193,15 +193,11 @@ private:
      */
     void moveToStartScreen();
 
-    /**
-     * @brief hideSettingsPopup Hides the settings popup
-     */
-    void hideSettingsPopup();
+    void toggleVisibleSettingsPopup(bool show);
 
-    /**
-     * @brief showSettingsPopup Shows the settings popup
-     */
-    void showSettingsPopup();
+    void toggleVisibleBettingView(bool show);
+
+    void toggleVisibleGamePlayButtons(bool show);
 
     /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
