@@ -205,10 +205,18 @@ QParallelAnimationGroup* TableView::createAnimationCardItem(AnimatableCardItem* 
 
 void TableView::clearTable()
 {
-    for (auto* item : scene->items()) {
-        if (item != tableBackground) {
+    for (auto* item : scene->items())
+    {
+        if (item != tableBackground)
+        {
             scene->removeItem(item);
             delete item;
         }
+    }
+    dealerCards.clear();
+
+    for (std::vector<AnimatableCardItem*>& hand : playerCards)
+    {
+        hand.clear();
     }
 }
