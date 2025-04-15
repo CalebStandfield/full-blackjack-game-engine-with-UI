@@ -19,7 +19,7 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpGamePlayButtons();
     setUpSettingsPopup();
     setUpBackGround();
-    hideSettingsPopup();
+    toggleVisibleSettingsPopup(false);
     setUpBasicStrategyCharts();
     setUpBettingMenu();
 
@@ -56,7 +56,7 @@ void Screens::setUpScreenConnects()
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
-            &Screens::hideSettingsPopup);
+            [this] () {toggleVisibleSettingsPopup(false);});
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
@@ -444,19 +444,22 @@ void Screens::setUpBackGround()
 void Screens::moveToStartScreen()
 {
     ui->screens->setCurrentIndex(0);
-    hideSettingsPopup();
+    toggleVisibleSettingsPopup(false);
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(false);
     mode = UNSELECTED;
 }
 
 void Screens::moveToPlayScreen()
 {
     toggleEnabledGamePlayButtons(false);
+    toggleVisibleGamePlayButtons(false);
     tableView->clearTable();
     toggleEnabledQPushButton(ui->nextRound, false);
 
     ui->screens->setCurrentIndex(1);
     ui->bettingArea->hide();
-    showSettingsPopup();
+    toggleVisibleSettingsPopup(true);
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
     QString name = button->objectName();
@@ -479,14 +482,40 @@ void Screens::moveToPlayScreen()
     }
 }
 
-void Screens::hideSettingsPopup()
+void Screens::toggleVisibleSettingsPopup(bool show)
 {
-    ui->settingsPopUp->hide();
+    if (show)
+    {
+        ui->settingsPopUp->show();
+    }
+    else
+    {
+        ui->settingsPopUp->hide();
+    }
 }
 
-void Screens::showSettingsPopup()
+void Screens::toggleVisibleBettingView(bool show)
 {
-    ui->settingsPopUp->show();
+    if (show)
+    {
+        ui->bettingArea->show();
+    }
+    else
+    {
+        ui->bettingArea->hide();
+    }
+}
+
+void Screens::toggleVisibleGamePlayButtons(bool show)
+{
+    if (show)
+    {
+        ui->gamePlayButtons->show();
+    }
+    else
+    {
+        ui->gamePlayButtons->hide();
+    }
 }
 
 void Screens::applyShadowToWidget(QWidget *widget)
@@ -547,7 +576,8 @@ void Screens::onPressSplitButton()
 
 void Screens::onPressPlacedBetButton()
 {
-    ui->bettingArea->hide();
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(true);
     emit sendOnBet(currentBet);
 }
 
@@ -600,7 +630,8 @@ void Screens::onEditChipCountLineEdit()
 
 void Screens::acceptSettingsButtonPressed()
 {
-    ui->bettingArea->show();
+    toggleVisibleGamePlayButtons(false);
+    toggleVisibleBettingView(true);
     ui->betSlider->setMaximum(initialMoney);
 
     //userIndex = QRandomGenerator::global()->bounded(playerCount);
@@ -770,7 +801,8 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
 
 void Screens::endBetting()
 {
-    ui->bettingArea->hide();
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(true);
 }
 
 void Screens::toggleEnabledGamePlayButtons(bool enabled)
@@ -823,7 +855,8 @@ void Screens::onPressNextRound()
 
     tableView->createDealerPile();
     ui->betSlider->setMaximum(players[userIndex].money);
-    ui->bettingArea->show();
+    toggleVisibleBettingView(true);
+    toggleVisibleGamePlayButtons(false);
 }
 
 void Screens::onPressMainMenuButton()
