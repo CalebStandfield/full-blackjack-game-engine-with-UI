@@ -357,6 +357,12 @@ public slots:
     void endBetting();
 
     /**
+     * @brief endRound SLot for the round ending
+     * @param message The message to display of the round
+     */
+    void endRound(QString message);
+
+    /**
      * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card
      * @param flipped A bool for if to flip or not
      */

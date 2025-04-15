@@ -95,4 +95,8 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::endBetting,
             screens,
             &Screens::endBetting);
+    connect(controller,
+            &Controller::endRound,
+            screens,
+            &Screens::endRound);
 }

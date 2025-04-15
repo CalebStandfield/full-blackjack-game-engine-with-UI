@@ -26,6 +26,8 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     // Connects
     setUpScreenConnects();
     tableViewCardTest();
+
+    toggleEnabledQPushButton(ui->nextRound, false);
 }
 
 void Screens::setUpScreenConnects()
@@ -771,19 +773,14 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
+    unsigned int waitTime = 1500 * players.size();
 
-    bool firstLoop = true;
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
-        if (firstLoop)
-        {
-            dealCard(-1, dealerHand.getCards()[i].getImagePath());
-            firstLoop = false;
-            continue;
-        }
-        QTimer::singleShot(3000, this, [=]() {
+        QTimer::singleShot(waitTime, this, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
+        waitTime += 1000;
     }
     toggleEnabledGamePlayButtons(true);
 }
@@ -806,7 +803,6 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
 void Screens::endBetting()
 {
     ui->bettingArea->hide();
-    //toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::toggleEnabledGamePlayButtons(bool enabled)
@@ -829,11 +825,17 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     button->setEnabled(enabled);
 }
 
+void Screens::endRound(QString message)
+{
+    toggleEnabledQPushButton(ui->nextRound, true);
+}
+
 void Screens::onPressNextRound()
 {
     tableView->clearTable();
 
     emit sendNewRound();
+    toggleEnabledQPushButton(ui->nextRound, false);
 
     tableView->createDealerPile();
     ui->bettingArea->show();
