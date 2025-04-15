@@ -301,6 +301,8 @@ signals:
 
     void sendNewRound();
 
+    void dealAnimationComplete();
+
 private slots:
     /**
      * @brief dealCard

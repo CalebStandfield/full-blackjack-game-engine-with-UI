@@ -762,6 +762,11 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         });
         waitTime += 1500;
     }
+
+    QTimer::singleShot(waitTime + 2000, this, [=]() {
+        emit dealAnimationComplete();
+        toggleEnabledGamePlayButtons(true);
+    });
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -777,12 +782,13 @@ void Screens::dealerUpdated(const Hand& hand, int total)
 
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
+        if(showDealerCard)
+            waitTime = 0;
         QTimer::singleShot(waitTime, this, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
         waitTime += 1000;
     }
-    toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
@@ -828,6 +834,7 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
 void Screens::endRound(QString message)
 {
     toggleEnabledQPushButton(ui->nextRound, true);
+    toggleEnabledGamePlayButtons(false);
 }
 
 void Screens::onPressNextRound()
@@ -836,6 +843,7 @@ void Screens::onPressNextRound()
 
     emit sendNewRound();
     toggleEnabledQPushButton(ui->nextRound, false);
+    toggleEnabledGamePlayButtons(false);
 
     tableView->createDealerPile();
     ui->bettingArea->show();

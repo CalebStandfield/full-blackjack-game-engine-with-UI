@@ -81,7 +81,6 @@ void Controller::advanceToNextPlayer()
     model->setPlayerActive(currentPlayerIndex);
 
     const Player& player = model->getPlayer(currentPlayerIndex);
-    // emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
 
     if(!player.isUser)
          botMove();
@@ -131,7 +130,10 @@ void Controller::dealCards()
     if(model->getDealerHand().getTotal() == 21) {
         currentPlayerIndex = model->getPlayerCount();
     }
+}
 
+void Controller::onDealingAnimationComplete()
+{
     advanceToNextPlayer();
 }
 

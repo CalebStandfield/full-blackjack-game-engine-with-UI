@@ -58,6 +58,11 @@ public slots:
     void onBet(int bet);
 
     /**
+     * @brief onDealingAnimationComplete Slot that the dealing animation is complete and the round can start
+     */
+    void onDealingAnimationComplete();
+
+    /**
      * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
      * @param players The number of players in the game
      * @param decks The number of decks to play with

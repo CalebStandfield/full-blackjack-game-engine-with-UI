@@ -1,5 +1,6 @@
 #include "gamestate.h"
 #include "playerStatus.h"
+#include "qdebug.h"
 
 using PlayerStatus::PLAYERSTATUS;
 
@@ -93,7 +94,6 @@ void GameState::endRound()
                 player.status = PLAYERSTATUS::BANKRUPT;
             continue;
         }
-
         int playerTotal = player.hand.getTotal();
         if(dealerBust || playerTotal > dealerTotal)
         {
