@@ -117,7 +117,6 @@ void Controller::advanceToNextBet()
 
     if(!(model->getPlayer(currentPlayerIndex).isUser))
          botBet();
-
 }
 
 void Controller::dealCards()

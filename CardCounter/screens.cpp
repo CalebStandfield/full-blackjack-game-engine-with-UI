@@ -143,7 +143,6 @@ void Screens::setUpTable()
         ui->table->setLayout(new QVBoxLayout());
     }
     ui->table->setStyleSheet(QWidgetStyle);
-
     ui->table->layout()->addWidget(tableView);
 }
 
@@ -262,108 +261,6 @@ void Screens::updateSettingsSlider(unsigned int value)
 
 void Screens::setUpQStyleSheets()
 {
-    // QPushButtonStyle =
-    //     "QPushButton {"
-    //     "    background-color: #404040;"
-    //     "    color: white;"
-    //     "    border: 2px solid #444444;"
-    //     "    border-radius: 5px;"
-    //     "    padding: 10px 20px;"
-    //     "    font-size: 24px;"
-    //     "}"
-    //     "QPushButton:hover {"
-    //     "    background-color: #505050;"
-    //     "}"
-    //     "QPushButton:pressed {"
-    //     "    background-color: #646464;"
-    //     "}";
-
-    // QPushButtonDisabledStyle =
-    //     "QPushButton:disabled {"
-    //     "    background-color: #2a2a2a;"
-    //     "    color: #888888;"
-    //     "    border: 2px solid #333333;"
-    //     "    border-radius: 5px;"
-    //     "    padding: 10px 20px;"
-    //     "    font-size: 24px;"
-    //     "}";
-
-    // QSliderStyle =
-    //     "QSlider {"
-    //     "    background: transparent;"
-    //     "    height: 12px;"
-    //     "}"
-    //     "QSlider::groove:horizontal {"
-    //     "    background: rgba(80, 80, 80, 180);"
-    //     "    border: 1px solid rgba(255, 255, 255, 20);"
-    //     "    height: 6px;"
-    //     "    border-radius: 3px;"
-    //     "}"
-    //     "QSlider::handle:horizontal {"
-    //     "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #aaaaaa, stop:1 #dddddd);"
-    //     "    border: 1px solid #444;"
-    //     "    width: 14px;"
-    //     "    height: 14px;"
-    //     "    margin: -4px 0;"
-    //     "    border-radius: 7px;"
-    //     "}"
-    //     "QSlider::handle:horizontal:hover {"
-    //     "    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #cccccc, stop:1 #eeeeee);"
-    //     "    border: 1px solid #666;"
-    //     "}"
-    //     "QSlider::sub-page:horizontal {"
-    //     "    background: rgba(160, 160, 160, 150);"
-    //     "    border-radius: 3px;"
-    //     "}"
-    //     "QSlider::add-page:horizontal {"
-    //     "    background: rgba(60, 60, 60, 100);"
-    //     "    border-radius: 3px;"
-    //     "}";
-
-    // QLabelStyle =
-    //     "QLabel {"
-    //     "    color: white;"
-    //     "    font-size: 32px;"
-    //     "    font-weight: bold;"
-    //     "    padding: 5px;"
-    //     "}";
-
-    // QBetLabelStyle =
-    //     "QLabel {"
-    //     "    color: white;"
-    //     "    font-size: 15px;"
-    //     "    font-weight: bold;"
-    //     "    padding: 5px;"
-    //     "}";
-
-    // QWidgetStyle =
-    //     "QWidget {"
-    //     "    background-color: rgba(50, 50, 50, 225);"
-    //     "    border-radius: 15px;"
-    //     "    border: 1px solid rgba(255, 255, 255, 30);"
-    //     "    padding: 10px;"
-    //     "    color: white;"
-    //     "    font-size: 14px;"
-    //     "}"
-    //     "QScrollBar:vertical, QScrollBar:horizontal {"
-    //     "    height: 0px;"
-    //     "    width: 0px;"
-    //     "    background: transparent;"
-    //     "}";
-
-    // QTextBrowserStyle =
-    //     "QTextBrowser {"
-    //     "    background-color: #404040;"
-    //     "    border-radius: 15px;"
-    //     "    color: white;"
-    //     "}";
-
-    // QGraphicsViewStyle =
-    //     "QGraphicsView {"
-    //     "    background-color: transparent;"
-    //     "    border: none;"
-    //     "}";
-
     QWidgetStyle =
         "QWidget {"
         "    background-color: rgba(50, 25, 20, 200);"
@@ -713,7 +610,7 @@ void Screens::acceptSettingsButtonPressed()
     ui->bettingArea->show();
     ui->betSlider->setMaximum(initialMoney);
 
-    //playerIndex = QRandomGenerator::global()->bounded(playerCount);
+    //userIndex = QRandomGenerator::global()->bounded(playerCount);
     userIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
@@ -825,10 +722,14 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     }
     unsigned int waitTime = 1500 * players.size();
 
+    if(showDealerCard)
+    {
+        // Flip card here
+        waitTime = 1000;
+    }
+
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
-        if(showDealerCard)
-            waitTime = 0;
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
