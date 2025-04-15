@@ -129,7 +129,7 @@ void TableView::createDealerPile()
 
 void TableView::revealDealerCard(const QString& imagePath)
 {
-    QPointF endPos = QPointF(500, 75);
+    QPointF endPos = QPointF(550, 50);
     createCardItem(imagePath, endPos, 0, false);
 }
 
@@ -176,32 +176,6 @@ QParallelAnimationGroup* TableView::createAnimationCardItem(AnimatableCardItem* 
 
     return group;
 }
-
-// void TableView::clearHands()
-// {
-//     for (std::vector<AnimatableCardItem*>& hand : playerCards)
-//     {
-//         for (auto* item : hand)
-//         {
-//             if (scene->items().contains(item))
-//             {
-//                 scene->removeItem(item);
-//             }
-//             item->deleteLater(); // safer than delete
-//         }
-//         hand.clear();
-//     }
-
-//     for (auto* item : dealerCards)
-//     {
-//         if (scene->items().contains(item))
-//         {
-//             scene->removeItem(item);
-//         }
-//         item->deleteLater();
-//     }
-//     dealerCards.clear();
-// }
 
 void TableView::clearTable()
 {

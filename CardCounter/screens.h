@@ -224,8 +224,6 @@ private:
      */
     void setUpBasicStrategyCharts();
 
-    void tableViewCardTest();
-
     /**
      * @brief onPressHitButton Logic for when the user presses hit
      */

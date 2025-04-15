@@ -25,7 +25,6 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
 
     // Connects
     setUpScreenConnects();
-    tableViewCardTest();
 
     // Set up timer
     timer = new TimerManager();
@@ -526,13 +525,6 @@ void Screens::setUpBasicStrategyCharts()
     ui->infoTextBrowser->setStyleSheet(QTextBrowserStyle);
 }
 
-void Screens::tableViewCardTest()
-{
-
-    // TEST FUNCTION
-
-}
-
 void Screens::onPressHitButton()
 {
     emit sendHitButtonPressed();
@@ -723,10 +715,12 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     }
     unsigned int waitTime = 1500 * players.size();
 
-    if(showDealerCard)
+    if (showDealerCard)
     {
-        // Flip card here
         waitTime = 1000;
+
+        QString imagePath = dealerHand.getCards().at(0).getImagePath();
+        tableView->revealDealerCard(imagePath);
     }
 
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
@@ -748,9 +742,13 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
     //TODO
     //Change POV to player at received index
     if(players[nextPlayerIndex].isUser)
+    {
         toggleEnabledGamePlayButtons(true);
+    }
     else
+    {
         toggleEnabledGamePlayButtons(false);
+    }
 }
 
 void Screens::endBetting()
@@ -770,17 +768,25 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
 {
     if (enabled)
     {
-        if(button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+        if (button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+        {
             button->setStyleSheet(QPushButtonStyleSmallFont);
+        }
         else
+        {
             button->setStyleSheet(QPushButtonStyle);
+        }
         button->setEnabled(enabled);
         return;
     }
-    if(button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+    if (button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+    {
         button->setStyleSheet(QPushButtonDisabledStyleSmallFont);
+    }
     else
+    {
         button->setStyleSheet(QPushButtonDisabledStyle);
+    }
     button->setEnabled(enabled);
 }
 
