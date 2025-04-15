@@ -1,4 +1,5 @@
 #include "controller.h"
+#include "qdebug.h"
 #include "statistics.h"
 #include <QTimer>
 
@@ -91,7 +92,7 @@ void Controller::advanceToNextPlayer()
 void Controller::startBetting()
 {
     currentPlayerIndex = -1;
-
+    emit showDealerCard(false);
     // Clear all hands and update view
     model->clearHands();
     for(int i = 0; i < model->getPlayerCount(); i++){
