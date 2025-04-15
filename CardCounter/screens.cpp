@@ -142,8 +142,8 @@ void Screens::setUpTable()
     if (!ui->table->layout()) {
         ui->table->setLayout(new QVBoxLayout());
     }
+    tableView->setStyleSheet(QGraphicsViewStyle);
     ui->table->setStyleSheet(QWidgetStyle);
-
     ui->table->layout()->addWidget(tableView);
 }
 

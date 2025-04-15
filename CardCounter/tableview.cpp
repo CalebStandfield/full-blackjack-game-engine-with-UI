@@ -43,7 +43,7 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
     if (playerIndex == -1)
     {
         endPos = QPointF(
-            endPos.x() + dealerCards.size() * 20,
+            endPos.x() + dealerCards.size() * 40,
             endPos.y()
             );
     }
@@ -53,7 +53,6 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
             endPos.x() + playerCards[playerIndex].size() * 7,
             endPos.y() - playerCards[playerIndex].size() * 7
             );
-
     }
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
 
@@ -126,6 +125,12 @@ void TableView::createDealerPile()
             });
         });
     }
+}
+
+void TableView::revealDealerCard(const QString& imagePath)
+{
+    QPointF endPos = QPointF(500, 75);
+    createCardItem(imagePath, endPos, 0, false);
 }
 
 AnimatableCardItem* TableView::createCardItem(const QString& imagePath, QPointF startPos, qreal rotationAngle, bool setShadow)

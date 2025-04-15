@@ -23,6 +23,8 @@ public:
     void addDealerCardAt(const QString& imagePath, QPointF pos, qreal rotationAngle);
     void createDealerPile();
 
+    void revealDealerCard(const QString &imagePath);
+
     AnimatableCardItem* createCardItem(const QString& imagePath, QPointF startPos, qreal rotationAngle, bool setShadow);
     QParallelAnimationGroup* createAnimationCardItem(AnimatableCardItem* cardItem, QPointF startPos, QPointF endPos, qreal startRotation, qreal endRotation);
 
