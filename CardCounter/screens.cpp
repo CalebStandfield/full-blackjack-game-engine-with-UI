@@ -207,10 +207,13 @@ void Screens::setUpBettingMenu()
 {
     ui->bettingArea->setStyleSheet(QWidgetStyle);
     ui->betSlider->setStyleSheet(QSliderStyle);
+    ui->betSlider->setMinimum(1);
+
     ui->betLabel->setStyleSheet(QBetLabelStyle);
     ui->allInButton->setStyleSheet(QPushButtonStyle);
     ui->halfButton->setStyleSheet(QPushButtonStyle);
     ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
+
     toggleEnabledQPushButton(ui->placeBetButton, false);
 }
 
