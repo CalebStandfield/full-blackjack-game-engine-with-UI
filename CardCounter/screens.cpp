@@ -342,6 +342,12 @@ void Screens::setUpQStyleSheets()
         "    background-color: transparent;"
         "    border: none;"
         "}";
+
+    QStackedWidgetStyle =
+        "QStackedWidget {"
+        "    background-color: transparent;"
+        "    border: none;"
+        "}";
 }
 
 void Screens::setUpBackGround()
@@ -364,8 +370,6 @@ void Screens::setUpBackGround()
     ui->startMenuMainWidget->setAutoFillBackground(true);
 
     ui->screens->setStyleSheet(QStackedWidgetStyle);
-
-
 }
 
 void Screens::moveToStartScreen()
