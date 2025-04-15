@@ -122,14 +122,24 @@ private:
     QString QStackedWidgetStyle;
 
     /**
-     * @brief QPushButtonStylef QString of the general QPushButton StyleSheet
+     * @brief QPushButtonStyle QString of the general QPushButton StyleSheet
      */
     QString QPushButtonStyle;
+
+    /**
+     * @brief QPushButtonStyleSmallFont QString of the general QPushButton StyleSheet with smaller font
+     */
+    QString QPushButtonStyleSmallFont;
 
     /**
      * @brief QPushButtonDisabledStyle QString of the disabled version of a QPushButton StyleSheet
      */
     QString QPushButtonDisabledStyle;
+
+    /**
+     * @brief QPushButtonDisabledStyleSmallFont QString of the disabled version of a QPushButton StyleSheet with smaller font
+     */
+    QString QPushButtonDisabledStyleSmallFont;
 
     /**
      * @brief getQLableStyle QString of the general QLabel StyleSheet

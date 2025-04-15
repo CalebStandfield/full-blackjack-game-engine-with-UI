@@ -26,8 +26,6 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     // Connects
     setUpScreenConnects();
     tableViewCardTest();
-
-    toggleEnabledQPushButton(ui->nextRound, false);
 }
 
 void Screens::setUpScreenConnects()
@@ -206,6 +204,12 @@ void Screens::setUpGamePlayButtons()
     ui->standButton->setStyleSheet(QPushButtonStyle);
     ui->doubleButton->setStyleSheet(QPushButtonStyle);
     ui->splitButton->setStyleSheet(QPushButtonStyle);
+
+    // Next round and menu button
+    ui->nextRound->setObjectName("nextRound");
+    ui->backToMainMenuFromPlay->setObjectName("backToMenuFromPlay");
+    toggleEnabledQPushButton(ui->nextRound, false);
+    toggleEnabledQPushButton(ui->backToMainMenuFromPlay, true);
 }
 
 void Screens::setUpBettingMenu()
@@ -382,6 +386,27 @@ void Screens::setUpQStyleSheets()
         "    padding-top: 14px;"
         "}";
 
+    QPushButtonStyleSmallFont =
+        "QPushButton {"
+        "    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #222, stop:1 #333);"
+        "    color: white;"
+        "    border: 1px solid rgba(255, 255, 255, 0.2);"
+        "    border-radius: 12px;"
+        "    padding: 12px 20px;"
+        "    font-size: 10px;"
+        "    font-weight: 600;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #444, stop:1 #555);"
+        "    border: 1px solid rgba(255, 255, 255, 0.35);"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #111;"
+        "    border: 1px solid #aaa;"
+        "    padding-left: 14px;"
+        "    padding-top: 14px;"
+        "}";
+
     QPushButtonDisabledStyle =
         "QPushButton:disabled {"
         "    background-color: #161616;"
@@ -390,6 +415,16 @@ void Screens::setUpQStyleSheets()
         "    border-radius: 12px;"
         "    padding: 12px 24px;"
         "    font-size: 24px;"
+        "}";
+
+    QPushButtonDisabledStyleSmallFont =
+        "QPushButton:disabled {"
+        "    background-color: #161616;"
+        "    color: #555;"
+        "    border: 1px solid rgba(255, 255, 255, 0.1);"
+        "    border-radius: 12px;"
+        "    padding: 12px 20px;"
+        "    font-size: 10px;"
         "}";
 
     QSliderStyle =
@@ -823,11 +858,17 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
 {
     if (enabled)
     {
-        button->setStyleSheet(QPushButtonStyle);
+        if(button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+            button->setStyleSheet(QPushButtonStyleSmallFont);
+        else
+            button->setStyleSheet(QPushButtonStyle);
         button->setEnabled(enabled);
         return;
     }
-    button->setStyleSheet(QPushButtonDisabledStyle);
+    if(button->objectName() == "nextRound" || button->objectName() == "backToMenuFromPlay")
+        button->setStyleSheet(QPushButtonDisabledStyleSmallFont);
+    else
+        button->setStyleSheet(QPushButtonDisabledStyle);
     button->setEnabled(enabled);
 }
 
