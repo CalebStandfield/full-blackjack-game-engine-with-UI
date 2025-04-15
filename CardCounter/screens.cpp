@@ -721,15 +721,11 @@ void Screens::dealCard(int seatIndex, QString imagePath)
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
-    if (hand.getCards().size() == 0)
-    {
-        return;
-    }
-    else if (hand.getCards().size() == 1)
+    if (hand.getCards().size() == 1)
     {
         // do split logic
     }
-    else
+    else if (hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
@@ -755,8 +751,6 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
-    // Need to implement
-    // Updates all players in order with a time delay
     unsigned int waitTime = 0;
 
     for(int i = 0; i < static_cast<int>(players.size()); i++)
@@ -803,12 +797,16 @@ void Screens::currentPlayerTurn(int nextPlayerIndex)
 {
     //TODO
     //Change POV to player at received index
+    if(players[nextPlayerIndex].isUser)
+        toggleEnabledGamePlayButtons(true);
+    else
+        toggleEnabledGamePlayButtons(false);
 }
 
 void Screens::endBetting()
 {
     ui->bettingArea->hide();
-    toggleEnabledGamePlayButtons(true);
+    //toggleEnabledGamePlayButtons(true);
 }
 
 void Screens::toggleEnabledGamePlayButtons(bool enabled)
@@ -834,6 +832,7 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
 void Screens::onPressNextRound()
 {
     tableView->clearTable();
+
     emit sendNewRound();
 
     tableView->createDealerPile();
