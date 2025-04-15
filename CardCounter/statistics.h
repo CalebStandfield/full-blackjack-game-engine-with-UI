@@ -18,11 +18,9 @@ public:
 
     static const MOVE HardTable[17][10];
 
-    static const MOVE SoftHands[9][10];
+    static const MOVE SoftTable[9][10];
 
-    static const MOVE PairHands[10][10];
-
-signals:
+    static const MOVE PairTable[10][10];
 };
 
 #endif // STATISTICS_H

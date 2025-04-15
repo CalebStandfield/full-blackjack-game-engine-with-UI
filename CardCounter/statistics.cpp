@@ -20,7 +20,7 @@ const MOVE Statistics::HardTable[17][10] = {
     { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }  // Hard 21
 };
 
-const MOVE Statistics::SoftHands[9][10] = {
+const MOVE Statistics::SoftTable[9][10] = {
     { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,2
     { MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,3
     { MOVE::HIT,    MOVE::HIT,    MOVE::DOUBLE, MOVE::DOUBLE, MOVE::DOUBLE, MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT,    MOVE::HIT    }, // A,4
@@ -32,7 +32,7 @@ const MOVE Statistics::SoftHands[9][10] = {
     { MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND,  MOVE::STAND  }  // A,10 (multi-card soft 21)
 };
 
-const MOVE Statistics::PairHands[10][10] = {
+const MOVE Statistics::PairTable[10][10] = {
     { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 2,2
     { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 3,3
     { MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::SPLIT, MOVE::SPLIT, MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT,   MOVE::HIT   },           // 4,4
