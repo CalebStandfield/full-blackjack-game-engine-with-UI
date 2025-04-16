@@ -408,6 +408,14 @@ public slots:
      * @param flipped A bool for if to flip or not
      */
     void updateShowDealerCardBool(bool flipped);
+
+    /**
+     * @brief splitPlayers Slot to split the player at the given index with the updated players
+     * @param originalIndex The index of the player to split
+     * @param originalPlayer The original player
+     * @param newPlayer The new player
+     */
+    void onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
 };
 
 #endif // SCREENS_H

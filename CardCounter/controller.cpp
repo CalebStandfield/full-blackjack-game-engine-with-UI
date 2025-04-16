@@ -56,8 +56,9 @@ void Controller::onSplit()
         return;
     }
     model->split(currentPlayerIndex);
-    emit splitPlayers(currentPlayerIndex, player, model->getPlayer(currentPlayerIndex + 1));
-    checkTurnEnd(player);
+
+    emit splitPlayers(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getPlayer(currentPlayerIndex + 1));
+    checkTurnEnd(model->getPlayer(currentPlayerIndex));
 }
 
 void Controller::onBet(int bet)

@@ -101,6 +101,10 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressDoubleButton);
+    connect(ui->splitButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressSplitButton);
 
     // Betting Buttons
     connect(ui->placeBetButton,
@@ -644,7 +648,9 @@ void Screens::acceptSettingsButtonPressed()
 
     tableView->createPlayerCardContainers(playerCount);
 
-    emit sendSettingsAccepted(players, deckCount, 0);
+    //emit sendSettingsAccepted(players, deckCount, 0);
+    emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
+
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
 
@@ -780,6 +786,29 @@ void Screens::updateShowDealerCardBool(bool flipped)
     showDealerCard = flipped;
 }
 
+void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
+{
+    // TODO
+    // Animation: move second card from index of originalIndex to the location of newPlayer
+    players[originalIndex].hand.removeLastCard();
+
+    // Create the new player and add half of their hand into the player vector
+    Player tempPlayer = Player(newPlayer.money, newPlayer.hand.getBet(), newPlayer.isUser);
+    tempPlayer.originalPlayer = newPlayer.originalPlayer;
+    Hand tempHand = Hand(newPlayer.hand.getBet());
+    tempHand.addCard(newPlayer.hand.getCards()[0]);
+    tempPlayer.hand = tempHand;
+    players.insert(players.begin() + originalIndex + 1, tempPlayer);
+
+    // Update original player hand
+    playerUpdated(originalIndex, originalPlayer.hand, originalPlayer.hand.getTotal(), originalPlayer.money, originalPlayer.status);
+
+    // Updates new player hand
+    timer->scheduleSingleShot(800 * 2, [=]() {
+        playerUpdated(originalIndex + 1, newPlayer.hand, newPlayer.hand.getTotal(), newPlayer.money, newPlayer.status);
+    });
+}
+
 void Screens::currentPlayerTurn(int nextPlayerIndex)
 {
     //TODO
@@ -842,7 +871,15 @@ void Screens::endRound(QString message)
 
 void Screens::onPressNextRound()
 {
+    timer->cancelAllTimers();
     tableView->clearTable();
+
+    // Remove split hands
+    for(int i = players.size() - 1; i >= 0; i--)
+    {
+        if(players[i].originalPlayer != nullptr)
+            players.erase(players.begin() + i);
+    }
 
     emit sendNewRound();
     toggleEnabledQPushButton(ui->nextRound, false);

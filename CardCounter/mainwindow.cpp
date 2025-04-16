@@ -33,10 +33,10 @@ void MainWindow::setUpMainWindowConnects()
             &Screens::sendDoubleButtonPressed,
             controller,
             &Controller::onDoubleDown);
-    // connect(screens,
-    //         &Screens::sendSplitButtonPressed,
-    //         controller,
-    //         &Controller::);
+    connect(screens,
+            &Screens::sendSplitButtonPressed,
+            controller,
+            &Controller::onSplit);
 
     // Settings
     connect(screens,
@@ -94,6 +94,10 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::updateAllPlayers,
             screens,
             &Screens::allPlayersUpdated);
+    connect(controller,
+            &Controller::splitPlayers,
+            screens,
+            &Screens::onsplitPlayers);
 
     // POV updater
     connect(controller,
