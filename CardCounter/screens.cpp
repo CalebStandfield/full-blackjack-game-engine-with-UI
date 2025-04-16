@@ -742,9 +742,19 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
     }
 
     timer->scheduleSingleShot(waitTime, [=]() {
-        emit dealAnimationComplete();
         toggleEnabledGamePlayButtons(true);
+        emit dealAnimationComplete();
     });
+
+    // for(const Player& player : players)
+    // {
+    //     qDebug() << "Player Hand: ";
+
+    //     for(const Card& card : player.hand.getCards())
+    //     {
+    //         qDebug() << "Card: " << Rank::toString(card.getRank());
+    //     }
+    // }
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -773,6 +783,19 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         });
         waitTime = (waitTime * 2) + 800;
     }
+
+    // if(showDealerCard)
+    // {
+    //     for(const Player& player : players)
+    //     {
+    //         qDebug() << "Player Hand: ";
+
+    //         for(const Card& card : player.hand.getCards())
+    //         {
+    //             qDebug() << "Card: " << Rank::toString(card.getRank());
+    //         }
+    //     }
+    // }
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
