@@ -56,8 +56,7 @@
     </qresource>
     <qresource prefix="/cash"/>
     <qresource prefix="/table">
-        <file>BlackJackTableMat.png</file>
-        <file>blackjack_table.png</file>
+        <file>background_table_mat.png</file>
     </qresource>
     <qresource prefix="/backGround">
         <file>start_menu_screen.png</file>

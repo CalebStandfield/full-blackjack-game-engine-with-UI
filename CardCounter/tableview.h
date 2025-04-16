@@ -17,6 +17,7 @@ public:
     ~TableView();
 
     void createPlayerCardContainers(unsigned int playerCount);
+    void addPlayerCardContanierAt(unsigned int indexAt);
 
     void addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
     void addPlayerCardAt(int playerIndex, const QString& imagePath, QPointF pos, qreal rotationAngle);
@@ -35,8 +36,8 @@ private:
     std::vector<std::vector<AnimatableCardItem*>> playerCards;
     std::vector<AnimatableCardItem*> dealerCards;
 
-    unsigned int sizeX = 75;
-    unsigned int sizeY = 109;
+    unsigned int sizeX = 63;
+    unsigned int sizeY = 91;
 
     void setUpTableViewConnects();
 
