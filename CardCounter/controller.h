@@ -38,9 +38,14 @@ public slots:
     void onStand();
 
     /**
-     * @brief onDoubleDown The currnet player chooses to dobule down
+     * @brief onDoubleDown The current player chooses to dobule down
      */
     void onDoubleDown();
+
+    /**
+     * @brief onSplit The current player chooses to split
+     */
+    void onSplit();
 
     /**
      * @brief startRound The next round of betting starts
@@ -132,6 +137,14 @@ signals:
      * @param players The vector of players to update in the view
      */
     void updateAllPlayers(const std::vector<Player>& players);
+
+    /**
+     * @brief splitPlayers Signal to split the player at the given index with the updated players
+     * @param originalIndex The index of the player to split
+     * @param originalPlayer The original player
+     * @param newPlayer The new player
+     */
+    void splitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
 
 private:
     /**

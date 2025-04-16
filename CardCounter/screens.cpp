@@ -634,9 +634,9 @@ void Screens::acceptSettingsButtonPressed()
     toggleVisibleBettingView(true);
     ui->betSlider->setMaximum(initialMoney);
 
-    //userIndex = QRandomGenerator::global()->bounded(playerCount);
+    userIndex = QRandomGenerator::global()->bounded(playerCount);
     //qDebug() << userIndex;
-    userIndex = 0;
+    //userIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == userIndex);
@@ -745,16 +745,6 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         toggleEnabledGamePlayButtons(true);
         emit dealAnimationComplete();
     });
-
-    // for(const Player& player : players)
-    // {
-    //     qDebug() << "Player Hand: ";
-
-    //     for(const Card& card : player.hand.getCards())
-    //     {
-    //         qDebug() << "Card: " << Rank::toString(card.getRank());
-    //     }
-    // }
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -783,34 +773,11 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         });
         waitTime = (waitTime * 2) + 800;
     }
-
-    // if(showDealerCard)
-    // {
-    //     for(const Player& player : players)
-    //     {
-    //         qDebug() << "Player Hand: ";
-
-    //         for(const Card& card : player.hand.getCards())
-    //         {
-    //             qDebug() << "Card: " << Rank::toString(card.getRank());
-    //         }
-    //     }
-    // }
 }
 
 void Screens::updateShowDealerCardBool(bool flipped)
 {
     showDealerCard = flipped;
-
-    // for(Player& player : players)
-    // {
-    //     qDebug() << "Player hand total" << player.hand.getTotal();
-    //     qDebug() << "player card: ";
-    //     for(const Card& card : player.hand.getCards())
-    //     {
-    //         qDebug() << Rank::toString(card.getRank());
-    //     }
-    // }
 }
 
 void Screens::currentPlayerTurn(int nextPlayerIndex)

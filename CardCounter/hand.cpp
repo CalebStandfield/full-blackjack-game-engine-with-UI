@@ -58,6 +58,13 @@ int Hand::getTotal() const
     return calculateTotalAndSoft().first;
 }
 
+const Card& Hand::removeLastCard()
+{
+    const Card& card = cards[cards.size()-1];
+    cards.pop_back();
+    return card;
+}
+
 bool Hand::isSoft() const
 {
     return calculateTotalAndSoft().second;

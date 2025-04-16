@@ -19,7 +19,6 @@ Controller::~Controller()
 void Controller::checkTurnEnd(const Player& player){
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
-        emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
         advanceToNextPlayer();
         return;
     }
@@ -47,7 +46,18 @@ void Controller::onDoubleDown()
         return;
     }
     model->doubleDown(currentPlayerIndex);
-    checkTurnEnd(model->getPlayer(currentPlayerIndex));
+    checkTurnEnd(player);
+}
+
+void Controller::onSplit()
+{
+    const Player& player = model->getPlayer(currentPlayerIndex);
+    if(player.money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
+        return;
+    }
+    model->split(currentPlayerIndex);
+    emit splitPlayers(currentPlayerIndex, player, model->getPlayer(currentPlayerIndex + 1));
+    checkTurnEnd(player);
 }
 
 void Controller::onBet(int bet)
@@ -59,7 +69,8 @@ void Controller::onBet(int bet)
 void Controller::advanceToNextPlayer()
 {
     currentPlayerIndex++;
-    while(currentPlayerIndex < model->getPlayerCount() && model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT)
+    while(currentPlayerIndex < model->getPlayerCount() && (model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT
+                                                            || model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::STAND))
     {
         currentPlayerIndex++;
     }

@@ -75,6 +75,12 @@ public:
      */
     const std::vector<Card>& getCards() const;
 
+    /**
+     * @brief removeLastCard Removes the last card in the hand
+     * @return Returns the removed card from the hands
+     */
+    const Card& removeLastCard();
+
 private:
     /**
      * @brief cards The cards in the hand

@@ -23,6 +23,11 @@ public:
     bool isUser;
 
     /**
+     * @brief originalPlayer Pointer to original player
+     */
+    Player* originalPlayer = nullptr;
+
+    /**
      * @brief status Stores the current status of the player
      */
     PlayerStatus::PLAYERSTATUS status = PlayerStatus::PLAYERSTATUS::WAITING;

@@ -31,9 +31,14 @@ void GameState::clearHands()
     dealerHand = Hand(0);
     dealerFinished = false;
 
-    // Reset player's hand
-    for(Player& player : players)
-        player.hand = Hand(player.hand.getBet());
+    // Reset player hands and remove split hands
+    for(int i = players.size() - 1; i >= 0; i--)
+    {
+        if(players[i].originalPlayer != nullptr)
+            players.erase(players.begin() + i);
+        else
+            players[i].hand = Hand(players[i].hand.getBet());
+    }
 }
 
 void GameState::hit(int playerIndex)
@@ -69,6 +74,35 @@ void GameState::stand(int playerIndex)
     currPlayer.status = PLAYERSTATUS::STAND;
 }
 
+void GameState::split(int playerIndex)
+{
+    Player &currPlayer = players[playerIndex];
+    Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser);
+    secondHandPlayer.originalPlayer = &currPlayer;
+
+    // Remove money for new bet from current player
+    currPlayer.money -= currPlayer.hand.getBet();
+
+    // Splits the hand of the original player and hits once for original and new hand
+    const Card& removedCard = currPlayer.hand.removeLastCard();
+    secondHandPlayer.hand.addCard(removedCard);
+    currPlayer.hand.addCard(deck.getNextCard());
+    secondHandPlayer.hand.addCard(deck.getNextCard());
+
+    // Set status of players
+    if(removedCard.getRank() == RANK::ACE)
+    {
+        currPlayer.status = PLAYERSTATUS::STAND;
+        secondHandPlayer.status = PLAYERSTATUS::STAND;
+    }
+    else{
+        currPlayer.status = PLAYERSTATUS::ACTIVE;
+        secondHandPlayer.status = PLAYERSTATUS::WAITING;
+    }
+
+    players.insert(players.begin() + playerIndex + 1, secondHandPlayer);
+}
+
 void GameState::dealerPlay()
 {
     while (dealerHand.getTotal() < 17)
@@ -94,19 +128,34 @@ void GameState::endRound()
                 player.status = PLAYERSTATUS::BANKRUPT;
             continue;
         }
+
         int playerTotal = player.hand.getTotal();
         if(dealerBust || playerTotal > dealerTotal)
         {
             // If player gets blackjack, player gets 1.5 times their bet
             if(playerTotal == 21 && player.hand.getCards().size() == 2)
-                player.money += player.hand.getBet() * 2.5;
+            {
+                if(player.originalPlayer != nullptr)
+                    player.originalPlayer->money += player.hand.getBet() * 2.5;
+                else
+                    player.money += player.hand.getBet() * 2.5;
+            }
             // Else, player doubles their bet
             else
-                player.money += player.hand.getBet() * 2;
+            {
+                if(player.originalPlayer != nullptr)
+                    player.originalPlayer->money += player.hand.getBet() * 2;
+                else
+                    player.money += player.hand.getBet() * 2;
+            }
         }
         else if(playerTotal == dealerTotal)
-            player.money += player.hand.getBet();
-
+        {
+            if(player.originalPlayer != nullptr)
+                player.originalPlayer->money += player.hand.getBet();
+            else
+                player.money += player.hand.getBet();
+        }
         if(player.money <= 0)
             player.status = PLAYERSTATUS::BANKRUPT;
     }
@@ -142,4 +191,3 @@ const std::vector<Player> GameState::getAllPlayers() const
 {
     return players;
 }
-

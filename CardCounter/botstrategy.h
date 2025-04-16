@@ -18,6 +18,13 @@ public:
      */
     MOVE getNextMove(const Hand& playerHand, const Card& dealerCard);
 
+    /**
+     * @brief isPair Checks if the hand is a pair (2 of the same card)
+     * @param hand The hand to check
+     * @return True if the hand is a pair, false if it is not
+     */
+    bool isPair(const Hand& hand);
+
 private:
     /**
      * @brief cardToIndex Converts the current card to an index for a table by subtracting 2
@@ -25,13 +32,6 @@ private:
      * @return Returns the int value for the index of the card
      */
     int cardToIndex(const Card& card);
-
-    /**
-     * @brief isPair Checks if the hand is a pair (2 of the same card)
-     * @param hand The hand to check
-     * @return True if the hand is a pair, false if it is not
-     */
-    bool isPair(const Hand& hand);
 
     /**
      * @brief getSoftHandMove Determines the recommended move for a soft hand (ace counted as 11)
