@@ -31,8 +31,7 @@ private:
     enum GAMEPLAYMODE {
         BLACKJACK,
         BLACKJACKTUTORIAL,
-        COUNTCARDS,
-        COUNTCARDSTUTORIAL,
+        BLACKJACKPRACTICE,
         UNSELECTED
     };
 
@@ -119,6 +118,11 @@ private:
     void setUpSettingsPopup();
 
     /**
+     * @brief setUpPlayerInfoBox Sets up the playerInfoBox
+     */
+    void setUpPlayerInfoBox();
+
+    /**
      * @brief setUpQStyleSheets Initalizes the QStrings for the different StyleSheets
      */
     void setUpQStyleSheets();
@@ -193,10 +197,22 @@ private:
      */
     void moveToStartScreen();
 
+    /**
+     * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
+     * @param show The state to set the setting popup
+     */
     void toggleVisibleSettingsPopup(bool show);
 
+    /**
+     * @brief toggleVisibleBettingView Sets the visibility of the betting view
+     * @param show The state to set the betting view
+     */
     void toggleVisibleBettingView(bool show);
 
+    /**
+     * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
+     * @param show The state to set the setting popup
+     */
     void toggleVisibleGamePlayButtons(bool show);
 
     /**

@@ -43,7 +43,7 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
-    connect(ui->countCardsPlayButton,
+    connect(ui->blackjackPracticeButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
@@ -163,7 +163,7 @@ void Screens::setUpStartMenuButtons()
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
     ui->basicStrategyChartButton->setStyleSheet(QPushButtonStyle);
-    ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
+    ui->blackjackPracticeButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
 
 }
@@ -258,7 +258,7 @@ void Screens::updateSettingsSlider(unsigned int value)
     else if (name == "deckCountSettingsSlider")
     {
         ui->deckCountTextSettingsLabel->setText("Deck Count: " + QString::number(value));
-        playerCount = value;
+        deckCount = value;
     }
 
 }
@@ -476,9 +476,9 @@ void Screens::moveToPlayScreen()
     {
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
     }
-    else if (name == "countCardsPlayButton")
+    else if (name == "blackjackPracticeButton")
     {
-        mode = GAMEPLAYMODE::COUNTCARDS;
+        mode = GAMEPLAYMODE::BLACKJACKPRACTICE;
     }
     else
     {
@@ -648,8 +648,8 @@ void Screens::acceptSettingsButtonPressed()
 
     tableView->createPlayerCardContainers(playerCount);
 
-    //emit sendSettingsAccepted(players, deckCount, 0);
-    emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
+    emit sendSettingsAccepted(players, deckCount, 0);
+    //emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
 
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
