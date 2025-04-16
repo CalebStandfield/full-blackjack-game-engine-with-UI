@@ -55,7 +55,6 @@ SOURCES += \
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
-    bettingview.cpp \
     botstrategy.cpp \
     card.cpp \
     controller.cpp \
@@ -64,6 +63,7 @@ SOURCES += \
     hand.cpp \
     main.cpp \
     mainwindow.cpp \
+    playerinfoview.cpp \
     screens.cpp \
     statistics.cpp \
     statsview.cpp \
@@ -118,7 +118,6 @@ HEADERS += \
     Box2D/Dynamics/b2World.h \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
-    bettingview.h \
     botstrategy.h \
     card.h \
     controller.h \
@@ -128,6 +127,7 @@ HEADERS += \
     mainwindow.h \
     player.h \
     playerStatus.h \
+    playerinfoview.h \
     rank.h \
     screens.h \
     statistics.h \
