@@ -695,16 +695,6 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
     if(hand.getCards().size() == 1)
     {
         dealCard(playerIndex, hand.getCards()[0].getImagePath());
-        players[playerIndex].hand.addCard(hand.getCards()[0]);
-
-        // if(players[playerIndex].isUser)
-        // {
-        //     qDebug() << "After hand update: ";
-        //     for(const Card& card : players[playerIndex].hand.getCards())
-        //     {
-        //         qDebug() << Rank::toString(card.getRank());
-        //     }
-        // }
     }
     else if(hand.getCards().size() >= 2)
     {
@@ -722,8 +712,8 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
             timer->scheduleSingleShot(800, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());});
         }
-        players[playerIndex].hand = hand;
     }
+    players[playerIndex].hand = hand;
     players[playerIndex].money = money;
     players[playerIndex].status = status;
 }
@@ -731,15 +721,20 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
     unsigned int waitTime = 0;
-    Hand tempHand;
+    std::vector<Player> tempPlayers;
+
+    for(const Player& player : players)
+    {
+        tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser);
+    }
+
     for(int j = 0; j < 2; j++)
     {
-        for(int i = 0; i < static_cast<int>(players.size()); i++)
+        for(int i = 0; i < static_cast<int>(tempPlayers.size()); i++)
         {
-            tempHand = Hand(players[i].hand.getBet());
-            tempHand.addCard(players[i].hand.getCards()[j]);
+            tempPlayers[i].hand.addCard(players[i].hand.getCards()[j]);
             timer->scheduleSingleShot(waitTime, [=]() {
-                playerUpdated(i, tempHand, tempHand.getTotal(), players[i].money, players[i].status);
+                playerUpdated(i, tempPlayers[i].hand, tempPlayers[i].hand.getTotal(), players[i].money, players[i].status);
             });
             waitTime += 800;
         }
@@ -783,6 +778,16 @@ void Screens::dealerUpdated(const Hand& hand, int total)
 void Screens::updateShowDealerCardBool(bool flipped)
 {
     showDealerCard = flipped;
+
+    // for(Player& player : players)
+    // {
+    //     qDebug() << "Player hand total" << player.hand.getTotal();
+    //     qDebug() << "player card: ";
+    //     for(const Card& card : player.hand.getCards())
+    //     {
+    //         qDebug() << Rank::toString(card.getRank());
+    //     }
+    // }
 }
 
 void Screens::currentPlayerTurn(int nextPlayerIndex)

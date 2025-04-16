@@ -19,6 +19,7 @@ Controller::~Controller()
 void Controller::checkTurnEnd(const Player& player){
     emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
+        emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
         advanceToNextPlayer();
         return;
     }
