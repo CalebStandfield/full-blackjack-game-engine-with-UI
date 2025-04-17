@@ -57,7 +57,6 @@ SOURCES += \
     Box2D/Rope/b2Rope.cpp \
     bettingview.cpp \
     botstrategy.cpp \
-    box2dphysicsscene.cpp \
     card.cpp \
     controller.cpp \
     deck.cpp \
@@ -121,7 +120,6 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     bettingview.h \
     botstrategy.h \
-    box2dphysicsscene.h \
     card.h \
     controller.h \
     deck.h \

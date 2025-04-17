@@ -10,31 +10,6 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 
     screens = new Screens(ui);
 
-    m_scene = new box2dPhysicsScene(this);
-
-    ui->coinAnimView_2->setStyleSheet("background: transparent");
-    ui->coinAnimView_2->setScene(m_scene);
-
-    // Disable scrolling and anchor the view
-    ui->coinAnimView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->coinAnimView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->coinAnimView_2->setRenderHint(QPainter::Antialiasing);
-
-    ui->coinAnimView_2->setSceneRect(m_scene->sceneRect());
-    ui->coinAnimView_2->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
-
-    // ui->coinAnimView->setStyleSheet("background: transparent");
-    // ui->coinAnimView->setScene(m_scene);
-
-    // // Disable scrolling and anchor the view
-    // ui->coinAnimView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // ui->coinAnimView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    // ui->coinAnimView->setRenderHint(QPainter::Antialiasing);
-
-    QTimer* timer = new QTimer(this);
-    connect(timer, &QTimer::timeout, m_scene, &box2dPhysicsScene::advance);
-    timer->start(1000 / 60);
-
     setUpMainWindowConnects();
 }
 
