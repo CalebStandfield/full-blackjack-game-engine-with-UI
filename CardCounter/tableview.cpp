@@ -10,7 +10,7 @@ TableView::TableView(QWidget *parent)
 
     QPixmap tablePixmap(":/table/background_table_mat.png");
 
-    tablePixmap = tablePixmap.scaled(1200, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    tablePixmap = tablePixmap.scaled(1170, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     tableBackground = scene->addPixmap(tablePixmap);
     tableBackground->setZValue(0);
     scene->setSceneRect(tablePixmap.rect());
