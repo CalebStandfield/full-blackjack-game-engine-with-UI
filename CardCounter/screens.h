@@ -108,6 +108,11 @@ private:
     void setUpBettingMenu();
 
     /**
+     * @brief setUpBankruptcyMenu Sets up the area where you can either go to menu or play again
+     */
+    void setUpBankruptcyMenu();
+
+    /**
      * @brief setUpGamePlayButtons Sets up the game play buttons
      */
     void setUpGamePlayButtons();
@@ -214,6 +219,12 @@ private:
      * @param show The state to set the setting popup
      */
     void toggleVisibleGamePlayButtons(bool show);
+
+    /**
+     * @brief toggleVisableBankruptcyMenu Sets the visibility of the game over screen
+     * @param show The state to set the setting popup
+     */
+    void toggleVisableBankruptcyMenu(bool show);
 
     /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
@@ -434,6 +445,11 @@ public slots:
      * @param newPlayer The new player
      */
     void onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+
+    /**
+     * @brief onGameOver Logic for when the controller sends the game over signal
+     */
+    void onGameOver();
 };
 
 #endif // SCREENS_H

@@ -22,7 +22,7 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     toggleVisibleSettingsPopup(false);
     setUpBasicStrategyCharts();
     setUpBettingMenu();
-
+    setUpBankruptcyMenu();
     // Connects
     setUpScreenConnects();
 
@@ -445,6 +445,36 @@ void Screens::setUpBackGround()
     ui->screens->setStyleSheet(QStackedWidgetStyle);
 }
 
+void Screens::setUpBankruptcyMenu()
+{
+    ui->bankruptcyMenu->setStyleSheet(QWidgetStyle);
+    QString bankruptcyLabel =
+        "QLabel {"
+        "    background-color: transparent;"
+        "    border: none;"
+        "    color: red;"
+        "    font-size: 30px;"
+        "    font-weight: bold;"
+        "    padding: 6px;"
+        "    qproperty-alignment: AlignCenter;"
+        "}";
+    ui->bankruptcyLabel->setStyleSheet(bankruptcyLabel);
+    ui->backToMainMenuFromPlay_2->setStyleSheet(QPushButtonStyle);
+    ui->nextRound->setStyleSheet(QPushButtonStyle);
+
+    auto* effect = new QGraphicsColorizeEffect(ui->bankruptcyLabel);
+    effect->setColor(Qt::darkRed);
+    ui->bankruptcyLabel->setGraphicsEffect(effect);
+
+    auto* animation = new QPropertyAnimation(effect, "color");
+    animation->setDuration(2000);
+    animation->setLoopCount(-1); // infinite
+    animation->setStartValue(QColor(100, 0, 0)); // dark red
+    animation->setEndValue(QColor(255, 0, 0));   // bright red
+    animation->setEasingCurve(QEasingCurve::InOutSine);
+    animation->start();
+}
+
 void Screens::moveToStartScreen()
 {
     ui->screens->setCurrentIndex(0);
@@ -458,6 +488,7 @@ void Screens::moveToPlayScreen()
 {
     toggleEnabledGamePlayButtons(false);
     toggleVisibleGamePlayButtons(false);
+    toggleVisableBankruptcyMenu(false);
     tableView->clearTable();
     toggleEnabledQPushButton(ui->nextRound, false);
 
@@ -521,6 +552,20 @@ void Screens::toggleVisibleGamePlayButtons(bool show)
         ui->gamePlayButtons->hide();
     }
 }
+
+void Screens::toggleVisableBankruptcyMenu(bool show)
+{
+    if (show)
+    {
+        ui->bankruptcyMenu->show();
+    }
+    else
+    {
+        ui->bankruptcyMenu->hide();
+    }
+
+}
+
 
 void Screens::applyShadowToWidget(QWidget *widget)
 {
@@ -630,6 +675,12 @@ void Screens::onEditChipCountLineEdit()
     ui->chipCountSettingsLineEdit->setText(QString::number(value));
     initialMoney = value;
     toggleEnabledQPushButton(ui->acceptSettingsButton, true);
+}
+
+void Screens::onGameOver()
+{
+    toggleVisableBankruptcyMenu(true);
+    toggleEnabledQPushButton(ui->nextRound, false);
 }
 
 void Screens::acceptSettingsButtonPressed()
