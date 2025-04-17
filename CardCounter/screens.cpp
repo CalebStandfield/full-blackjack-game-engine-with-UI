@@ -715,7 +715,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            timer->scheduleSingleShot(800, [=]() {
+            timer->scheduleSingleShot(600, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());});
         }
     }
@@ -742,9 +742,9 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
             timer->scheduleSingleShot(waitTime, [=]() {
                 playerUpdated(i, tempPlayers[i].hand, tempPlayers[i].hand.getTotal(), players[i].money, players[i].status);
             });
-            waitTime += 800;
+            waitTime += 600;
         }
-        waitTime += 800;
+        waitTime += 600;
     }
 
     timer->scheduleSingleShot(waitTime, [=]() {
@@ -762,11 +762,11 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
-    unsigned int waitTime = 800 * players.size();
+    unsigned int waitTime = 600 * players.size();
 
     if (showDealerCard)
     {
-        waitTime = 800;
+        waitTime = 600;
 
         QString imagePath = dealerHand.getCards().at(0).getImagePath();
         tableView->revealDealerCard(imagePath);
@@ -777,7 +777,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
-        waitTime = (waitTime * 2) + 800;
+        waitTime = (waitTime * 2) + 600;
     }
 }
 
@@ -804,7 +804,7 @@ void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, co
     playerUpdated(originalIndex, originalPlayer.hand, originalPlayer.hand.getTotal(), originalPlayer.money, originalPlayer.status);
 
     // Updates new player hand
-    timer->scheduleSingleShot(800 * 2, [=]() {
+    timer->scheduleSingleShot(600 * 2, [=]() {
         playerUpdated(originalIndex + 1, newPlayer.hand, newPlayer.hand.getTotal(), newPlayer.money, newPlayer.status);
     });
 }

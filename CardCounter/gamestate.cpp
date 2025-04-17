@@ -38,6 +38,9 @@ void GameState::clearHands()
             players.erase(players.begin() + i);
         else
             players[i].hand = Hand(players[i].hand.getBet());
+
+        if(players[i].status != PLAYERSTATUS::BANKRUPT)
+            players[i].status = PLAYERSTATUS::WAITING;
     }
 }
 
@@ -170,6 +173,10 @@ void GameState::setPlayerBet(int index, int amount)
 {
     players[index].money -= amount;
     players[index].hand.setBet(amount);
+
+    // Set the status to bet submitted if not bankrupt
+    if (players[index].status != PLAYERSTATUS::BANKRUPT)
+        players[index].status = PLAYERSTATUS::BETSUBMITTED;
 }
 
 const Player& GameState::getPlayer(int index) const

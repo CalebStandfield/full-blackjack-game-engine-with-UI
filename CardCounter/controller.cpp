@@ -119,7 +119,22 @@ void Controller::startBetting()
 
 void Controller::advanceToNextBet()
 {
+    // Tell the view the player bet and change their status
+    if(currentPlayerIndex >= 0)
+    {
+        const Player& betPlayer = model->getPlayer(currentPlayerIndex);
+        emit playerUpdated(currentPlayerIndex, betPlayer.hand, betPlayer.hand.getTotal(), betPlayer.money, betPlayer.status);
+    }
+
     currentPlayerIndex++;
+
+    // Skip all bankrupt players
+    while(currentPlayerIndex < model->getPlayerCount() && model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT)
+    {
+        currentPlayerIndex++;
+    }
+
+    // Check if everyone has bet
     if(currentPlayerIndex == model->getPlayerCount())
     {
         emit endBetting();
@@ -150,11 +165,13 @@ void Controller::onDealingAnimationComplete()
 
 void Controller::botMove()
 {
+    // Get the correct MOVE
     const Player& player = model->getPlayer(currentPlayerIndex);
     MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
     unsigned int waitTime = 1000;
 
+    // Call the correct MOVE
     if(move == MOVE::HIT)
         QTimer::singleShot(waitTime, this, [=]() {
             onHit();});
@@ -184,7 +201,7 @@ void Controller::botBet()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
     int bet = std::max(player.money / 10, 1);
-    timer->scheduleSingleShot(100, [=]() {
+    timer->scheduleSingleShot(500, [=]() {
         onBet(bet);});
 }
 

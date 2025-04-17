@@ -8,6 +8,7 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 {
     ui->setupUi(this);
 
+    infoBar = new PlayerInfoView(ui);
     screens = new Screens(ui);
 
     setUpMainWindowConnects();
@@ -16,6 +17,8 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete screens;
+    delete infoBar;
 }
 
 void MainWindow::setUpMainWindowConnects()
@@ -73,6 +76,10 @@ void MainWindow::setUpMainWindowConnects()
             &Screens::sendStopEverything,
             controller,
             &Controller::onStopEverything);
+    connect(screens,
+            &Screens::sendStopEverything,
+            infoBar,
+            &PlayerInfoView::onStopEverything);
 
 
     // Controller -> Screens
@@ -114,4 +121,27 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::endRound,
             screens,
             &Screens::endRound);
+
+    // Controller -> PlayerInfoView
+    connect(screens,
+            &Screens::sendSettingsAccepted,
+            infoBar,
+            &PlayerInfoView::onSettingsAccepted);
+    connect(controller,
+            &Controller::playerUpdated,
+            infoBar,
+            &PlayerInfoView::onPlayerUpdated);
+    connect(controller,
+            &Controller::updateAllPlayers,
+            infoBar,
+            &PlayerInfoView::onUpdateAllPlayers);
+    connect(controller,
+            &Controller::splitPlayers,
+            infoBar,
+            &PlayerInfoView::onSplitPlayers);
+    connect(controller,
+            &Controller::currentPlayerTurn,
+            infoBar,
+            &PlayerInfoView::onCurrentPlayerTurn);
+
 }
