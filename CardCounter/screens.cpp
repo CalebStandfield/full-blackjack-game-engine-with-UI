@@ -785,6 +785,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
+    toggleEnabledGamePlayButtons(false);
     unsigned int waitTime = 0;
     std::vector<Player> tempPlayers;
 
@@ -814,6 +815,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 
 void Screens::dealerUpdated(const Hand& hand, int total)
 {
+    toggleEnabledGamePlayButtons(false);
     int prevHandSize = dealerHand.getCards().size();
     dealerHand = hand;
 
@@ -837,6 +839,13 @@ void Screens::dealerUpdated(const Hand& hand, int total)
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
         waitTime = (waitTime * 2) + 600;
+    }
+
+    if (showDealerCard)
+    {
+        timer->scheduleSingleShot(waitTime, [=]() {
+            emit sendDealerDonePlaying();
+        });
     }
 }
 

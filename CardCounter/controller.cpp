@@ -81,14 +81,6 @@ void Controller::advanceToNextPlayer()
         model->dealerPlay();
         emit showDealerCard(true);
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
-        model->endRound();
-        emit endRound(model->getAllPlayers());
-
-        for(int i = 0; i < model->getPlayerCount(); i++){
-            if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
-                return;
-        }
-        emit gameOver();
         return;
     }
 
@@ -99,6 +91,18 @@ void Controller::advanceToNextPlayer()
 
     if(!player.isUser)
          botMove();
+}
+
+void Controller::onDealerDonePlaying()
+{
+    model->endRound();
+    emit endRound(model->getAllPlayers());
+
+    for(int i = 0; i < model->getPlayerCount(); i++){
+        if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
+            return;
+    }
+    emit gameOver();
 }
 
 void Controller::startBetting()

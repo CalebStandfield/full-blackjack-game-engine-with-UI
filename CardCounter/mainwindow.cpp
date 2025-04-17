@@ -65,6 +65,12 @@ void MainWindow::setUpMainWindowConnects()
             controller,
             &Controller::onBet);
 
+    // Round ending
+    connect(screens,
+            &Screens::sendDealerDonePlaying,
+            controller,
+            &Controller::onDealerDonePlaying);
+
     // Next round
     connect(screens,
             &Screens::sendNewRound,

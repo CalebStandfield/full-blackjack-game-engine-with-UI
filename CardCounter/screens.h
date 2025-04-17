@@ -379,6 +379,11 @@ signals:
      */
     void sendStopEverything();
 
+    /**
+     * @brief sendDealerDonePlaying Signal that the dealer has finished his play animation
+     */
+    void sendDealerDonePlaying();
+
 private slots:
     /**
      * @brief dealCard

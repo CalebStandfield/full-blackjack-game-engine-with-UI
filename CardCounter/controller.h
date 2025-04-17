@@ -74,6 +74,11 @@ public slots:
     void onDealingAnimationComplete();
 
     /**
+     * @brief onDealerDonePlaying Slot that the dealer animation is complete and the round can end
+     */
+    void onDealerDonePlaying();
+
+    /**
      * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
      * @param players The number of players in the game
      * @param decks The number of decks to play with
