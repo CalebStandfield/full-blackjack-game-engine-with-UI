@@ -39,8 +39,7 @@ void Deck::shuffle()
         // Implement determined shuffle for single player
         for (SUIT suit : Suit::allSuits)
             for (RANK rank : Rank::allRanks)
-                masterDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
-
+                shuffledDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
     }
     else
     {
