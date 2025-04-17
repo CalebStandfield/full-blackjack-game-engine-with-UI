@@ -17,7 +17,7 @@ Controller::~Controller()
 }
 
 void Controller::checkTurnEnd(const Player& player){
-    emit playerUpdated(currentPlayerIndex, player.hand, player.hand.getTotal(), player.money, player.status);
+    emit playerUpdated(currentPlayerIndex, player, player.hand.getTotal());
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
         advanceToNextPlayer();
         return;
@@ -113,7 +113,7 @@ void Controller::startBetting()
     model->clearHands();
     for(int i = 0; i < model->getPlayerCount(); i++){
         const Player& player = model->getPlayer(i);
-        emit playerUpdated(i, player.hand, player.hand.getTotal(), player.money, player.status);
+        emit playerUpdated(i, player, player.hand.getTotal());
     }
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
 
@@ -126,7 +126,7 @@ void Controller::advanceToNextBet()
     if(currentPlayerIndex >= 0)
     {
         const Player& betPlayer = model->getPlayer(currentPlayerIndex);
-        emit playerUpdated(currentPlayerIndex, betPlayer.hand, betPlayer.hand.getTotal(), betPlayer.money, betPlayer.status);
+        emit playerUpdated(currentPlayerIndex, betPlayer, betPlayer.hand.getTotal());
     }
 
     currentPlayerIndex++;

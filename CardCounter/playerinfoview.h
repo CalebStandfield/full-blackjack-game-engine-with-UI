@@ -39,7 +39,7 @@ public slots:
      * @param money The money the player has
      * @param status The status of the player
      */
-    void onPlayerUpdated(int playerIndex, const Hand &hand, int total, int money, PLAYERSTATUS status);
+    void onPlayerUpdated(int playerIndex, const Player &player, int total);//TODO
 
     /**
      * @brief onUpdateAllPlayers Slot to update all of the players

@@ -155,15 +155,15 @@ void PlayerInfoView::refreshSeat(int seat, const Player& player)
     setSeatText(seat, player.money, player.hand.getBet(), player.status);
 }
 
-void PlayerInfoView::onPlayerUpdated(int playerIndex, const Hand& hand, int, int money, PLAYERSTATUS status)
+void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int total)
 {
     if (playerIndex >= modelToSeat.size())
         return;
 
     // Updates text and border for the playerIndex label
     int seat = modelToSeat[playerIndex];
-    paintBorder(seatLabels[seat], status);
-    setSeatText(playerIndex, money, hand.getBet(), status);
+    paintBorder(seatLabels[seat], player.status);
+    setSeatText(playerIndex, player.money, player.hand.getBet(), player.status);
 }
 
 void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
