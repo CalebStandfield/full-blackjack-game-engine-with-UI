@@ -701,7 +701,7 @@
           </sizepolicy>
          </property>
          <property name="text">
-          <string>Minimum ($1)</string>
+          <string>Minimum</string>
          </property>
         </widget>
        </item>

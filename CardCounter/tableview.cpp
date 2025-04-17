@@ -38,6 +38,16 @@ void TableView::createPlayerCardContainers(unsigned int playerCount)
     }
 }
 
+void TableView::addPlayerCardContanierAt(unsigned int indexAt)
+{
+    // Index check
+    if (indexAt > playerCards.size())
+        return;
+
+    // Insert an empty vector at the specified index
+    playerCards.insert(playerCards.begin() + indexAt, std::vector<AnimatableCardItem*>());
+}
+
 void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
     if (playerIndex == -1)
