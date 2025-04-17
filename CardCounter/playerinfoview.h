@@ -58,8 +58,10 @@ public slots:
     /**
      * @brief onCurrentPlayerTurn Slot to select a new player
      * @param newPlayerIndex The index of the player to select
+     * @param money The money of the current player's turn
+     * @param bet The bet of the current player's turn
      */
-    void onCurrentPlayerTurn(int newPlayerIndex);
+    void onCurrentPlayerTurn(int newPlayerIndex, int money, int bet);
 
     /**
      * @brief onStopEverything Hide the player info bar

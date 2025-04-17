@@ -154,13 +154,14 @@ void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPla
         refreshSeat(modelToSeat[originalIndex], originalPlayer);
 }
 
-void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex)
+void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet)
 {
     if (newPlayerIndex >= modelToSeat.size())
         return;
 
     int seat = modelToSeat[newPlayerIndex];
     paintBorder(seatLabels[seat], PLAYERSTATUS::ACTIVE);
+    setSeatText(newPlayerIndex, money, bet, PLAYERSTATUS::ACTIVE);
 }
 
 void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS status)

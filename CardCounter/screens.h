@@ -405,8 +405,10 @@ public slots:
     /**
      * @brief currentPlayerTurn Slot for changing to the player at given index
      * @param nextPlayerIndex The index of the next player that is up now
+     * @param money The money of the current player
+     * @param bet The bet of the current player
      */
-    void currentPlayerTurn(int nextPlayerIndex);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
 
     /**
      * @brief endBetting Slot for changing from betting phase to playing phase

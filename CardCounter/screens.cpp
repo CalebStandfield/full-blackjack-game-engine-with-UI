@@ -809,10 +809,8 @@ void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, co
     });
 }
 
-void Screens::currentPlayerTurn(int nextPlayerIndex)
+void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
 {
-    //TODO
-    //Change POV to player at received index
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);

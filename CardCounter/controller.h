@@ -101,8 +101,10 @@ signals:
     /**
      * @brief currentPlayerTurn Signal that it is the next player's turn
      * @param nextPlayerIndex The index of the next player that is up now
+     * @param money The money of the current player's turn
+     * @param bet The bet of the current player's turn
      */
-    void currentPlayerTurn(int nextPlayerIndex);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
 
     /**
      * @brief flipDealerCard Signal to flip over the dealer's first card
