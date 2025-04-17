@@ -121,6 +121,10 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::endRound,
             screens,
             &Screens::endRound);
+    connect(controller,
+            &Controller::gameOver,
+            screens,
+            &Screens::onGameOver);
 
     // Controller -> PlayerInfoView
     connect(screens,
