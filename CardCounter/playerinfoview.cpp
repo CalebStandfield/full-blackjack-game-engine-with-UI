@@ -18,15 +18,6 @@ void PlayerInfoView::buildLayout(int seats)
         "    padding: 16px;"
         "    color: white;"
         "    font-size: 16px;"
-        "}"
-        "QLabel {"
-        "    background-color: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #222, stop:1 #333);"
-        "    color: white;"
-        "    border: 1px solid rgba(255, 255, 255, 0.2);"
-        "    border-radius: 12px;"
-        "    padding: 12px 20px;"
-        "    font-size: 19px;"
-        "    font-weight: 600;"
         "}";
 
     ui->playInfoContainer->setStyleSheet(QWidgetStyle);
@@ -86,8 +77,28 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
 
 void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
 {
-    QString color = getStatusColor(status);
-    label->setStyleSheet(QString("border:3px solid %1").arg(color));
+    QString borderColor = getStatusColor(status);
+
+    /* choose base style */
+    const char *darkBase =
+        "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
+        " stop:0 #222, stop:1 #333);"
+        "color:white;";
+    const char *lightBase =
+        "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
+        " stop:0 #ffffff, stop:1 #dddddd);"
+        "color:black;";
+
+    bool isUser = (userIndex >= 0 && label == seatLabels[userIndex]);
+    QString base = isUser ? lightBase : darkBase;
+
+    label->setStyleSheet(QString(
+                             "QLabel{%1"
+                             "border:3px solid %2;"
+                             "border-radius:12px;"
+                             "padding:12px 20px;"
+                             "font-size:19px;"
+                             "font-weight:600;}").arg(base, borderColor));
 }
 
 void PlayerInfoView::rebuildMapping()
@@ -169,20 +180,35 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
     if (seat < 0 || seat >= seatCount)
         return;
 
-    QString color = getStatusColor(status);
+    QString borderColor = getStatusColor(status);
     std::string statusString = PlayerStatus::toString(status);
+
+    QString textColor = (seat == userIndex) ? "#000000" : "#ffffff";
+
+    QString name;
+    // If seat is is the user, set name as User
+    if(seat == userIndex)
+        name = "User";
+    // If seat is not user, use Player
+    else
+    {
+        // If seat is after userIndex, subtract by 1 for player number
+        int playerNumber = seat + 1 - (seat > userIndex ? 1 : 0);
+        name = QString("Player %1").arg(playerNumber);
+    }
 
     seatLabels[seat]->setTextFormat(Qt::RichText);
     seatLabels[seat]->setText(
-        QString("<span style='color: white;'>Player %1</span><br>"
-                "<span style='color: white;'>Money: $%2</span><br>"
-                "<span style='color: white;'>Bet: $%3</span><br>"
+        QString("<span style='color:%6;'>%1</span><br>"
+                "<span style='color:%6;'>Money: $%2</span><br>"
+                "<span style='color:%6;'>Bet: $%3</span><br>"
                 "<span style='color: %4;'>%5</span>")
-            .arg(seat + 1)
+            .arg(name)
             .arg(money)
             .arg(bet)
-            .arg(color)
+            .arg(borderColor)
             .arg(QString::fromStdString(statusString))
+            .arg(textColor)
         );
 
     seatLabels[seat]->show();
