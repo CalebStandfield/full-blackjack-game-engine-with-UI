@@ -75,9 +75,9 @@ private:
     int seatCount = 0;
 
     /**
-     * @brief seatStatus A vector holding all of the player's status'
+     * @brief userIndex Index where the user is
      */
-    QVector<PLAYERSTATUS> seatStatus;
+    int userIndex = -1;
 
     /**
      * @brief ui The ui of the game

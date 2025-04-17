@@ -102,11 +102,17 @@ void PlayerInfoView::insertSplitMapping(int playerIndex)
 
 void PlayerInfoView::onSettingsAccepted(const std::vector<Player> &players, int, int)
 {
+    userIndex = -1;
+
     // Builds all labels and then updates them
     buildLayout(static_cast<int>(players.size()));
     rebuildMapping();
     for (int i = 0; i < static_cast<int>(players.size()); i++)
+    {
+        if(players[i].isUser)
+            userIndex = i;
         refreshSeat(modelToSeat[i], players[i]);
+    }
 }
 
 void PlayerInfoView::refreshSeat(int seat, const Player& player)
