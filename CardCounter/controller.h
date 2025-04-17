@@ -38,9 +38,14 @@ public slots:
     void onStand();
 
     /**
-     * @brief onDoubleDown The currnet player chooses to dobule down
+     * @brief onDoubleDown The current player chooses to dobule down
      */
     void onDoubleDown();
+
+    /**
+     * @brief onSplit The current player chooses to split
+     */
+    void onSplit();
 
     /**
      * @brief startRound The next round of betting starts
@@ -67,6 +72,11 @@ public slots:
      * @brief onDealingAnimationComplete Slot that the dealing animation is complete and the round can start
      */
     void onDealingAnimationComplete();
+
+    /**
+     * @brief onDealerDonePlaying Slot that the dealer animation is complete and the round can end
+     */
+    void onDealerDonePlaying();
 
     /**
      * @brief createNewGame Create a new gamestate and initalizes blackjack with the set players with the given amount of money
@@ -96,8 +106,10 @@ signals:
     /**
      * @brief currentPlayerTurn Signal that it is the next player's turn
      * @param nextPlayerIndex The index of the next player that is up now
+     * @param money The money of the current player's turn
+     * @param bet The bet of the current player's turn
      */
-    void currentPlayerTurn(int nextPlayerIndex);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
 
     /**
      * @brief flipDealerCard Signal to flip over the dealer's first card
@@ -107,9 +119,9 @@ signals:
 
     /**
      * @brief endRound Signal that the round has ended
-     * @param roundSummary A brief summary of the round to display
+     * @param players A vector of the players after the round has ended
      */
-    void endRound(QString roundSummary);
+    void endRound(const std::vector<Player>& players);
 
     /**
      * @brief gameMessage Signal to send a game message (ex. player 0 has busted)
@@ -132,6 +144,14 @@ signals:
      * @param players The vector of players to update in the view
      */
     void updateAllPlayers(const std::vector<Player>& players);
+
+    /**
+     * @brief splitPlayers Signal to split the player at the given index with the updated players
+     * @param originalIndex The index of the player to split
+     * @param originalPlayer The original player
+     * @param newPlayer The new player
+     */
+    void splitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
 
 private:
     /**

@@ -19,10 +19,10 @@ Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     setUpGamePlayButtons();
     setUpSettingsPopup();
     setUpBackGround();
-    hideSettingsPopup();
+    toggleVisibleSettingsPopup(false);
     setUpBasicStrategyCharts();
     setUpBettingMenu();
-
+    setUpBankruptcyMenu();
     // Connects
     setUpScreenConnects();
 
@@ -38,12 +38,12 @@ Screens::~Screens()
 
 void Screens::setUpScreenConnects()
 {
-    // Gameplay buttons
+    // Menu Buttons
     connect(ui->blackjackPlayButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
-    connect(ui->countCardsPlayButton,
+    connect(ui->blackjackPracticeButton,
             &QPushButton::clicked,
             this,
             &Screens::moveToPlayScreen);
@@ -56,7 +56,7 @@ void Screens::setUpScreenConnects()
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
-            &Screens::hideSettingsPopup);
+            [this] () {toggleVisibleSettingsPopup(false);});
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
@@ -101,6 +101,10 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressDoubleButton);
+    connect(ui->splitButton,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressSplitButton);
 
     // Betting Buttons
     connect(ui->placeBetButton,
@@ -124,7 +128,7 @@ void Screens::setUpScreenConnects()
             this,
             &Screens::onPressBettingAmountButtons);
 
-    // Continue or leave
+    // Continue, leave, or play again
     connect(ui->backToMainMenuFromPlay,
             &QPushButton::clicked,
             this,
@@ -133,6 +137,14 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressNextRound);
+    connect(ui->backToMainMenuFromPlay_2,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressMainMenuButton);
+    connect(ui->playAgain,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressPlayAgain);
 }
 
 void Screens::setUpTable()
@@ -159,7 +171,7 @@ void Screens::setUpStartMenuButtons()
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);
     ui->basicStrategyChartButton->setStyleSheet(QPushButtonStyle);
-    ui->countCardsPlayButton->setStyleSheet(QPushButtonStyle);
+    ui->blackjackPracticeButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
 
 }
@@ -236,7 +248,7 @@ void Screens::setUpBettingMenu()
 
 void Screens::updateBetLabelText(unsigned int value)
 {
-    toggleEnabledQPushButton(ui->placeBetButton, true);
+    //toggleEnabledQPushButton(ui->placeBetButton, true);
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
 }
 
@@ -254,7 +266,7 @@ void Screens::updateSettingsSlider(unsigned int value)
     else if (name == "deckCountSettingsSlider")
     {
         ui->deckCountTextSettingsLabel->setText("Deck Count: " + QString::number(value));
-        playerCount = value;
+        deckCount = value;
     }
 
 }
@@ -299,7 +311,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.2);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 10px;"
+        "    font-size: 18px;"
         "    font-weight: 600;"
         "}"
         "QPushButton:hover {"
@@ -330,7 +342,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.1);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 10px;"
+        "    font-size: 18px;"
         "}";
 
     QSliderStyle =
@@ -441,22 +453,57 @@ void Screens::setUpBackGround()
     ui->screens->setStyleSheet(QStackedWidgetStyle);
 }
 
+void Screens::setUpBankruptcyMenu()
+{
+    ui->bankruptcyMenu->setStyleSheet(QWidgetStyle);
+    QString bankruptcyLabel =
+        "QLabel {"
+        "    background-color: transparent;"
+        "    border: none;"
+        "    color: red;"
+        "    font-size: 30px;"
+        "    font-weight: bold;"
+        "    padding: 6px;"
+        "    qproperty-alignment: AlignCenter;"
+        "}";
+    ui->bankruptcyLabel->setStyleSheet(bankruptcyLabel);
+    ui->backToMainMenuFromPlay_2->setStyleSheet(QPushButtonStyle);
+    ui->nextRound->setStyleSheet(QPushButtonStyle);
+
+    auto* effect = new QGraphicsColorizeEffect(ui->bankruptcyLabel);
+    effect->setColor(Qt::darkRed);
+    ui->bankruptcyLabel->setGraphicsEffect(effect);
+
+    auto* animation = new QPropertyAnimation(effect, "color");
+    animation->setDuration(2000);
+    animation->setLoopCount(-1); // infinite
+    animation->setStartValue(QColor(100, 0, 0)); // dark red
+    animation->setEndValue(QColor(255, 0, 0));   // bright red
+    animation->setEasingCurve(QEasingCurve::InOutSine);
+    animation->start();
+}
+
 void Screens::moveToStartScreen()
 {
     ui->screens->setCurrentIndex(0);
-    hideSettingsPopup();
+    toggleVisibleSettingsPopup(false);
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(false);
     mode = UNSELECTED;
 }
 
 void Screens::moveToPlayScreen()
 {
     toggleEnabledGamePlayButtons(false);
+    toggleVisibleGamePlayButtons(false);
+    toggleVisableBankruptcyMenu(false);
     tableView->clearTable();
     toggleEnabledQPushButton(ui->nextRound, false);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 
     ui->screens->setCurrentIndex(1);
     ui->bettingArea->hide();
-    showSettingsPopup();
+    toggleVisibleSettingsPopup(true);
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
     QString name = button->objectName();
@@ -469,9 +516,9 @@ void Screens::moveToPlayScreen()
     {
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
     }
-    else if (name == "countCardsPlayButton")
+    else if (name == "blackjackPracticeButton")
     {
-        mode = GAMEPLAYMODE::COUNTCARDS;
+        mode = GAMEPLAYMODE::BLACKJACKPRACTICE;
     }
     else
     {
@@ -479,15 +526,55 @@ void Screens::moveToPlayScreen()
     }
 }
 
-void Screens::hideSettingsPopup()
+void Screens::toggleVisibleSettingsPopup(bool show)
 {
-    ui->settingsPopUp->hide();
+    if (show)
+    {
+        ui->settingsPopUp->show();
+    }
+    else
+    {
+        ui->settingsPopUp->hide();
+    }
 }
 
-void Screens::showSettingsPopup()
+void Screens::toggleVisibleBettingView(bool show)
 {
-    ui->settingsPopUp->show();
+    if (show)
+    {
+        ui->bettingArea->show();
+    }
+    else
+    {
+        ui->bettingArea->hide();
+    }
 }
+
+void Screens::toggleVisibleGamePlayButtons(bool show)
+{
+    if (show)
+    {
+        ui->gamePlayButtons->show();
+    }
+    else
+    {
+        ui->gamePlayButtons->hide();
+    }
+}
+
+void Screens::toggleVisableBankruptcyMenu(bool show)
+{
+    if (show)
+    {
+        ui->bankruptcyMenu->show();
+    }
+    else
+    {
+        ui->bankruptcyMenu->hide();
+    }
+
+}
+
 
 void Screens::applyShadowToWidget(QWidget *widget)
 {
@@ -510,7 +597,7 @@ void Screens::moveToInforScreen()
 void Screens::setUpBasicStrategyCharts()
 {
     // Set up the basic strategy charts
-    QPixmap originalPixmap(":/BasicStrategyCharts.png");
+    QPixmap originalPixmap(":/StrategyCharts/BasicStrategyCharts.png");
     QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem(originalPixmap);
     imageItem->setScale(0.48);
     QGraphicsScene* scene = new QGraphicsScene(this);
@@ -547,7 +634,8 @@ void Screens::onPressSplitButton()
 
 void Screens::onPressPlacedBetButton()
 {
-    ui->bettingArea->hide();
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(true);
     emit sendOnBet(currentBet);
 }
 
@@ -598,14 +686,20 @@ void Screens::onEditChipCountLineEdit()
     toggleEnabledQPushButton(ui->acceptSettingsButton, true);
 }
 
+void Screens::onGameOver()
+{
+    toggleVisableBankruptcyMenu(true);
+    toggleEnabledQPushButton(ui->nextRound, false);
+}
+
 void Screens::acceptSettingsButtonPressed()
 {
-    ui->bettingArea->show();
+    toggleVisibleGamePlayButtons(false);
+    toggleVisibleBettingView(true);
     ui->betSlider->setMaximum(initialMoney);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 
-    //userIndex = QRandomGenerator::global()->bounded(playerCount);
-    //qDebug() << userIndex;
-    userIndex = 0;
+    userIndex = QRandomGenerator::global()->bounded(playerCount);
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == userIndex);
@@ -614,6 +708,8 @@ void Screens::acceptSettingsButtonPressed()
     tableView->createPlayerCardContainers(playerCount);
 
     emit sendSettingsAccepted(players, deckCount, 0);
+    //emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
+
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
 
@@ -661,11 +757,11 @@ void Screens::dealCard(int seatIndex, QString imagePath)
 
 void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
 {
-    if (hand.getCards().size() == 1)
+    if(hand.getCards().size() == 1)
     {
-        // do split logic
+        dealCard(playerIndex, hand.getCards()[0].getImagePath());
     }
-    else if (hand.getCards().size() >= 2)
+    else if(hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
@@ -678,7 +774,7 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
                 firstLoop = false;
                 continue;
             }
-            timer->scheduleSingleShot(850, [=]() {
+            timer->scheduleSingleShot(600, [=]() {
                 dealCard(playerIndex, hand.getCards()[i].getImagePath());});
         }
     }
@@ -689,24 +785,37 @@ void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int mo
 
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
+    toggleEnabledGamePlayButtons(false);
     unsigned int waitTime = 0;
+    std::vector<Player> tempPlayers;
 
-    for(int i = 0; i < static_cast<int>(players.size()); i++)
+    for(const Player& player : players)
     {
-        timer->scheduleSingleShot(waitTime, [=]() {
-            playerUpdated(i, players[i].hand, players[i].hand.getTotal(), players[i].money, players[i].status);
-        });
-        waitTime += 1500;
+        tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser);
     }
 
-    timer->scheduleSingleShot(waitTime + 2000, [=]() {
-        emit dealAnimationComplete();
+    for(int j = 0; j < 2; j++)
+    {
+        for(int i = 0; i < static_cast<int>(tempPlayers.size()); i++)
+        {
+            tempPlayers[i].hand.addCard(players[i].hand.getCards()[j]);
+            timer->scheduleSingleShot(waitTime, [=]() {
+                playerUpdated(i, tempPlayers[i].hand, tempPlayers[i].hand.getTotal(), players[i].money, players[i].status);
+            });
+            waitTime += 600;
+        }
+        waitTime += 600;
+    }
+
+    timer->scheduleSingleShot(waitTime, [=]() {
         toggleEnabledGamePlayButtons(true);
+        emit dealAnimationComplete();
     });
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
 {
+    toggleEnabledGamePlayButtons(false);
     int prevHandSize = dealerHand.getCards().size();
     dealerHand = hand;
 
@@ -714,11 +823,11 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
-    unsigned int waitTime = 1500 * players.size();
+    unsigned int waitTime = 600 * players.size();
 
     if (showDealerCard)
     {
-        waitTime = 1000;
+        waitTime = 600;
 
         QString imagePath = dealerHand.getCards().at(0).getImagePath();
         tableView->revealDealerCard(imagePath);
@@ -729,7 +838,14 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, dealerHand.getCards()[i].getImagePath());
         });
-        waitTime += 1000;
+        waitTime = (waitTime * 2) + 600;
+    }
+
+    if (showDealerCard)
+    {
+        timer->scheduleSingleShot(waitTime, [=]() {
+            emit sendDealerDonePlaying();
+        });
     }
 }
 
@@ -738,23 +854,47 @@ void Screens::updateShowDealerCardBool(bool flipped)
     showDealerCard = flipped;
 }
 
-void Screens::currentPlayerTurn(int nextPlayerIndex)
+void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
 {
-    //TODO
-    //Change POV to player at received index
+    // TODO
+    // Animation: move second card from index of originalIndex to the location of newPlayer
+    players[originalIndex].hand.removeLastCard();
+
+    // Create the new player and add half of their hand into the player vector
+    Player tempPlayer = Player(newPlayer.money, newPlayer.hand.getBet(), newPlayer.isUser);
+    tempPlayer.originalPlayer = newPlayer.originalPlayer;
+    Hand tempHand = Hand(newPlayer.hand.getBet());
+    tempHand.addCard(newPlayer.hand.getCards()[0]);
+    tempPlayer.hand = tempHand;
+    players.insert(players.begin() + originalIndex + 1, tempPlayer);
+
+    // Update original player hand
+    playerUpdated(originalIndex, originalPlayer.hand, originalPlayer.hand.getTotal(), originalPlayer.money, originalPlayer.status);
+
+    // Updates new player hand
+    timer->scheduleSingleShot(600 * 2, [=]() {
+        playerUpdated(originalIndex + 1, newPlayer.hand, newPlayer.hand.getTotal(), newPlayer.money, newPlayer.status);
+    });
+}
+
+void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
+{
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
+        toggleEnabledQPushButton(ui->placeBetButton, true);
     }
     else
     {
         toggleEnabledGamePlayButtons(false);
+        toggleEnabledQPushButton(ui->placeBetButton, false);
     }
 }
 
 void Screens::endBetting()
 {
-    ui->bettingArea->hide();
+    toggleVisibleBettingView(false);
+    toggleVisibleGamePlayButtons(true);
 }
 
 void Screens::toggleEnabledGamePlayButtons(bool enabled)
@@ -791,7 +931,7 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     button->setEnabled(enabled);
 }
 
-void Screens::endRound(QString message)
+void Screens::endRound(const std::vector<Player>& players)
 {
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
@@ -799,7 +939,15 @@ void Screens::endRound(QString message)
 
 void Screens::onPressNextRound()
 {
+    timer->cancelAllTimers();
     tableView->clearTable();
+
+    // Remove split hands
+    for(int i = players.size() - 1; i >= 0; i--)
+    {
+        if(players[i].originalPlayer != nullptr)
+            players.erase(players.begin() + i);
+    }
 
     emit sendNewRound();
     toggleEnabledQPushButton(ui->nextRound, false);
@@ -807,13 +955,25 @@ void Screens::onPressNextRound()
 
     tableView->createDealerPile();
     ui->betSlider->setMaximum(players[userIndex].money);
-    ui->bettingArea->show();
+    toggleVisibleBettingView(true);
+    toggleVisibleGamePlayButtons(false);
 }
 
 void Screens::onPressMainMenuButton()
 {
+    resetEverything();
+    ui->screens->setCurrentIndex(0);
+}
+
+void Screens::onPressPlayAgain()
+{
+    resetEverything();
+    moveToPlayScreen();
+}
+
+void Screens::resetEverything()
+{
     emit sendStopEverything();
     timer->cancelAllTimers();
     players.clear();
-    ui->screens->setCurrentIndex(0);
 }

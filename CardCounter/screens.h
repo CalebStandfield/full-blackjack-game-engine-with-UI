@@ -31,8 +31,7 @@ private:
     enum GAMEPLAYMODE {
         BLACKJACK,
         BLACKJACKTUTORIAL,
-        COUNTCARDS,
-        COUNTCARDSTUTORIAL,
+        BLACKJACKPRACTICE,
         UNSELECTED
     };
 
@@ -109,6 +108,11 @@ private:
     void setUpBettingMenu();
 
     /**
+     * @brief setUpBankruptcyMenu Sets up the area where you can either go to menu or play again
+     */
+    void setUpBankruptcyMenu();
+
+    /**
      * @brief setUpGamePlayButtons Sets up the game play buttons
      */
     void setUpGamePlayButtons();
@@ -117,6 +121,11 @@ private:
      * @brief setUpSettingsPopup Sets up the settings pop up
      */
     void setUpSettingsPopup();
+
+    /**
+     * @brief setUpPlayerInfoBox Sets up the playerInfoBox
+     */
+    void setUpPlayerInfoBox();
 
     /**
      * @brief setUpQStyleSheets Initalizes the QStrings for the different StyleSheets
@@ -194,14 +203,28 @@ private:
     void moveToStartScreen();
 
     /**
-     * @brief hideSettingsPopup Hides the settings popup
+     * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
+     * @param show The state to set the setting popup
      */
-    void hideSettingsPopup();
+    void toggleVisibleSettingsPopup(bool show);
 
     /**
-     * @brief showSettingsPopup Shows the settings popup
+     * @brief toggleVisibleBettingView Sets the visibility of the betting view
+     * @param show The state to set the betting view
      */
-    void showSettingsPopup();
+    void toggleVisibleBettingView(bool show);
+
+    /**
+     * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
+     * @param show The state to set the setting popup
+     */
+    void toggleVisibleGamePlayButtons(bool show);
+
+    /**
+     * @brief toggleVisableBankruptcyMenu Sets the visibility of the game over screen
+     * @param show The state to set the setting popup
+     */
+    void toggleVisableBankruptcyMenu(bool show);
 
     /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
@@ -230,7 +253,7 @@ private:
     void onPressHitButton();
 
     /**
-     * @brief onPressStandButton Logic for when the user presses stnad
+     * @brief onPressStandButton Logic for when the user presses stand
      */
     void onPressStandButton();
 
@@ -281,6 +304,16 @@ private:
      * @brief onPressNextRound Handles pressing the next round button
      */
     void onPressNextRound();
+
+    /**
+     * @brief onPressPlayAgain Handles pressing the play again button
+     */
+    void onPressPlayAgain();
+
+    /**
+     * @brief stopEverything Stops all timers and clears the entire game
+     */
+    void resetEverything();
 
 signals:
 
@@ -346,6 +379,11 @@ signals:
      */
     void sendStopEverything();
 
+    /**
+     * @brief sendDealerDonePlaying Signal that the dealer has finished his play animation
+     */
+    void sendDealerDonePlaying();
+
 private slots:
     /**
      * @brief dealCard
@@ -393,8 +431,10 @@ public slots:
     /**
      * @brief currentPlayerTurn Slot for changing to the player at given index
      * @param nextPlayerIndex The index of the next player that is up now
+     * @param money The money of the current player
+     * @param bet The bet of the current player
      */
-    void currentPlayerTurn(int nextPlayerIndex);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
 
     /**
      * @brief endBetting Slot for changing from betting phase to playing phase
@@ -403,15 +443,28 @@ public slots:
 
     /**
      * @brief endRound SLot for the round ending
-     * @param message The message to display of the round
+     * @param players The players after the round has ended
      */
-    void endRound(QString message);
+    void endRound(const std::vector<Player>& players);
 
     /**
      * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card
      * @param flipped A bool for if to flip or not
      */
     void updateShowDealerCardBool(bool flipped);
+
+    /**
+     * @brief splitPlayers Slot to split the player at the given index with the updated players
+     * @param originalIndex The index of the player to split
+     * @param originalPlayer The original player
+     * @param newPlayer The new player
+     */
+    void onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+
+    /**
+     * @brief onGameOver Logic for when the controller sends the game over signal
+     */
+    void onGameOver();
 };
 
 #endif // SCREENS_H

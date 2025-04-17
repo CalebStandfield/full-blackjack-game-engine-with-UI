@@ -8,9 +8,9 @@ TableView::TableView(QWidget *parent)
     setScene(scene);
     setRenderHint(QPainter::Antialiasing);
 
-    QPixmap tablePixmap(":/table/blackjack_table.png");
+    QPixmap tablePixmap(":/table/background_table_mat.png");
 
-    tablePixmap = tablePixmap.scaled(1200, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    tablePixmap = tablePixmap.scaled(1170, 600, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     tableBackground = scene->addPixmap(tablePixmap);
     tableBackground->setZValue(0);
     scene->setSceneRect(tablePixmap.rect());
@@ -36,6 +36,16 @@ void TableView::createPlayerCardContainers(unsigned int playerCount)
     {
         playerCards[i] = std::vector<AnimatableCardItem*>();
     }
+}
+
+void TableView::addPlayerCardContanierAt(unsigned int indexAt)
+{
+    // Index check
+    if (indexAt > playerCards.size())
+        return;
+
+    // Insert an empty vector at the specified index
+    playerCards.insert(playerCards.begin() + indexAt, std::vector<AnimatableCardItem*>());
 }
 
 void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)

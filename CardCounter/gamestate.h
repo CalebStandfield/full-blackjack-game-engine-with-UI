@@ -40,6 +40,12 @@ public:
     void stand(int playerIndex);
 
     /**
+     * @brief split The player splits
+     * @param playerIndex The index of the current player
+     */
+    void split(int playerIndex);
+
+    /**
      * @brief dealerPlay Dealer draws cards until total >= 17 or bust
      */
     void dealerPlay();

@@ -46,6 +46,18 @@ void Controller::onDoubleDown()
         return;
     }
     model->doubleDown(currentPlayerIndex);
+    checkTurnEnd(player);
+}
+
+void Controller::onSplit()
+{
+    const Player& player = model->getPlayer(currentPlayerIndex);
+    if(player.money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
+        return;
+    }
+    model->split(currentPlayerIndex);
+
+    emit splitPlayers(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getPlayer(currentPlayerIndex + 1));
     checkTurnEnd(model->getPlayer(currentPlayerIndex));
 }
 
@@ -58,7 +70,8 @@ void Controller::onBet(int bet)
 void Controller::advanceToNextPlayer()
 {
     currentPlayerIndex++;
-    while(currentPlayerIndex < model->getPlayerCount() && model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT)
+    while(currentPlayerIndex < model->getPlayerCount() && (model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT
+                                                            || model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::STAND))
     {
         currentPlayerIndex++;
     }
@@ -68,25 +81,28 @@ void Controller::advanceToNextPlayer()
         model->dealerPlay();
         emit showDealerCard(true);
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
-        model->endRound();
-        emit endRound("The round has ended.");
-
-        for(int i = 0; i < model->getPlayerCount(); i++){
-            if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
-                return;
-        }
-        emit gameOver();
         return;
     }
 
     // Switch to next player
-    emit currentPlayerTurn(currentPlayerIndex);
-    model->setPlayerActive(currentPlayerIndex);
-
     const Player& player = model->getPlayer(currentPlayerIndex);
+    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet());
+    model->setPlayerActive(currentPlayerIndex);
 
     if(!player.isUser)
          botMove();
+}
+
+void Controller::onDealerDonePlaying()
+{
+    model->endRound();
+    emit endRound(model->getAllPlayers());
+
+    for(int i = 0; i < model->getPlayerCount(); i++){
+        if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
+            return;
+    }
+    emit gameOver();
 }
 
 void Controller::startBetting()
@@ -106,7 +122,22 @@ void Controller::startBetting()
 
 void Controller::advanceToNextBet()
 {
+    // Tell the view the player bet and change their status
+    if(currentPlayerIndex >= 0)
+    {
+        const Player& betPlayer = model->getPlayer(currentPlayerIndex);
+        emit playerUpdated(currentPlayerIndex, betPlayer.hand, betPlayer.hand.getTotal(), betPlayer.money, betPlayer.status);
+    }
+
     currentPlayerIndex++;
+
+    // Skip all bankrupt players
+    while(currentPlayerIndex < model->getPlayerCount() && model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT)
+    {
+        currentPlayerIndex++;
+    }
+
+    // Check if everyone has bet
     if(currentPlayerIndex == model->getPlayerCount())
     {
         emit endBetting();
@@ -114,9 +145,10 @@ void Controller::advanceToNextBet()
         return;
     }
 
-    emit currentPlayerTurn(currentPlayerIndex);
+    const Player& player = model->getPlayer(currentPlayerIndex);
+    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet());
 
-    if(!(model->getPlayer(currentPlayerIndex).isUser))
+    if(!player.isUser)
          botBet();
 }
 
@@ -137,11 +169,13 @@ void Controller::onDealingAnimationComplete()
 
 void Controller::botMove()
 {
+    // Get the correct MOVE
     const Player& player = model->getPlayer(currentPlayerIndex);
     MOVE move = botStrategy->getNextMove(player.hand, model->getDealerHand().getCards()[1]);
 
     unsigned int waitTime = 1000;
 
+    // Call the correct MOVE
     if(move == MOVE::HIT)
         QTimer::singleShot(waitTime, this, [=]() {
             onHit();});
@@ -171,7 +205,7 @@ void Controller::botBet()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
     int bet = std::max(player.money / 10, 1);
-    timer->scheduleSingleShot(100, [=]() {
+    timer->scheduleSingleShot(500, [=]() {
         onBet(bet);});
 }
 

@@ -4,9 +4,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
     Box2D/Collision/Shapes/b2ChainShape.cpp \
@@ -55,7 +53,6 @@ SOURCES += \
     Box2D/Dynamics/b2World.cpp \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
-    bettingview.cpp \
     botstrategy.cpp \
     card.cpp \
     controller.cpp \
@@ -64,6 +61,7 @@ SOURCES += \
     hand.cpp \
     main.cpp \
     mainwindow.cpp \
+    playerinfoview.cpp \
     screens.cpp \
     statistics.cpp \
     statsview.cpp \
@@ -118,7 +116,6 @@ HEADERS += \
     Box2D/Dynamics/b2World.h \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
-    bettingview.h \
     botstrategy.h \
     card.h \
     controller.h \
@@ -128,6 +125,7 @@ HEADERS += \
     mainwindow.h \
     player.h \
     playerStatus.h \
+    playerinfoview.h \
     rank.h \
     screens.h \
     statistics.h \

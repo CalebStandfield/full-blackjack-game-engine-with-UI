@@ -35,7 +35,11 @@ void Deck::shuffle()
     }
     else if(deterministic == 1)
     {
+        unsigned int i = 0;
         // Implement determined shuffle for single player
+        for (SUIT suit : Suit::allSuits)
+            for (RANK rank : Rank::allRanks)
+                shuffledDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
     }
     else
     {
