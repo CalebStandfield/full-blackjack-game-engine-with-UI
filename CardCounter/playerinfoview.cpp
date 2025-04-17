@@ -58,8 +58,10 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
     case PLAYERSTATUS::WAITING:
         color = "#dcdc33";
         break; // yellow
-    case PLAYERSTATUS::PUSHED:
     case PLAYERSTATUS::BANKRUPT:
+        color = "#2a2a2a";
+        break; // slightly transparent black
+    case PLAYERSTATUS::PUSHED:
         color = "#808080";
         break; // grey
     case PLAYERSTATUS::STAND:
@@ -89,23 +91,24 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
         "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
         " stop:0 #222, stop:1 #333);"
         "color:white;";
-    const char *lightBase =
-        "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
-        "stop:0 #dcdcdc, stop:1 #b8b8b8);"
-        "color:black;";
+    // const char *lightBase =
+    //     "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
+    //     "stop:0 #dcdcdc, stop:1 #b8b8b8);"
+    //     "color:black;";
 
-    bool isUser = (userIndex >= 0 && label == seatLabels[userIndex]);
-    QString baseColor;
+    // bool isUser = (userIndex >= 0 && label == seatLabels[userIndex]);
+    QString labelColor;
 
     if(fillWholeCard(status))
     {
-        baseColor = QString("background-color:%1;color:white;"
-                            "border:3px solid %1;").arg(borderColor);
+        labelColor = QString("background-color:%1;color:white;"
+                            "border:3px solid #000000;").arg(borderColor);
     }
     else
     {
-        const char *base = isUser ? lightBase : darkBase;
-        baseColor = QString("%1border:3px solid %2;").arg(base, borderColor);
+        //const char *base = isUser ? lightBase : darkBase;
+        const char *base = darkBase;
+        labelColor = QString("%1border:3px solid %2;").arg(base, borderColor);
     }
 
     label->setStyleSheet(QString(
@@ -113,7 +116,7 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
                              "border-radius:12px;"
                              "padding:12px 20px;"
                              "font-size:19px;"
-                             "font-weight:600;}").arg(baseColor));
+                             "font-weight:600;}").arg(labelColor));
 }
 
 bool PlayerInfoView::fillWholeCard(PLAYERSTATUS status)
@@ -203,6 +206,13 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
     QString borderColor = getStatusColor(status);
     std::string statusString = PlayerStatus::toString(status);
 
+    //QString textColor = (seat == userIndex) ? "#000000" : "#ffffff";
+    QString textColor = "#ffffff";
+
+    // Make the status text white if the background is filled in
+    bool isFilled = fillWholeCard(status);
+    QString statusTextColor = isFilled ? textColor : borderColor;
+
     QString name;
     // If seat is is the user, set name as User
     if(seat == userIndex)
@@ -217,15 +227,16 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
 
     seatLabels[seat]->setTextFormat(Qt::RichText);
     seatLabels[seat]->setText(
-        QString("<span style='color:white;'>%1</span><br>"
+        QString("<span style='color:%6;'>%1</span><br>"
                 "<span style='color:white;'>Money: $%2</span><br>"
                 "<span style='color:white;'>Bet: $%3</span><br>"
                 "<span style='color: %4;'>%5</span>")
             .arg(name)
             .arg(money)
             .arg(bet)
-            .arg(borderColor)
+            .arg(statusTextColor)
             .arg(QString::fromStdString(statusString))
+            .arg(textColor)
         );
 
     seatLabels[seat]->show();

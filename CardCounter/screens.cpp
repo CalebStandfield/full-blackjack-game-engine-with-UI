@@ -303,7 +303,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.2);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 10px;"
+        "    font-size: 14px;"
         "    font-weight: 600;"
         "}"
         "QPushButton:hover {"
@@ -334,7 +334,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.1);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 10px;"
+        "    font-size: 14px;"
         "}";
 
     QSliderStyle =
