@@ -56,8 +56,7 @@ void PlayerInfoView::buildLayout(int seats)
 
     ui->playInfoContainer->show();
 }
-
-void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
+QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
 {
     QString color;
     switch (status) {
@@ -82,7 +81,12 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
     default:
         color = "#ffffff";
     }
+    return color;
+}
 
+void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
+{
+    QString color = getStatusColor(status);
     label->setStyleSheet(QString("border:3px solid %1").arg(color));
 }
 
@@ -115,7 +119,7 @@ void PlayerInfoView::refreshSeat(int seat, const Player& player)
         return;
 
     paintBorder(seatLabels[seat], player.status);
-    setSeatText(seat, player.money, player.hand.getBet());
+    setSeatText(seat, player.money, player.hand.getBet(), player.status);
 }
 
 void PlayerInfoView::onPlayerUpdated(int playerIndex, const Hand& hand, int, int money, PLAYERSTATUS status)
@@ -126,7 +130,7 @@ void PlayerInfoView::onPlayerUpdated(int playerIndex, const Hand& hand, int, int
     // Updates text and border for the playerIndex label
     int seat = modelToSeat[playerIndex];
     paintBorder(seatLabels[seat], status);
-    setSeatText(playerIndex, money, hand.getBet());
+    setSeatText(playerIndex, money, hand.getBet(), status);
 }
 
 void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
@@ -153,16 +157,27 @@ void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex)
     paintBorder(seatLabels[seat], PLAYERSTATUS::ACTIVE);
 }
 
-void PlayerInfoView::setSeatText(int seat, int money, int bet)
+void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS status)
 {
     if (seat < 0 || seat >= seatCount)
         return;
 
+    QString color = getStatusColor(status);
+    std::string statusString = PlayerStatus::toString(status);
+
+    seatLabels[seat]->setTextFormat(Qt::RichText);
     seatLabels[seat]->setText(
-        QString("Player %1\nMoney: $%2\nBet: $%3")
+        QString("<span style='color: white;'>Player %1</span><br>"
+                "<span style='color: white;'>Money: $%2</span><br>"
+                "<span style='color: white;'>Bet: $%3</span><br>"
+                "<span style='color: %4;'>%5</span>")
             .arg(seat + 1)
             .arg(money)
-            .arg(bet));
+            .arg(bet)
+            .arg(color)
+            .arg(QString::fromStdString(statusString))
+        );
+
     seatLabels[seat]->show();
 }
 

@@ -126,7 +126,14 @@ private:
      * @param money The money the label should display
      * @param bet The bet the label should display
      */
-    void setSeatText(int seat, int money, int bet);
+    void setSeatText(int seat, int money, int bet, PLAYERSTATUS status);
+
+    /**
+     * @brief getStatusColor Gets the QString representation of the player status
+     * @param status An enum state of the players status
+     * @return A QString of a hexidecimal color
+     */
+    QString getStatusColor(PLAYERSTATUS status);
 };
 
 #endif // PLAYERINFOVIEW_H
