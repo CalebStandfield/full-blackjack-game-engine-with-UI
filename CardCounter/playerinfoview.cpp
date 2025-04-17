@@ -79,14 +79,14 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
 {
     QString borderColor = getStatusColor(status);
 
-    /* choose base style */
+    // Choose label background color
     const char *darkBase =
         "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
         " stop:0 #222, stop:1 #333);"
         "color:white;";
     const char *lightBase =
         "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
-        " stop:0 #ffffff, stop:1 #dddddd);"
+        " stop:0 #eeeeee, stop:1 #bbbbbb);"
         "color:black;";
 
     bool isUser = (userIndex >= 0 && label == seatLabels[userIndex]);
