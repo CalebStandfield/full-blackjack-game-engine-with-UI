@@ -650,8 +650,6 @@ void Screens::acceptSettingsButtonPressed()
     ui->betSlider->setMaximum(initialMoney);
 
     userIndex = QRandomGenerator::global()->bounded(playerCount);
-    //qDebug() << userIndex;
-    //userIndex = 0;
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == userIndex);
