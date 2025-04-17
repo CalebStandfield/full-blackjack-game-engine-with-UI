@@ -248,7 +248,7 @@ void Screens::setUpBettingMenu()
 
 void Screens::updateBetLabelText(unsigned int value)
 {
-    toggleEnabledQPushButton(ui->placeBetButton, true);
+    //toggleEnabledQPushButton(ui->placeBetButton, true);
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
 }
 
@@ -499,6 +499,7 @@ void Screens::moveToPlayScreen()
     toggleVisableBankruptcyMenu(false);
     tableView->clearTable();
     toggleEnabledQPushButton(ui->nextRound, false);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 
     ui->screens->setCurrentIndex(1);
     ui->bettingArea->hide();
@@ -696,6 +697,7 @@ void Screens::acceptSettingsButtonPressed()
     toggleVisibleGamePlayButtons(false);
     toggleVisibleBettingView(true);
     ui->betSlider->setMaximum(initialMoney);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 
     userIndex = QRandomGenerator::global()->bounded(playerCount);
 
@@ -871,10 +873,12 @@ void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
+        toggleEnabledQPushButton(ui->placeBetButton, true);
     }
     else
     {
         toggleEnabledGamePlayButtons(false);
+        toggleEnabledQPushButton(ui->placeBetButton, false);
     }
 }
 
