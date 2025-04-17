@@ -9,6 +9,7 @@
 
 #include "controller.h"
 #include "screens.h"
+#include "box2dphysicsscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     Controller *controller;
     Screens *screens;
+    box2dPhysicsScene* m_scene;
 
     void setUpMainWindowConnects();
 };
