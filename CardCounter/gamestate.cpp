@@ -127,6 +127,7 @@ void GameState::endRound()
     {
         if(player.status == PLAYERSTATUS::BUST)
         {
+            player.status = PLAYERSTATUS::LOST;
             if(player.money <= 0)
                 player.status = PLAYERSTATUS::BANKRUPT;
             continue;
@@ -151,6 +152,7 @@ void GameState::endRound()
                 else
                     player.money += player.hand.getBet() * 2;
             }
+            player.status = PLAYERSTATUS::WON;
         }
         else if(playerTotal == dealerTotal)
         {
@@ -158,9 +160,14 @@ void GameState::endRound()
                 player.originalPlayer->money += player.hand.getBet();
             else
                 player.money += player.hand.getBet();
+            player.status = PLAYERSTATUS::PUSHED;
         }
-        if(player.money <= 0)
-            player.status = PLAYERSTATUS::BANKRUPT;
+        else
+        {
+            player.status = PLAYERSTATUS::LOST;
+            if(player.money <= 0)
+                player.status = PLAYERSTATUS::BANKRUPT;
+        }
     }
 }
 

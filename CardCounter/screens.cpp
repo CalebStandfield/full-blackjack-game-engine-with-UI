@@ -859,7 +859,7 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     button->setEnabled(enabled);
 }
 
-void Screens::endRound(QString message)
+void Screens::endRound(const std::vector<Player>& players)
 {
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);

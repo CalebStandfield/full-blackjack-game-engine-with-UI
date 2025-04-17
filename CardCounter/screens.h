@@ -417,9 +417,9 @@ public slots:
 
     /**
      * @brief endRound SLot for the round ending
-     * @param message The message to display of the round
+     * @param players The players after the round has ended
      */
-    void endRound(QString message);
+    void endRound(const std::vector<Player>& players);
 
     /**
      * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card

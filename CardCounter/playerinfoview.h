@@ -68,6 +68,12 @@ public slots:
      */
     void onStopEverything();
 
+    /**
+     * @brief onEndRound Slot to receive when the round has ended
+     * @param players The players after the round has ended
+     */
+    void onEndRound(const std::vector<Player>& players);
+
 private:
     QVector<int> modelToSeat;
 
@@ -136,6 +142,13 @@ private:
      * @return A QString of a hexidecimal color
      */
     QString getStatusColor(PLAYERSTATUS status);
+
+    /**
+     * @brief fillWholeCard Helper to get if the status should fill just the border or the whole card
+     * @param status The status to display
+     * @return True for WON, LOST, PUSHED, BANKRUPT, fales otherwise
+     */
+    bool fillWholeCard(PLAYERSTATUS status);
 };
 
 #endif // PLAYERINFOVIEW_H

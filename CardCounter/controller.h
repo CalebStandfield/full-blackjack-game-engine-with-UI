@@ -114,9 +114,9 @@ signals:
 
     /**
      * @brief endRound Signal that the round has ended
-     * @param roundSummary A brief summary of the round to display
+     * @param players A vector of the players after the round has ended
      */
-    void endRound(QString roundSummary);
+    void endRound(const std::vector<Player>& players);
 
     /**
      * @brief gameMessage Signal to send a game message (ex. player 0 has busted)

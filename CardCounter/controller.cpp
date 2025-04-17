@@ -82,7 +82,7 @@ void Controller::advanceToNextPlayer()
         emit showDealerCard(true);
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
         model->endRound();
-        emit endRound("The round has ended.");
+        emit endRound(model->getAllPlayers());
 
         for(int i = 0; i < model->getPlayerCount(); i++){
             if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
