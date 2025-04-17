@@ -244,11 +244,11 @@ void Screens::setUpBettingMenu()
     ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
 
     toggleEnabledQPushButton(ui->placeBetButton, false);
+    updateBetLabelText(1);
 }
 
 void Screens::updateBetLabelText(unsigned int value)
 {
-    //toggleEnabledQPushButton(ui->placeBetButton, true);
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
 }
 
@@ -468,7 +468,7 @@ void Screens::setUpBankruptcyMenu()
         "}";
     ui->bankruptcyLabel->setStyleSheet(bankruptcyLabel);
     ui->backToMainMenuFromPlay_2->setStyleSheet(QPushButtonStyle);
-    ui->nextRound->setStyleSheet(QPushButtonStyle);
+    ui->playAgain->setStyleSheet(QPushButtonStyle);
 
     auto* effect = new QGraphicsColorizeEffect(ui->bankruptcyLabel);
     effect->setColor(Qt::darkRed);
@@ -962,7 +962,7 @@ void Screens::onPressNextRound()
 void Screens::onPressMainMenuButton()
 {
     resetEverything();
-    ui->screens->setCurrentIndex(0);
+    moveToStartScreen();
 }
 
 void Screens::onPressPlayAgain()
