@@ -253,7 +253,7 @@ private:
     void onPressHitButton();
 
     /**
-     * @brief onPressStandButton Logic for when the user presses stnad
+     * @brief onPressStandButton Logic for when the user presses stand
      */
     void onPressStandButton();
 
@@ -304,6 +304,16 @@ private:
      * @brief onPressNextRound Handles pressing the next round button
      */
     void onPressNextRound();
+
+    /**
+     * @brief onPressPlayAgain Handles pressing the play again button
+     */
+    void onPressPlayAgain();
+
+    /**
+     * @brief stopEverything Stops all timers and clears the entire game
+     */
+    void resetEverything();
 
 signals:
 

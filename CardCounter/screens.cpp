@@ -38,7 +38,7 @@ Screens::~Screens()
 
 void Screens::setUpScreenConnects()
 {
-    // Gameplay buttons
+    // Menu Buttons
     connect(ui->blackjackPlayButton,
             &QPushButton::clicked,
             this,
@@ -128,7 +128,7 @@ void Screens::setUpScreenConnects()
             this,
             &Screens::onPressBettingAmountButtons);
 
-    // Continue or leave
+    // Continue, leave, or play again
     connect(ui->backToMainMenuFromPlay,
             &QPushButton::clicked,
             this,
@@ -137,6 +137,14 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressNextRound);
+    connect(ui->backToMainMenuFromPlay_2,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressMainMenuButton);
+    connect(ui->playAgain,
+            &QPushButton::clicked,
+            this,
+            &Screens::onPressPlayAgain);
 }
 
 void Screens::setUpTable()
@@ -303,7 +311,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.2);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 14px;"
+        "    font-size: 18px;"
         "    font-weight: 600;"
         "}"
         "QPushButton:hover {"
@@ -334,7 +342,7 @@ void Screens::setUpQStyleSheets()
         "    border: 1px solid rgba(255, 255, 255, 0.1);"
         "    border-radius: 12px;"
         "    padding: 12px 20px;"
-        "    font-size: 14px;"
+        "    font-size: 18px;"
         "}";
 
     QSliderStyle =
@@ -940,8 +948,19 @@ void Screens::onPressNextRound()
 
 void Screens::onPressMainMenuButton()
 {
+    resetEverything();
+    ui->screens->setCurrentIndex(0);
+}
+
+void Screens::onPressPlayAgain()
+{
+    resetEverything();
+    moveToPlayScreen();
+}
+
+void Screens::resetEverything()
+{
     emit sendStopEverything();
     timer->cancelAllTimers();
     players.clear();
-    ui->screens->setCurrentIndex(0);
 }
