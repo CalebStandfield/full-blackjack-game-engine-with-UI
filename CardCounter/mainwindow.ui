@@ -908,8 +908,8 @@
      <widget class="QGraphicsView" name="basicStrategyChart">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>130</y>
+        <x>870</x>
+        <y>140</y>
         <width>341</width>
         <height>451</height>
        </rect>
@@ -918,8 +918,8 @@
      <widget class="QTextBrowser" name="infoTextBrowser">
       <property name="geometry">
        <rect>
-        <x>70</x>
-        <y>110</y>
+        <x>210</x>
+        <y>120</y>
         <width>601</width>
         <height>501</height>
        </rect>
@@ -931,23 +931,23 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;How to Read a Basic Strategy Chart&lt;/span&gt;&lt;/h3&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;A basic strategy chart for Blackjack summarizes the mathematically best decisions for every possible hand you can have versus every possible dealer upcard. These charts are usually divided into three main sections:&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;left column&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; lists your hand total (for example, 9, 10, 11, etc.).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;The &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;top row&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; shows the dealer’s upcard (2–10 or Ace).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;H&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Hit&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (ask for another card).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;S&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Stand&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (keep your current hand).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;D&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; means &lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-style:italic;&quot;&gt;Double Down&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; (double your bet and receive exactly one more card; if doubling is not allowed, usually treat the action as Hit).&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;SP:&lt;/span&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt; Split (divide your pair into two separate hands).&lt;/span&gt;&lt;/p&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;h3 style=&quot; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:large; font-weight:700;&quot;&gt;How to Read a Basic Strategy Chart&lt;/span&gt;&lt;/h3&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A basic strategy chart for Blackjack summarizes the mathematically best decisions for every possible hand you can have versus every possible dealer upcard. These charts are usually divided into three main sections:&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;left column&lt;/span&gt; lists your hand total (for example, 9, 10, 11, etc.).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;top row&lt;/span&gt; shows the dealer’s upcard (2–10 or Ace).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;H&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Hit&lt;/span&gt; (ask for another card).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;S&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Stand&lt;/span&gt; (keep your current hand).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;D&lt;/span&gt; means &lt;span style=&quot; font-style:italic;&quot;&gt;Double Down&lt;/span&gt; (double your bet and receive exactly one more card; if doubling is not allowed, usually treat the action as Hit).&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;SP:&lt;/span&gt; Split (divide your pair into two separate hands).&lt;/p&gt;
 &lt;ol style=&quot;margin-top: 0px; margin-bottom: 0px; margin-left: 0px; margin-right: 0px; -qt-list-indent: 1;&quot;&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Hard Totals: &lt;/span&gt;Hands that do not include an Ace counted as 11—or, in other words, hands without a “soft” Ace.&lt;/li&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Soft Totals: &lt;/span&gt;Hands that include an Ace that can be counted as 11 without busting (for instance, A-6 counted as 7 or 17).&lt;/li&gt;
-&lt;li style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot; style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pairs: &lt;/span&gt;Hands that consist of two cards of the same rank (for example, two 8’s).&lt;/li&gt;&lt;/ol&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt; font-weight:700;&quot;&gt;Why It Matters&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;Using a basic strategy chart means you're making decisions based on extensive mathematical analysis. Mastering it equates to near-perfect Blackjack play, reducing the house edge to about 0.05. In practical terms, with a $100 wager per hour, you're likely to lose roughly $5 over time.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'.AppleSystemUIFont'; font-size:13pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Hard Totals: &lt;/span&gt;Hands that do not include an Ace counted as 11—or, in other words, hands without a “soft” Ace.&lt;/li&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Soft Totals: &lt;/span&gt;Hands that include an Ace that can be counted as 11 without busting (for instance, A-6 counted as 7 or 17).&lt;/li&gt;
+&lt;li style=&quot; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Pairs: &lt;/span&gt;Hands that consist of two cards of the same rank (for example, two 8’s).&lt;/li&gt;&lt;/ol&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Why It Matters&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Using a basic strategy chart means you're making decisions based on extensive mathematical analysis. Mastering it equates to near-perfect Blackjack play, reducing the house edge to about 0.05. In practical terms, with a $100 wager per hour, you're likely to lose roughly $5 over time.&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:12px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </widget>

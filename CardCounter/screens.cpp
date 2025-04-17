@@ -543,7 +543,7 @@ void Screens::moveToInforScreen()
 void Screens::setUpBasicStrategyCharts()
 {
     // Set up the basic strategy charts
-    QPixmap originalPixmap(":/BasicStrategyCharts.png");
+    QPixmap originalPixmap(":/StrategyCharts/BasicStrategyCharts.png");
     QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem(originalPixmap);
     imageItem->setScale(0.48);
     QGraphicsScene* scene = new QGraphicsScene(this);
