@@ -216,6 +216,18 @@ private:
     void toggleVisibleGamePlayButtons(bool show);
 
     /**
+     * @brief toggleVisableGameOverScreen Sets the visibility of the game over screen
+     * @param show The state to set the setting popup
+     */
+    void toggleVisableGameOverScreen(bool show);
+
+    /**
+     * @brief toggleVisableRoundResultsScreen Sets the visibility of the round results screen
+     * @param show The state to set the setting popup
+     */
+    void toggleVisableRoundResultsScreen(bool show);
+
+    /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
      */
     void acceptSettingsButtonPressed();

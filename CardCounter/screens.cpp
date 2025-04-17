@@ -522,6 +522,17 @@ void Screens::toggleVisibleGamePlayButtons(bool show)
     }
 }
 
+void Screens::toggleVisableGameOverScreen(bool show)
+{
+
+}
+
+void Screens::toggleVisableRoundResultsScreen(bool show)
+{
+
+}
+
+
 void Screens::applyShadowToWidget(QWidget *widget)
 {
     // Create a shadow effect
