@@ -5,6 +5,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QRandomGenerator>
 #include <QTimer>
+#include <QtMath>
 
 Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
     : QStackedWidget(parent), ui(ui)
@@ -704,13 +705,13 @@ void Screens::acceptSettingsButtonPressed()
     userIndex = QRandomGenerator::global()->bounded(playerCount);
 
     for (unsigned int i = 0; i < playerCount; i++) {
-        players.emplace_back(initialMoney, 1, i == userIndex);
+        players.emplace_back(initialMoney, 1, i == userIndex, 1, 0);
     }
 
     tableView->createPlayerCardContainers(playerCount);
 
-    emit sendSettingsAccepted(players, deckCount, 0);
-    //emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
+    //emit sendSettingsAccepted(players, deckCount, 0);
+    emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
 
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
@@ -720,69 +721,79 @@ void Screens::acceptSettingsButtonPressed()
     tableView->createDealerPile();
 }
 
-void Screens::dealCard(int seatIndex, QString imagePath)
+void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)
 {
     QString cardPNG = imagePath;
     QPointF startPos(500, 49);
     QPointF endPos;
     qreal rotation = 0;
 
-    switch (seatIndex) {
-    case 0:
-        endPos = QPointF(950, 250); // far right
-        rotation = -20;
-        break;
-    case 1:
-        endPos = QPointF(750, 350); // middle right
-        rotation = -10;
-        break;
-    case 2:
-        endPos = QPointF(550, 400); // middle
-        rotation = 0;
-        break;
-    case 3:
-        endPos = QPointF(350, 350); // middle left
-        rotation = 10;
-        break;
-    case 4:
-        endPos = QPointF(150, 250); // far left
-        rotation = 20;
-        break;
-    default:
+    if(seatIndex < 0 || seatIndex > 5)
+    {
         endPos = QPointF(550, 50);
         rotation = 0;
-        break;
+    }
+    else
+    {
+        int xOffset = 550;
+        int yOffset = -10;
+        int r = 450; //radius
+
+        double tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
+        double newX = xOffset + r * qCos(tempAngle);
+        double newY = yOffset + r * qSin(tempAngle);
+        double angle = tempAngle - M_PI_2;
+
+        endPos = QPointF(newX, newY);
+        rotation = qRadiansToDegrees(angle);
     }
 
     tableView->addCardAnimated(seatIndex, cardPNG, startPos, endPos, rotation);
 }
 
-void Screens::playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status)
+int Screens::indexToSeat(unsigned int playerIndex)
 {
-    if(hand.getCards().size() == 1)
-    {
-        dealCard(playerIndex, hand.getCards()[0].getImagePath());
+    if(playerIndex >= players.size())
+        return -1;
+    int seatIndex = 0;
+    for(int i = 0; i < (int)playerIndex; i++){
+        if(players[i].originalPlayer == nullptr)
+            seatIndex++;
     }
-    else if(hand.getCards().size() >= 2)
+    return seatIndex;
+}
+
+void Screens::playerUpdated(int playerIndex, const Player& player, int total)
+{
+    int handCount;
+    if(player.originalPlayer == nullptr)
+        handCount = player.playerHandCount;
+    else
+        handCount = player.originalPlayer->playerHandCount;
+    if(player.hand.getCards().size() == 1)
+    {
+        dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[0].getImagePath());
+    }
+    else if(player.hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
         bool firstLoop = true;
-        for (int i = prevHandSize; i < static_cast<int>(hand.getCards().size()); i++)
+        for (int i = prevHandSize; i < static_cast<int>(player.hand.getCards().size()); i++)
         {
             if (firstLoop)
             {
-                dealCard(playerIndex, hand.getCards()[i].getImagePath());
+                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());
                 firstLoop = false;
                 continue;
             }
             timer->scheduleSingleShot(600, [=]() {
-                dealCard(playerIndex, hand.getCards()[i].getImagePath());});
+                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());});
         }
     }
-    players[playerIndex].hand = hand;
-    players[playerIndex].money = money;
-    players[playerIndex].status = status;
+    players[playerIndex].hand = player.hand;
+    players[playerIndex].money = player.money;
+    players[playerIndex].status = player.status;
 }
 
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
@@ -793,7 +804,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 
     for(const Player& player : players)
     {
-        tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser);
+        tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser, player.playerHandCount, player.playerHandIndex);
     }
 
     for(int j = 0; j < 2; j++)
@@ -802,7 +813,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         {
             tempPlayers[i].hand.addCard(players[i].hand.getCards()[j]);
             timer->scheduleSingleShot(waitTime, [=]() {
-                playerUpdated(i, tempPlayers[i].hand, tempPlayers[i].hand.getTotal(), players[i].money, players[i].status);
+                playerUpdated(i, tempPlayers[i], tempPlayers[i].hand.getTotal());
             });
             waitTime += 600;
         }
@@ -838,7 +849,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
         timer->scheduleSingleShot(waitTime, [=]() {
-            dealCard(-1, dealerHand.getCards()[i].getImagePath());
+            dealCard(-1, 0, 0, dealerHand.getCards()[i].getImagePath());
         });
         waitTime = (waitTime * 2) + 600;
     }
@@ -856,14 +867,15 @@ void Screens::updateShowDealerCardBool(bool flipped)
     showDealerCard = flipped;
 }
 
-void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
+void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
 {
     // TODO
     // Animation: move second card from index of originalIndex to the location of newPlayer
+    tableView->addPlayerCardContanierAt(originalIndex + 1);
     players[originalIndex].hand.removeLastCard();
 
     // Create the new player and add half of their hand into the player vector
-    Player tempPlayer = Player(newPlayer.money, newPlayer.hand.getBet(), newPlayer.isUser);
+    Player tempPlayer = Player(newPlayer.money, newPlayer.hand.getBet(), newPlayer.isUser, newPlayer.playerHandCount, newPlayer.playerHandIndex);
     tempPlayer.originalPlayer = newPlayer.originalPlayer;
     Hand tempHand = Hand(newPlayer.hand.getBet());
     tempHand.addCard(newPlayer.hand.getCards()[0]);
@@ -871,11 +883,11 @@ void Screens::onsplitPlayers(int originalIndex, const Player& originalPlayer, co
     players.insert(players.begin() + originalIndex + 1, tempPlayer);
 
     // Update original player hand
-    playerUpdated(originalIndex, originalPlayer.hand, originalPlayer.hand.getTotal(), originalPlayer.money, originalPlayer.status);
+    playerUpdated(originalIndex, originalPlayer, originalPlayer.hand.getTotal());
 
     // Updates new player hand
     timer->scheduleSingleShot(600 * 2, [=]() {
-        playerUpdated(originalIndex + 1, newPlayer.hand, newPlayer.hand.getTotal(), newPlayer.money, newPlayer.status);
+        playerUpdated(originalIndex + 1, newPlayer, newPlayer.hand.getTotal());
     });
 }
 

@@ -110,7 +110,7 @@ void MainWindow::setUpMainWindowConnects()
     connect(controller,
             &Controller::splitPlayers,
             screens,
-            &Screens::onsplitPlayers);
+            &Screens::onSplitPlayers);
 
     // POV updater
     connect(controller,

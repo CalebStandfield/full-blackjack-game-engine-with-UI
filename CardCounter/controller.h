@@ -94,7 +94,7 @@ signals:
      * @param money The money they have left
      * @param status The status of the player
      */
-    void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
+    void playerUpdated(int playerIndex, const Player& player, int total);//TODO
 
     /**
      * @brief dealerUpdated Signal that the dealer has updated with their updated info

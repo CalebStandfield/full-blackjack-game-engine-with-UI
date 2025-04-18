@@ -80,7 +80,8 @@ void GameState::stand(int playerIndex)
 void GameState::split(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
-    Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser);
+    currPlayer.playerHandCount++;
+    Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser, currPlayer.playerHandCount, currPlayer.playerHandCount - 1);
     secondHandPlayer.originalPlayer = &currPlayer;
 
     // Remove money for new bet from current player

@@ -315,6 +315,12 @@ private:
      */
     void resetEverything();
 
+    /**
+     * @brief indexToSeat Returns the seat index of a given playerIndex
+     * @param playerIndex The index of the player whose seat index should be returned
+     * @return the seat index associated with this player
+     */
+    int indexToSeat(unsigned int playerIndex);
 signals:
 
     // Settings accept
@@ -386,11 +392,13 @@ signals:
 
 private slots:
     /**
-     * @brief dealCard
-     * @param seatIndex
-     * @param imagePath
+     * @brief dealCard Deals a card to the correct player's hand.
+     * @param seatIndex Player/Dealer to be dealt to
+     * @param handIndex Hand of the player to deal to
+     * @param totalHandCount The number of hands a player has
+     * @param imagePath Image of the card to deal
      */
-    void dealCard(int seatIndex, QString imagePath);
+    void dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath);
 
     /**
      * @brief updateBetLabelText Updates the betting lable for the betting view
@@ -412,7 +420,7 @@ public slots:
      * @param money The money they have left
      * @param status The status of the player
      */
-    void playerUpdated(int playerIndex, const Hand& hand, int total, int money, PLAYERSTATUS status);
+    void playerUpdated(int playerIndex, const Player& player, int total); //TODO
 
     /**
      * @brief allPlayersUpdated Slot for receiving all of the updated players to display
@@ -459,7 +467,7 @@ public slots:
      * @param originalPlayer The original player
      * @param newPlayer The new player
      */
-    void onsplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+    void onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
 
     /**
      * @brief onGameOver Logic for when the controller sends the game over signal
