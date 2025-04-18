@@ -78,7 +78,7 @@
      </size>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="startMenu">
      <property name="sizePolicy">
@@ -193,25 +193,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="blackjackTutorialButton">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>400</width>
-           <height>130</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Blackjack Tutorial</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="blackjackPracticeButton">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -227,6 +208,25 @@
          </property>
          <property name="text">
           <string>Blackjack Practice</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="blackjackTutorialButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>130</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Blackjack Tutorial</string>
          </property>
         </widget>
        </item>

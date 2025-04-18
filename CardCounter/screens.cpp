@@ -245,7 +245,11 @@ void Screens::setUpBettingMenu()
     ui->minimumBettingButton->setStyleSheet(QPushButtonStyle);
 
     toggleEnabledQPushButton(ui->placeBetButton, false);
-    updateBetLabelText(1);
+
+    if(mode == GAMEPLAYMODE::BLACKJACK)
+        updateBetLabelText(1);
+    else
+        updateBetLabelText(0);
 }
 
 void Screens::updateBetLabelText(unsigned int value)
@@ -513,16 +517,21 @@ void Screens::moveToPlayScreen()
     {
         mode = GAMEPLAYMODE::BLACKJACK;
         toggleVisibleSettingsPopup(true);
+        updateBetLabelText(1);
     }
     else if (name == "blackjackTutorialButton")
     {
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
+        playerCount = 1;
+        acceptSettingsButtonPressed();
+        updateBetLabelText(0);
     }
     else if (name == "blackjackPracticeButton")
     {
         mode = GAMEPLAYMODE::BLACKJACKPRACTICE;
         playerCount = 1;
         acceptSettingsButtonPressed();
+        updateBetLabelText(0);
     }
     else
     {
@@ -707,11 +716,17 @@ void Screens::acceptSettingsButtonPressed()
         toggleVisibleBettingView(true);
         determinedDeck = 0;
     }
-    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
         initialMoney = 1000000;
         determinedDeck = 1;
         deckCount = 2;
+    }
+    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    {
+        initialMoney = 1000000;
+        determinedDeck = 0;
+        deckCount = 1;
     }
 
     ui->betSlider->setMaximum(initialMoney);
@@ -720,7 +735,7 @@ void Screens::acceptSettingsButtonPressed()
     userIndex = QRandomGenerator::global()->bounded(playerCount);
 
     for (unsigned int i = 0; i < playerCount; i++) {
-        players.emplace_back(initialMoney, 1, i == userIndex, 1, 0);
+        players.emplace_back(initialMoney, currentBet, i == userIndex, 1, 0);
         players[i].originalHand = true;
     }
 
@@ -734,7 +749,7 @@ void Screens::acceptSettingsButtonPressed()
     {
         emit sendGameSetupCompleteStartBetting();
     }
-    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL || mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
         timer->scheduleSingleShot(2100, [=]() {
             emit sendGameSetupCompleteStartBetting();
@@ -1004,11 +1019,12 @@ void Screens::onPressNextRound()
         toggleVisibleBettingView(true);
         toggleVisibleGamePlayButtons(false);
     }
-    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL || mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
-        onPressPlacedBetButton();
+        timer->scheduleSingleShot(2100, [=]() {
+            onPressPlacedBetButton();
+        });
     }
-
 }
 
 void Screens::onPressMainMenuButton()
