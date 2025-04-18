@@ -42,9 +42,6 @@ void PlayerInfoView::buildLayout(int seats)
         layout->addWidget(label, 0, Qt::AlignVCenter);
     }
 
-    // Ensure position is to the right when less than 5 players
-    layout->addStretch(1);
-
     ui->playInfoContainer->show();
 }
 QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)

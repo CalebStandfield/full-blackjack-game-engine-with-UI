@@ -706,12 +706,12 @@ void Screens::acceptSettingsButtonPressed()
 
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, 1, i == userIndex, 1, 0);
+        players[i].originalHand = true;
     }
 
     tableView->createPlayerCardContainers(playerCount);
 
-    //emit sendSettingsAccepted(players, deckCount, 0);
-    emit sendSettingsAccepted(players, deckCount, 1);   // FIX LATER!!!!!!!!
+    emit sendSettingsAccepted(players, deckCount, 0);
 
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
@@ -755,9 +755,9 @@ int Screens::indexToSeat(unsigned int playerIndex)
 {
     if(playerIndex >= players.size())
         return -1;
-    int seatIndex = 0;
-    for(int i = 0; i < (int)playerIndex; i++){
-        if(players[i].originalPlayer == nullptr)
+    int seatIndex = -1;
+    for(int i = 0; i <= (int)playerIndex; i++){
+        if(players[i].originalHand)
             seatIndex++;
     }
     return seatIndex;
@@ -765,11 +765,7 @@ int Screens::indexToSeat(unsigned int playerIndex)
 
 void Screens::playerUpdated(int playerIndex, const Player& player, int total)
 {
-    int handCount;
-    if(player.originalPlayer == nullptr)
-        handCount = player.playerHandCount;
-    else
-        handCount = player.originalPlayer->playerHandCount;
+    int handCount = players[playerIndex - player.playerHandIndex].playerHandCount;
     if(player.hand.getCards().size() == 1)
     {
         dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[0].getImagePath());
@@ -876,13 +872,13 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
 
     // Create the new player and add half of their hand into the player vector
     Player tempPlayer = Player(newPlayer.money, newPlayer.hand.getBet(), newPlayer.isUser, newPlayer.playerHandCount, newPlayer.playerHandIndex);
-    tempPlayer.originalPlayer = newPlayer.originalPlayer;
     Hand tempHand = Hand(newPlayer.hand.getBet());
     tempHand.addCard(newPlayer.hand.getCards()[0]);
     tempPlayer.hand = tempHand;
     players.insert(players.begin() + originalIndex + 1, tempPlayer);
 
     // Update original player hand
+    players[originalIndex].playerHandCount++;
     playerUpdated(originalIndex, originalPlayer, originalPlayer.hand.getTotal());
 
     // Updates new player hand
@@ -959,8 +955,10 @@ void Screens::onPressNextRound()
     // Remove split hands
     for(int i = players.size() - 1; i >= 0; i--)
     {
-        if(players[i].originalPlayer != nullptr)
+        if(!players[i].originalHand)
             players.erase(players.begin() + i);
+        else
+            players[i].playerHandCount = 1;
     }
 
     emit sendNewRound();

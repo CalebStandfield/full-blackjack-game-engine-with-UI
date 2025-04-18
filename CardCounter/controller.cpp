@@ -182,7 +182,7 @@ void Controller::botMove()
     else if(move == MOVE::DOUBLE)
     {
         // If not enough money to double down, hit instead
-        if(player.money < player.hand.getBet()){
+        if(player.money < player.hand.getBet() || player.hand.getCards().size() != 2){
             timer->scheduleSingleShot(waitTime, [=]() {
                 onHit();});
         }

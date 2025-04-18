@@ -23,9 +23,9 @@ public:
     bool isUser;
 
     /**
-     * @brief originalPlayer Pointer to original player
+     * @brief originalHand True if this is the original hand of the player (not a split)
      */
-    Player* originalPlayer = nullptr;
+    bool originalHand = false;
 
     /**
      * @brief status Stores the current status of the player

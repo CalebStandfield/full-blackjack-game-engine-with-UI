@@ -34,7 +34,7 @@ void GameState::clearHands()
     // Reset player hands and remove split hands
     for(int i = players.size() - 1; i >= 0; i--)
     {
-        if(players[i].originalPlayer != nullptr)
+        if(!players[i].originalHand)
             players.erase(players.begin() + i);
         else
             players[i].hand = Hand(players[i].hand.getBet());
@@ -80,9 +80,17 @@ void GameState::stand(int playerIndex)
 void GameState::split(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
-    currPlayer.playerHandCount++;
-    Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser, currPlayer.playerHandCount, currPlayer.playerHandCount - 1);
-    secondHandPlayer.originalPlayer = &currPlayer;
+    int handIndex = 1;
+    for(int i = playerIndex; i >= 0; i--){
+        if(players[i].originalHand)
+        {
+            players[i].playerHandCount++;
+            break;
+        }
+        handIndex++;
+    }
+
+    Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser, 0, handIndex);
 
     // Remove money for new bet from current player
     currPlayer.money -= currPlayer.hand.getBet();
@@ -124,8 +132,10 @@ void GameState::endRound()
     int dealerTotal = dealerHand.getTotal();
     bool dealerBust = isBust(dealerHand);
 
-    for(Player& player : players)
+    for(int i = 0; i < (int)players.size(); i++)
     {
+        Player &player = players[i];
+        Player &originalPlayer = players[i - player.playerHandIndex];
         if(player.status == PLAYERSTATUS::BUST)
         {
             player.status = PLAYERSTATUS::LOST;
@@ -140,30 +150,21 @@ void GameState::endRound()
             // If player gets blackjack, player gets 2.5 times their bet
             if(playerTotal == 21 && player.hand.getCards().size() == 2)
             {
-                if(player.originalPlayer != nullptr)
-                    player.originalPlayer->money += player.hand.getBet() * 2.5;
-                else
-                    player.money += player.hand.getBet() * 2.5;
+                originalPlayer.money += player.hand.getBet() * 2.5;
 
                 player.status = PLAYERSTATUS::BLACKJACK;
             }
             // Else, player won and doubles their bet
             else
             {
-                if(player.originalPlayer != nullptr)
-                    player.originalPlayer->money += player.hand.getBet() * 2;
-                else
-                    player.money += player.hand.getBet() * 2;
+                originalPlayer.money += player.hand.getBet() * 2;
 
                 player.status = PLAYERSTATUS::WON;
             }
         }
         else if(playerTotal == dealerTotal)
         {
-            if(player.originalPlayer != nullptr)
-                player.originalPlayer->money += player.hand.getBet();
-            else
-                player.money += player.hand.getBet();
+            originalPlayer.money += player.hand.getBet();
             player.status = PLAYERSTATUS::PUSHED;
         }
         else
