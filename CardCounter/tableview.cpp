@@ -6,7 +6,11 @@ TableView::TableView(QWidget *parent)
     : QGraphicsView(parent), scene(new QGraphicsScene(this)) {
 
     setScene(scene);
-    setRenderHint(QPainter::Antialiasing);
+
+    setRenderHints(
+        QPainter::Antialiasing                |
+        QPainter::SmoothPixmapTransform
+        );
 
     QPixmap tablePixmap(":/table/background_table_mat.png");
 
@@ -65,6 +69,7 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
             );
     }
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
+    cardItem->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
     QParallelAnimationGroup* anim = createAnimationCardItem(cardItem, startPos, endPos, 90, rotationAngle);
 

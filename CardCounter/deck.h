@@ -61,6 +61,20 @@ private:
      * @brief createDeck Creates a full 52 card deck in number order. Suit goes
      */
     void createDeck();
+
+    /**
+     * @brief charToRank Converts a char from 2 - 9, A, K, Q, J, T to their RANK
+     * @param c The char to convert
+     * @return Returns the RANK of the char
+     */
+    Rank::RANK charToRank(char c);
+
+    /**
+     * @brief charToSuit Converts a char from S, H, C, D to their SUIT
+     * @param c The char to convert
+     * @return Returns the RANK of the char
+     */
+    Suit::SUIT charToSuit(char c);
 };
 
 #endif // DECK_H

@@ -78,7 +78,8 @@ void Controller::advanceToNextPlayer()
 
     // All players have went, dealer turn
     if(currentPlayerIndex >= model->getPlayerCount() || model->getDealerHand().getTotal() == 21) {
-        model->dealerPlay();
+        if(onePlayerStillAlive())
+            model->dealerPlay();
         emit showDealerCard(true);
         emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
         return;
@@ -91,6 +92,16 @@ void Controller::advanceToNextPlayer()
 
     if(!player.isUser)
          botMove();
+}
+
+bool Controller::onePlayerStillAlive()
+{
+    for(const Player& player : model->getAllPlayers())
+    {
+        if(player.status == PLAYERSTATUS::STAND)
+            return true;
+    }
+    return false;
 }
 
 void Controller::onDealerDonePlaying()

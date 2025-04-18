@@ -116,11 +116,6 @@ private:
      * @brief dealerHand The dealer's hand
      */
     Hand dealerHand;
-
-    /**
-     * @brief dealerFinished True if the dealer has done their turn, false otherwise
-     */
-    bool dealerFinished = false;
 };
 
 #endif // GAMESTATE_H

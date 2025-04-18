@@ -505,7 +505,6 @@ void Screens::moveToPlayScreen()
 
     ui->screens->setCurrentIndex(1);
     ui->bettingArea->hide();
-    toggleVisibleSettingsPopup(true);
     QPushButton *button = qobject_cast<QPushButton *>(sender());
 
     QString name = button->objectName();
@@ -513,6 +512,7 @@ void Screens::moveToPlayScreen()
     if (name == "blackjackPlayButton")
     {
         mode = GAMEPLAYMODE::BLACKJACK;
+        toggleVisibleSettingsPopup(true);
     }
     else if (name == "blackjackTutorialButton")
     {
@@ -521,6 +521,8 @@ void Screens::moveToPlayScreen()
     else if (name == "blackjackPracticeButton")
     {
         mode = GAMEPLAYMODE::BLACKJACKPRACTICE;
+        playerCount = 1;
+        acceptSettingsButtonPressed();
     }
     else
     {
@@ -698,7 +700,20 @@ void Screens::onGameOver()
 void Screens::acceptSettingsButtonPressed()
 {
     toggleVisibleGamePlayButtons(false);
-    toggleVisibleBettingView(true);
+
+    int determinedDeck;
+    if (mode == GAMEPLAYMODE::BLACKJACK)
+    {
+        toggleVisibleBettingView(true);
+        determinedDeck = 0;
+    }
+    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    {
+        initialMoney = 1000000;
+        determinedDeck = 1;
+        deckCount = 2;
+    }
+
     ui->betSlider->setMaximum(initialMoney);
     toggleEnabledQPushButton(ui->placeBetButton, false);
 
@@ -711,14 +726,25 @@ void Screens::acceptSettingsButtonPressed()
 
     tableView->createPlayerCardContainers(playerCount);
 
-    emit sendSettingsAccepted(players, deckCount, 0);
+    emit sendSettingsAccepted(players, deckCount, determinedDeck);
 
-    // timer between start and bet/anims
-    emit sendGameSetupCompleteStartBetting();
+    tableView->createDealerPile();
+
+    if (mode == GAMEPLAYMODE::BLACKJACK)
+    {
+        emit sendGameSetupCompleteStartBetting();
+    }
+    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    {
+        timer->scheduleSingleShot(2100, [=]() {
+            emit sendGameSetupCompleteStartBetting();
+            updateBetLabelText(0);
+            onPressPlacedBetButton();
+        });
+    }
 
     toggleEnabledGamePlayButtons(false);
 
-    tableView->createDealerPile();
 }
 
 void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)
@@ -784,7 +810,8 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int total)
                 continue;
             }
             timer->scheduleSingleShot(600, [=]() {
-                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());});
+                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());
+            });
         }
     }
     players[playerIndex].hand = player.hand;
@@ -847,7 +874,11 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         timer->scheduleSingleShot(waitTime, [=]() {
             dealCard(-1, 0, 0, dealerHand.getCards()[i].getImagePath());
         });
-        waitTime = (waitTime * 2) + 600;
+        if(!showDealerCard)
+        {
+            waitTime *= 2;
+        }
+        waitTime += 800;
     }
 
     if (showDealerCard)
@@ -967,8 +998,17 @@ void Screens::onPressNextRound()
 
     tableView->createDealerPile();
     ui->betSlider->setMaximum(players[userIndex].money);
-    toggleVisibleBettingView(true);
-    toggleVisibleGamePlayButtons(false);
+
+    if (mode == GAMEPLAYMODE::BLACKJACK)
+    {
+        toggleVisibleBettingView(true);
+        toggleVisibleGamePlayButtons(false);
+    }
+    else if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    {
+        onPressPlacedBetButton();
+    }
+
 }
 
 void Screens::onPressMainMenuButton()
