@@ -14,6 +14,7 @@ enum class PLAYERSTATUS {
     BANKRUPT,
     PUSHED,
     WON,
+    BLACKJACK,
     LOST
 };
 
@@ -43,6 +44,8 @@ inline std::string toString(PLAYERSTATUS playerStatus)
         return "Won";
     case PLAYERSTATUS::LOST:
         return "Lost";
+    case PLAYERSTATUS::BLACKJACK:
+        return "Blackjack";
     }
 
     return "Unknown player status";
@@ -70,6 +73,7 @@ inline constexpr PLAYERSTATUS allPlayerStatus[] = {
     PLAYERSTATUS::BANKRUPT,
     PLAYERSTATUS::PUSHED,
     PLAYERSTATUS::WON,
+    PLAYERSTATUS::BLACKJACK,
     PLAYERSTATUS::LOST
 };
 

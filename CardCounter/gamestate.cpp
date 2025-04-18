@@ -136,23 +136,26 @@ void GameState::endRound()
         int playerTotal = player.hand.getTotal();
         if(dealerBust || playerTotal > dealerTotal)
         {
-            // If player gets blackjack, player gets 1.5 times their bet
+            // If player gets blackjack, player gets 2.5 times their bet
             if(playerTotal == 21 && player.hand.getCards().size() == 2)
             {
                 if(player.originalPlayer != nullptr)
                     player.originalPlayer->money += player.hand.getBet() * 2.5;
                 else
                     player.money += player.hand.getBet() * 2.5;
+
+                player.status = PLAYERSTATUS::BLACKJACK;
             }
-            // Else, player doubles their bet
+            // Else, player won and doubles their bet
             else
             {
                 if(player.originalPlayer != nullptr)
                     player.originalPlayer->money += player.hand.getBet() * 2;
                 else
                     player.money += player.hand.getBet() * 2;
+
+                player.status = PLAYERSTATUS::WON;
             }
-            player.status = PLAYERSTATUS::WON;
         }
         else if(playerTotal == dealerTotal)
         {

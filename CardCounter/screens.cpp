@@ -82,7 +82,7 @@ void Screens::setUpScreenConnects()
     connect(ui->basicStrategyChartButton,
             &QPushButton::clicked,
             this,
-            &Screens::moveToInforScreen);
+            &Screens::moveToInfoScreen);
     connect(ui->infoMenuButton,
             &QPushButton::clicked,
             this,
@@ -250,6 +250,7 @@ void Screens::setUpBettingMenu()
 void Screens::updateBetLabelText(unsigned int value)
 {
     ui->betLabel->setText("Bet Amount: $" + QString::number(value));
+    currentBet = value;
 }
 
 void Screens::updateSettingsSlider(unsigned int value)
@@ -589,8 +590,9 @@ void Screens::applyShadowToWidget(QWidget *widget)
     widget->setGraphicsEffect(shadow);
 }
 
-void Screens::moveToInforScreen()
+void Screens::moveToInfoScreen()
 {
+    ui->infoMenuButton->setStyleSheet(QPushButtonStyleSmallFont);
     ui->screens->setCurrentIndex(2);
 }
 

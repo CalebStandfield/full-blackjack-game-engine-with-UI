@@ -240,7 +240,7 @@ private:
     /**
      * @brief move to the screen that shows infromation about the blackjack charts and how to play
      */
-    void moveToInforScreen();
+    void moveToInfoScreen();
 
     /**
      * @brief this methods add an image to the window in the tutorial

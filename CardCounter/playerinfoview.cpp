@@ -60,7 +60,7 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
         break; // yellow
     case PLAYERSTATUS::BANKRUPT:
         color = "#2a2a2a";
-        break; // slightly transparent black
+        break; // black
     case PLAYERSTATUS::PUSHED:
         color = "#808080";
         break; // grey
@@ -73,6 +73,9 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
     case PLAYERSTATUS::BETSUBMITTED:
         color = "#ff9933";
         break; // orange
+    case PLAYERSTATUS::BLACKJACK:
+        color = "#9C27B0";
+        break; // casino green
     case PLAYERSTATUS::WON:
         color = "#D4AF37";
         break; // golden
@@ -114,7 +117,8 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
 
 bool PlayerInfoView::fillWholeCard(PLAYERSTATUS status)
 {
-    return status == PLAYERSTATUS::WON || status == PLAYERSTATUS::LOST || status == PLAYERSTATUS::PUSHED || status == PLAYERSTATUS::BANKRUPT;
+    return status == PLAYERSTATUS::WON || status == PLAYERSTATUS::BLACKJACK || status == PLAYERSTATUS::LOST
+           || status == PLAYERSTATUS::PUSHED || status == PLAYERSTATUS::BANKRUPT;
 }
 
 void PlayerInfoView::rebuildMapping()
