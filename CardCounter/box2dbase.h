@@ -45,13 +45,38 @@ public:
      */
     //void removeBodies();
 
+    /**
+     * @brief coinPixmap The pixmap image for the coin
+     */
     QPixmap *coinPixmap;
 
+    /**
+     * @brief spawnNextCoin Spawns the next coin in the queue sequentially to emulate a slot machine
+     */
     void spawnNextCoin();
 
+    /**
+     * @brief onWinSpawnCoins Function called by other classes to begin spawning coins only when the player has won
+     * @param position To spawn the coins at
+     * @param coinsToSpawn The number of coins to spawn
+     */
     void onWinSpawnCoins(QPointF position, int coinsToSpawn);
 
+    /**
+     * @brief initialBurst Spawns a burst of coins
+     */
     void initialBurst();
+
+    /**
+     * @brief isCoinSpawning Helper method to check if the spawn timer for the coins is running - thus the coins are spawning
+     * @return true or false depending on if the timer is active or not
+     */
+    bool isCoinSpawning();
+
+    /**
+     * @brief stopSpawning Helper method to clear the coin queue and stop any new coins from spawning
+     */
+    void stopSpawning();
 
 protected:
     /**

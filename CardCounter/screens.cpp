@@ -952,13 +952,18 @@ void Screens::endRound(const std::vector<Player>& players)
 
         if(player.status == PLAYERSTATUS::WON && player.isUser){
             qDebug() << "Player won game";
-            m_scene->onWinSpawnCoins(QPointF(540.0, 740.0), 40);
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 30);
         }
     }
 }
 
 void Screens::onPressNextRound()
 {
+    // if the scene is active/valid
+    if (m_scene) {
+        m_scene->stopSpawning();
+    }
+
     timer->cancelAllTimers();
     tableView->clearTable();
 

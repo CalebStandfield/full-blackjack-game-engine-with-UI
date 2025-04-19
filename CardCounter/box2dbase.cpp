@@ -138,7 +138,7 @@ void box2Dbase::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
         // 4. Create graphics (PNG)
         QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem(*coinPixmap);
-        coinItem->setOffset(-coinPixmap->width()/2, -coinPixmap->height()/2);
+        coinItem->setOffset(-coinPixmap->width()/10, -coinPixmap->height()/10);
         coinItem->setPos(event->scenePos());
         addItem(coinItem);
 
@@ -188,30 +188,34 @@ void box2Dbase::spawnNextCoin() {
         return;
     }
 
+    const float COIN_SIZE_PIXELS = 50.0f;
+
     QPointF pos = m_coinQueue.dequeue();
 
     // Physics setup
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(pos.x() / pixels_PerMeter, pos.y() / pixels_PerMeter);
-    bodyDef.angularDamping = 0.2f;  // resist spinning
-    bodyDef.linearDamping = 0.4f;   // air resistance
+    bodyDef.angularDamping = 0.1f;  // resist spinning
+    bodyDef.linearDamping = 0.1f;   // air resistance
     b2Body* body = m_world->CreateBody(&bodyDef);
+
+    QPixmap scaledCoin = coinPixmap->scaled(COIN_SIZE_PIXELS, COIN_SIZE_PIXELS, Qt::KeepAspectRatio);
 
     // shape setup
     b2CircleShape circle;
-    circle.m_radius = coinPixmap->width() / (2.5f * pixels_PerMeter); // Slightly smaller than visual
+    circle.m_radius = (COIN_SIZE_PIXELS / 2.0f) / pixels_PerMeter;
 
     // fixture setup
     b2FixtureDef fixture;
     fixture.shape = &circle;
-    fixture.density = 2.0f;      // Very heavy coins
-    fixture.friction = 0.4f;     // High friction
-    fixture.restitution = 0.4f;  // Minimal bounce
+    fixture.density = 0.4f;
+    fixture.friction = 0.1f;     // High friction
+    fixture.restitution = 0.6f;  // Minimal bounce
     body->CreateFixture(&fixture);
 
-    QGraphicsPixmapItem* coin = new QGraphicsPixmapItem(*coinPixmap);
-    coin->setOffset(-coinPixmap->width()/2, -coinPixmap->height()/2);
+    QGraphicsPixmapItem* coin = new QGraphicsPixmapItem(scaledCoin);
+    coin->setOffset(-scaledCoin.width()/2, -scaledCoin.height()/2);
     coin->setPos(pos);
     addItem(coin);
     body->SetUserData(coin);
@@ -226,10 +230,12 @@ void box2Dbase::initialBurst(){
     // Queue coins with horizontal spread (like a real slot)
     const float slotWidth = 30.0f;
     QPointF position;
+    const float COIN_SIZE_PIXELS = 50.0f;
+    QPixmap scaledCoin = coinPixmap->scaled(COIN_SIZE_PIXELS, COIN_SIZE_PIXELS, Qt::KeepAspectRatio);
 
     for (int i = 0; i < 40; i++) {
         float offset = randomFloat(-slotWidth/2, slotWidth/2);
-        position = QPointF(540, 740) + QPointF(offset, 0);
+        position = QPointF(540, 730) + QPointF(offset, 0);
         m_coinQueue.enqueue(position);
     }
 
@@ -242,19 +248,19 @@ void box2Dbase::initialBurst(){
 
         // 2. Create CIRCULAR physics shape (matches image dimensions)
         b2CircleShape circleShape;
-        circleShape.m_radius = coinPixmap->width() / (2 * pixels_PerMeter); // Convert pixels to meters
+        circleShape.m_radius = (COIN_SIZE_PIXELS / 2.0f) / pixels_PerMeter;
 
         // 3. Create fixture
         b2FixtureDef fixtureDef;
         fixtureDef.shape = &circleShape;  // Use the circle shape, not the pixmap
-        fixtureDef.density = 3.5f;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.2f;
+        fixtureDef.restitution = 0.6f;
         body->CreateFixture(&fixtureDef);
 
         // 4. Create graphics (PNG)
-        QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem(*coinPixmap);
-        coinItem->setOffset(-coinPixmap->width()/2, -coinPixmap->height()/2);
+        QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem(scaledCoin);
+        coinItem->setOffset(-scaledCoin.width()/2, -scaledCoin.height()/2);
         coinItem->setPos(position);
         addItem(coinItem);
 
@@ -273,4 +279,15 @@ void box2Dbase::initialBurst(){
             m_coinTimer->setInterval(1000 / m_coinsPerSecond); // Then slower
         });
     }
+}
+
+void box2Dbase::stopSpawning(){
+    m_coinQueue.clear();
+    if (m_coinTimer->isActive()) {
+        m_coinTimer->stop();
+    }
+}
+
+bool box2Dbase::isCoinSpawning() {
+    return m_coinTimer->isActive();
 }
