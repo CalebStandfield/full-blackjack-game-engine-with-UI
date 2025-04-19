@@ -54,7 +54,9 @@
         <file>cards_pngsource/queen_of_spades.png</file>
         <file>cards_pngsource/back_of_card.png</file>
     </qresource>
-    <qresource prefix="/cash"/>
+    <qresource prefix="/cash">
+        <file>otherimg/coin.png</file>
+    </qresource>
     <qresource prefix="/table">
         <file>background_table_mat.png</file>
     </qresource>

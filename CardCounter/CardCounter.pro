@@ -54,6 +54,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     botstrategy.cpp \
+    box2dbase.cpp \
     card.cpp \
     controller.cpp \
     deck.cpp \
@@ -117,6 +118,7 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     botstrategy.h \
+    box2dbase.h \
     card.h \
     controller.h \
     deck.h \
