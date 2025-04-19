@@ -8,10 +8,13 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 {
     ui->setupUi(this);
 
+    m_scene = new box2Dbase(this);
+
     infoBar = new PlayerInfoView(ui);
     screens = new Screens(ui);
 
     setUpMainWindowConnects();
+    setupCoinAnimViews();
 }
 
 MainWindow::~MainWindow()
@@ -19,6 +22,26 @@ MainWindow::~MainWindow()
     delete ui;
     delete screens;
     delete infoBar;
+}
+
+void MainWindow::setupCoinAnimViews(){
+    ui->coinAnimView->setStyleSheet("background: transparent");
+    ui->coinAnimView->setScene(m_scene);
+    ui->coinAnimView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView->setRenderHint(QPainter::Antialiasing);
+
+    ui->coinAnimView->setSceneRect(m_scene->sceneRect());
+    ui->coinAnimView->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
+
+    ui->coinAnimView_2->setStyleSheet("background: transparent");
+    ui->coinAnimView_2->setScene(m_scene);
+    ui->coinAnimView_2->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView_2->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView_2->setRenderHint(QPainter::Antialiasing);
+
+    ui->coinAnimView_2->setSceneRect(m_scene->sceneRect());
+    ui->coinAnimView_2->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
 }
 
 void MainWindow::setUpMainWindowConnects()
@@ -157,5 +180,4 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::currentPlayerTurn,
             infoBar,
             &PlayerInfoView::onCurrentPlayerTurn);
-
 }
