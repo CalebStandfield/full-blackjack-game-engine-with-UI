@@ -49,7 +49,9 @@ public:
 
     void spawnNextCoin();
 
-    void onWinSpawnCoins(QPointF position);
+    void onWinSpawnCoins(QPointF position, int coinsToSpawn);
+
+    void initialBurst();
 
 protected:
     /**

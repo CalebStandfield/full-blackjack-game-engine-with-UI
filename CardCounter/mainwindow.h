@@ -27,6 +27,8 @@ public:
     MainWindow(Controller* controller, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setupCoinAnimViews();
+
 private:
     Ui::MainWindow *ui;
     Controller *controller;
@@ -36,6 +38,5 @@ private:
     GameState *state;
 
     void setUpMainWindowConnects();
-    void setupCoinAnimViews();
 };
 #endif // MAINWINDOW_H
