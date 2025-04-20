@@ -1007,8 +1007,11 @@ void Screens::endRound(const std::vector<Player>& players)
         ui->coinAnimView->viewport()->update();
 
         if(player.status == PLAYERSTATUS::WON && player.isUser){
-            qDebug() << "Player won game";
-            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 30);
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 15);
+        }
+        else if (player.status == PLAYERSTATUS::BLACKJACK && player.isUser)
+        {
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 25);
         }
     }
 }
@@ -1067,6 +1070,9 @@ void Screens::onPressPlayAgain()
 void Screens::resetEverything()
 {
     emit sendStopEverything();
+    if (m_scene) {
+        m_scene->stopSpawning();
+    }
     timer->cancelAllTimers();
     players.clear();
 }

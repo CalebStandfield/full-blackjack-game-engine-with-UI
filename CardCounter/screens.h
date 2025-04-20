@@ -303,11 +303,6 @@ private:
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
 
     /**
-     * @brief onPressNextRound Handles pressing the next round button
-     */
-    void onPressNextRound();
-
-    /**
      * @brief onPressPlayAgain Handles pressing the play again button
      */
     void onPressPlayAgain();
@@ -475,6 +470,11 @@ public slots:
      * @brief onGameOver Logic for when the controller sends the game over signal
      */
     void onGameOver();
+
+    /**
+     * @brief onPressNextRound Handles pressing the next round button
+     */
+    void onPressNextRound();
 };
 
 #endif // SCREENS_H

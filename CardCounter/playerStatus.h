@@ -19,7 +19,7 @@ enum class PLAYERSTATUS {
 };
 
 /**
- * @brief to_string Converts a PLAYERSTATUS to a string
+ * @brief toString Converts a PLAYERSTATUS to a string
  * @param PLAYERSTATUS The PLAYERSTATUS to convert
  * @return A string of the PLAYERSTATUS provided
  */
