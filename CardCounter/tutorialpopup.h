@@ -3,6 +3,7 @@
 
 #include "ui_mainwindow.h"
 #include "statistics.h"
+#include "timermanager.h"
 
 using Move::MOVE;
 
@@ -27,6 +28,12 @@ public:
      */
     void toggleVisableTutorialPopup(bool show);
 
+    /**
+     * @brief nextIsTip Gets if the next message will be a tip message
+     * @return True if the next message is a tip, false otherwise
+     */
+    bool nextIsTip() const;
+
 signals:
     /**
      * @brief sendNextRound Signal to move to the next round of blackjack
@@ -34,17 +41,29 @@ signals:
     void sendNextRound();
 
     /**
-     * @brief enableButton
-     * @param button
-     * @param enabled
+     * @brief enableButton Signal to set the passed button to enabled
+     * @param button The button to change
+     * @param enabled The value of true for on, or false for off
      */
     void enableButton(QPushButton* button, bool enabled);
+
+    /**
+     * @brief delayedEnableButton Signal to set the passed button to enabled after a delay
+     * @param button The button to change
+     * @param enabled The value of true for on, or false for off
+     */
+    void delayedEnableButton(QPushButton* button, bool enabled);
 
 public slots:
     /**
      * @brief onContinuePressed Slot for when the continue button is pressed on the popup page
      */
     void onContinuePressed();
+
+    /**
+     * @brief resetAndHideTutorial Hides the popup and resets to the start
+     */
+    void resetAndHideTutorial();
 
 private:
     /**

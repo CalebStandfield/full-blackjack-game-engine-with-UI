@@ -152,6 +152,10 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressPlayAgain);
+    connect(this,
+            &Screens::sendStopEverything,
+            tutorialPopup,
+            &TutorialPopup::resetAndHideTutorial);
 
     // Tutorial Buttons
     connect(ui->tutorialContinueButton,
@@ -162,6 +166,25 @@ void Screens::setUpScreenConnects()
             &TutorialPopup::enableButton,
             this,
             &Screens::toggleEnabledQPushButton);
+    connect(tutorialPopup,
+            &TutorialPopup::sendNextRound,
+            this,
+            &Screens::onPressNextRound);
+    connect(tutorialPopup,
+            &TutorialPopup::delayedEnableButton,
+            this,
+            [this](QPushButton* button){
+
+                // when the deal‐animation finishes, enable just this one
+                connect(this,
+                        &Screens::dealAnimationComplete,
+                        this,
+                        [this,button]() {
+                            toggleEnabledGamePlayButtons(false);
+                            toggleEnabledQPushButton(button, true);
+                        },
+                        Qt::SingleShotConnection);
+            });
 }
 
 void Screens::setUpTable()
@@ -552,7 +575,7 @@ void Screens::moveToPlayScreen()
 
     QString name = button->objectName();
 
-    if (name == "blackjackPlayButton")
+    if (name == "blackjackPlayButton" || name == "playAgain")
     {
         mode = GAMEPLAYMODE::BLACKJACK;
         toggleVisibleSettingsPopup(true);
@@ -767,7 +790,8 @@ void Screens::acceptSettingsButtonPressed()
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         toggleVisibleBettingView(true);
-        determinedDeck = 0;
+        //determinedDeck = 0;
+        determinedDeck = 2;
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -890,7 +914,10 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
     }
 
     timer->scheduleSingleShot(waitTime, [=]() {
-        toggleEnabledGamePlayButtons(true);
+        if (mode != GAMEPLAYMODE::BLACKJACKTUTORIAL)
+        {
+            toggleEnabledGamePlayButtons(true);
+        }
         emit dealAnimationComplete();
     });
 }
@@ -966,6 +993,14 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
 
 void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
 {
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && players[nextPlayerIndex].isUser && tutorialPopup->nextIsTip())
+    {
+        toggleEnabledGamePlayButtons(false);
+        // show the next tip
+        tutorialPopup->toggleVisableTutorialPopup(true);
+        return;
+    }
+
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
@@ -1023,6 +1058,12 @@ void Screens::endRound(const std::vector<Player>& players)
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
 
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
+    {
+        tutorialPopup->toggleVisableTutorialPopup(true);
+        return;
+    }
+
     std::vector<Player> localPlayers = players;
 
     for(Player& player : localPlayers)
@@ -1041,6 +1082,14 @@ void Screens::endRound(const std::vector<Player>& players)
 
 void Screens::onPressNextRound()
 {
+    // in tutorial mode, don’t advance the table—just forward to the popup
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && ui->tutorialWidget->isVisible())
+    {
+        tutorialPopup->onContinuePressed();
+        return;
+    }
+
+    tutorialPopup->toggleVisableTutorialPopup(false);
     // if the scene is active/valid
     if (m_scene) {
         m_scene->stopSpawning();
