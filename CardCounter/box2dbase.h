@@ -52,6 +52,8 @@ public:
 
     /**
      * @brief spawnNextCoin Spawns the next coin in the queue sequentially to emulate a slot machine
+     * Responsible for creating a Box2D object and adding to queue - including the body, shape and fixture such that the
+     * element can be simulated in the world scene
      */
     void spawnNextCoin();
 
@@ -77,14 +79,6 @@ public:
      * @brief stopSpawning Helper method to clear the coin queue and stop any new coins from spawning
      */
     void stopSpawning();
-
-protected:
-    /**
-     * @brief mousePressEvent Responsible for creating a Box2D object on mouse click including the body, shape and fixture such that the
-     * element can be simulated in the world scene
-     * @param event Mouse button pressed
-     */
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
 private:
     /**
