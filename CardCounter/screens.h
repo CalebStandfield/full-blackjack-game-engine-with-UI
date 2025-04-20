@@ -1,6 +1,7 @@
 #ifndef SCREENS_H
 #define SCREENS_H
 
+#include "box2dbase.h"
 #include "player.h"
 #include "tableview.h"
 #include "ui_mainwindow.h"
@@ -19,7 +20,7 @@ class Screens : public QStackedWidget
 {
     Q_OBJECT
 public:
-    explicit Screens(Ui::MainWindow *ui, QWidget *parent = nullptr);
+    explicit Screens(Ui::MainWindow *ui,  box2Dbase* m_scene, QWidget *parent = nullptr);
 
     ~Screens();
 
@@ -27,6 +28,7 @@ private:
     Ui::MainWindow *ui;
     TableView *tableView;
     TimerManager* timer;
+    box2Dbase *m_scene;
 
     enum GAMEPLAYMODE {
         BLACKJACK,

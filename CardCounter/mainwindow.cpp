@@ -8,10 +8,13 @@ MainWindow::MainWindow(Controller* controller, QWidget *parent)
 {
     ui->setupUi(this);
 
+    m_scene = new box2Dbase(this);
+
     infoBar = new PlayerInfoView(ui);
-    screens = new Screens(ui);
+    screens = new Screens(ui, m_scene);
 
     setUpMainWindowConnects();
+    setupCoinAnimViews();
 }
 
 MainWindow::~MainWindow()
@@ -19,6 +22,18 @@ MainWindow::~MainWindow()
     delete ui;
     delete screens;
     delete infoBar;
+}
+
+void MainWindow::setupCoinAnimViews(){
+    ui->coinAnimView->setStyleSheet("background: transparent");
+    ui->coinAnimView->setScene(m_scene);
+    ui->coinAnimView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->coinAnimView->setRenderHint(QPainter::Antialiasing);
+
+    ui->coinAnimView->setSceneRect(m_scene->sceneRect());
+    ui->coinAnimView->setFixedSize(1181, 621); // Match the UI geometry
+    ui->coinAnimView->fitInView(m_scene->sceneRect(), Qt::KeepAspectRatioByExpanding);
 }
 
 void MainWindow::setUpMainWindowConnects()
@@ -157,5 +172,4 @@ void MainWindow::setUpMainWindowConnects()
             &Controller::currentPlayerTurn,
             infoBar,
             &PlayerInfoView::onCurrentPlayerTurn);
-
 }
