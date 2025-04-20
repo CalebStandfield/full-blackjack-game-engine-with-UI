@@ -102,65 +102,6 @@ void box2Dbase::advance(){
     QGraphicsScene::advance();
 }
 
-void box2Dbase::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    if (event->button() != Qt::LeftButton) {
-        QGraphicsScene::mousePressEvent(event);
-        return;
-    }
-
-    // Queue coins with horizontal spread (like a real slot)
-    const float slotWidth = 30.0f;
-
-    for (int i = 0; i < 40; i++) {
-        float offset = randomFloat(-slotWidth/2, slotWidth/2);
-        m_coinQueue.enqueue(event->scenePos() + QPointF(offset, 0));
-    }
-
-    for (int i = 0; i < 40; i++) {
-        // 1. Create physics body (circle shape)
-        b2BodyDef bodyDef;
-        bodyDef.type = b2_dynamicBody;
-        bodyDef.position.Set(event->scenePos().x() / pixels_PerMeter, event->scenePos().y() / pixels_PerMeter);
-        b2Body* body = m_world->CreateBody(&bodyDef);
-
-        // 2. Create CIRCULAR physics shape (matches image dimensions)
-        b2CircleShape circleShape;
-        circleShape.m_radius = coinPixmap->width() / (2 * pixels_PerMeter); // Convert pixels to meters
-
-        // 3. Create fixture
-        b2FixtureDef fixtureDef;
-        fixtureDef.shape = &circleShape;  // Use the circle shape, not the pixmap
-        fixtureDef.density = 3.5f;
-        fixtureDef.friction = 0.5f;
-        fixtureDef.restitution = 0.5f;
-        body->CreateFixture(&fixtureDef);
-
-        // 4. Create graphics (PNG)
-        QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem(*coinPixmap);
-        coinItem->setOffset(-coinPixmap->width()/10, -coinPixmap->height()/10);
-        coinItem->setPos(event->scenePos());
-        addItem(coinItem);
-
-        // 5. Link physics and graphics
-        body->SetUserData(coinItem);
-
-        float randx = static_cast<float>(QRandomGenerator::global()->generateDouble() * 16.0 - 8.0);
-        float randy = static_cast<float>(QRandomGenerator::global()->generateDouble() * 5.0 - 16.0);
-        body->ApplyLinearImpulse(b2Vec2(randx, randy), body->GetWorldCenter(), true);
-    }
-
-    // Start with rapid initial burst
-    if (!m_coinTimer->isActive()) {
-        m_coinTimer->start(50); // First coins fast
-        QTimer::singleShot(300, [this]() {
-            m_coinTimer->setInterval(1000 / m_coinsPerSecond); // Then slower
-        });
-    }
-
-    QGraphicsScene::mousePressEvent(event);
-}
-
 void box2Dbase::onWinSpawnCoins(QPointF position, int coinsToSpawn) {
     // Clear any existing coins first
     m_coinQueue.clear();
