@@ -15,8 +15,9 @@ public:
 
     /**
      * @brief showNextPopup Shows the next popup message on screen
+     * @param show A bool for the state of visability for the tutorial popup
      */
-    void showNextPopup();
+    void toggleVisableTutorialPopup(bool show);
 
 signals:
     /**

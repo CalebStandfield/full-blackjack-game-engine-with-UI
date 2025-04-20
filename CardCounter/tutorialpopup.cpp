@@ -20,9 +20,16 @@ void TutorialPopup::createMessages()
     messageIndex = 0;
 }
 
-void TutorialPopup::showNextPopup()
+void TutorialPopup::toggleVisableTutorialPopup(bool show)
 {
-
+    if (show)
+    {
+        ui->tutorialWidget->show();
+    }
+    else
+    {
+        ui->tutorialWidget->hide();
+    }
 }
 
 void TutorialPopup::onContinuePressed()
