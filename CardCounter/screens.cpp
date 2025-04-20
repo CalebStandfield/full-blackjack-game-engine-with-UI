@@ -14,8 +14,8 @@ Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
     moveToStartScreen();
 
     // Set up function calls
-    setUpTable();
     setUpQStyleSheets();
+    setUpTable();
     setUpStartMenuButtons();
     setUpGamePlayButtons();
     setUpSettingsPopup();
@@ -25,17 +25,22 @@ Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
     setUpBettingMenu();
     setUpBankruptcyMenu();
     setUpRecomendedMove();
-    // Connects
-    setUpScreenConnects();
 
     // Set up timer
     timer = new TimerManager();
+
+    // Set up tutorial popup
+    tutorialPopup = new TutorialPopup(ui, QWidgetStyle, QPushButtonStyleSmallFont);
+
+    // Connects
+    setUpScreenConnects();
 }
 
 Screens::~Screens()
 {
     delete timer;
     delete tableView;
+    delete tutorialPopup;
 }
 
 void Screens::setUpScreenConnects()
@@ -147,6 +152,16 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressPlayAgain);
+
+    // Tutorial Buttons
+    connect(ui->tutorialContinueButton,
+            &QPushButton::clicked,
+            tutorialPopup,
+            &TutorialPopup::onContinuePressed);
+    connect(tutorialPopup,
+            &TutorialPopup::enableButton,
+            this,
+            &Screens::toggleEnabledQPushButton);
 }
 
 void Screens::setUpTable()

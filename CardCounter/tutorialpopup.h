@@ -2,6 +2,9 @@
 #define TUTORIALPOPUP_H
 
 #include "ui_mainwindow.h"
+#include "statistics.h"
+
+using Move::MOVE;
 
 class TutorialPopup : public QObject
 {
@@ -11,7 +14,12 @@ public:
      * @brief TutorialPopup Creates the popup message class for the tutorial
      * @param ui The ui holding all elements on the screen
      */
-    explicit TutorialPopup(Ui::MainWindow* ui, QObject *parent = nullptr);
+    explicit TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent = nullptr);
+
+    /**
+     * @brief Deconstructor
+     */
+    ~TutorialPopup();
 
     /**
      * @brief showNextPopup Shows the next popup message on screen
@@ -24,6 +32,13 @@ signals:
      * @brief sendNextRound Signal to move to the next round of blackjack
      */
     void sendNextRound();
+
+    /**
+     * @brief enableButton
+     * @param button
+     * @param enabled
+     */
+    void enableButton(QPushButton* button, bool enabled);
 
 public slots:
     /**
@@ -41,6 +56,11 @@ private:
      * @brief popupMessages A vector containing all of the popup messages
      */
     std::vector<QString>* popupMessages;
+
+    /**
+     * @brief toggleButtonOrder A vector containing the MOVE at each message popup so the correct button is turned on
+     */
+    std::vector<MOVE>* toggleButtonOrder;
 
     /**
      * @brief messageIndex The current index in the messages list
