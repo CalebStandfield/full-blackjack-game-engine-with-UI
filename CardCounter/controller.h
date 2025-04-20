@@ -190,6 +190,12 @@ private:
     void checkTurnEnd(const Player& player);
 
     /**
+     * @brief onePlayerStillAlive Checks if there is at least one player still with a stood hand
+     * @return True if there is a player who stood, false otherwise
+     */
+    bool onePlayerStillAlive();
+
+    /**
      * @brief botMove Performs a move for a bot player
      */
     void botMove();

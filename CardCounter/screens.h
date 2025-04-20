@@ -135,6 +135,11 @@ private:
     void setUpQStyleSheets();
 
     /**
+     * @brief setUpRecomendedMove Sets up the recomended move label
+     */
+    void setUpRecomendedMove();
+
+    /**
      * @brief QStackedWidgetStyle QString of the general widget StyleSheet
      */
     QString QStackedWidgetStyle;
@@ -218,15 +223,21 @@ private:
 
     /**
      * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
-     * @param show The state to set the setting popup
+     * @param show The state to set the gameplay buttons
      */
     void toggleVisibleGamePlayButtons(bool show);
 
     /**
      * @brief toggleVisableBankruptcyMenu Sets the visibility of the game over screen
-     * @param show The state to set the setting popup
+     * @param show The state to set the bankruptcy popup
      */
     void toggleVisableBankruptcyMenu(bool show);
+
+    /**
+     * @brief toggleVisableRecommendedMove Sets the visibility of the recommended move box
+     * @param show The state to set the recommended move box
+     */
+    void toggleVisableRecommendedMove(bool show);
 
     /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
@@ -301,11 +312,6 @@ private:
      * @param enabled A bool for if the button should look/be enabled or disabled
      */
     void toggleEnabledQPushButton(QPushButton *button, bool enabled);
-
-    /**
-     * @brief onPressNextRound Handles pressing the next round button
-     */
-    void onPressNextRound();
 
     /**
      * @brief onPressPlayAgain Handles pressing the play again button
@@ -475,6 +481,11 @@ public slots:
      * @brief onGameOver Logic for when the controller sends the game over signal
      */
     void onGameOver();
+
+    /**
+     * @brief onPressNextRound Handles pressing the next round button
+     */
+    void onPressNextRound();
 };
 
 #endif // SCREENS_H

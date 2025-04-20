@@ -29,7 +29,6 @@ void GameState::dealInitialCards()
 void GameState::clearHands()
 {
     dealerHand = Hand(0);
-    dealerFinished = false;
 
     // Reset player hands and remove split hands
     for(int i = players.size() - 1; i >= 0; i--)
@@ -119,7 +118,6 @@ void GameState::dealerPlay()
 {
     while (dealerHand.getTotal() < 17)
         dealerHand.addCard(deck.getNextCard());
-    dealerFinished = true;
 }
 
 bool GameState::isBust(const Hand& hand) const

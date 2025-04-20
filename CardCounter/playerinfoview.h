@@ -5,7 +5,6 @@
 #include <QLabel>
 #include <QVector>
 #include "player.h"
-#include "hand.h"
 #include "playerStatus.h"
 #include "ui_mainwindow.h"
 
