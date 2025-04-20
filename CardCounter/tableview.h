@@ -17,7 +17,12 @@ public:
     ~TableView();
 
     void createPlayerCardContainers(unsigned int playerCount);
-    void addPlayerCardContanierAt(unsigned int indexAt);
+    void addPlayerCardContainerAt(unsigned int indexAt);
+    void splitPlayerHand(unsigned int playerIndex, unsigned int seatIndex, unsigned int handIndex, unsigned int totalHandCount);
+
+    int playerCount;
+    QPointF getCardEndPosition(int seatIndex, int handIndex, int totalHandCount);
+    qreal getCardEndRotation(int seatIndex, int handIndex, int totalHandCount);
 
     void addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
     void addPlayerCardAt(int playerIndex, const QString& imagePath, QPointF pos, qreal rotationAngle);
@@ -47,6 +52,7 @@ private:
     void setPlayerTextPositionsOnTable();
 
     void applyShadowToWidget(AnimatableCardItem *card);
+
 };
 
 // ---- Internal AnimatableCardItem Class ----
@@ -56,8 +62,10 @@ class AnimatableCardItem : public QObject, public QGraphicsPixmapItem {
     Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
 
 public:
-    AnimatableCardItem(const QPixmap& pixmap, QGraphicsItem* parent = nullptr)
-        : QObject(), QGraphicsPixmapItem(pixmap, parent) {}
+    QString imagePath;
+
+    explicit AnimatableCardItem(const QPixmap& pixmap, const QString& imagePath, QGraphicsItem* parent = nullptr)
+        : QObject(), QGraphicsPixmapItem(pixmap, parent), imagePath(imagePath){}
 };
 
 #endif // TABLEVIEW_H
