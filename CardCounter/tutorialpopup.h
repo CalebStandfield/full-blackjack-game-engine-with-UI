@@ -60,12 +60,17 @@ private:
     /**
      * @brief toggleButtonOrder A vector containing the MOVE at each message popup so the correct button is turned on
      */
-    std::vector<MOVE>* toggleButtonOrder;
+    std::vector<MOVE>* moveOrder;
 
     /**
      * @brief messageIndex The current index in the messages list
      */
     int messageIndex;
+
+    /**
+     * @brief moveIndex The current index in the moves list
+     */
+    int moveIndex;
 
     /**
      * @brief createMessages Helper method to create all of the popup messages and add them to the list
