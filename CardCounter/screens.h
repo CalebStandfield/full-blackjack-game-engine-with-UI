@@ -135,6 +135,11 @@ private:
     void setUpQStyleSheets();
 
     /**
+     * @brief setUpRecomendedMove Sets up the recomended move label
+     */
+    void setUpRecomendedMove();
+
+    /**
      * @brief QStackedWidgetStyle QString of the general widget StyleSheet
      */
     QString QStackedWidgetStyle;

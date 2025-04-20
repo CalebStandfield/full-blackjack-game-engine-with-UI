@@ -24,6 +24,7 @@ Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
     setUpBasicStrategyCharts();
     setUpBettingMenu();
     setUpBankruptcyMenu();
+    setUpRecomendedMove();
     // Connects
     setUpScreenConnects();
 
@@ -495,6 +496,21 @@ void Screens::setUpBankruptcyMenu()
     animation->setEndValue(QColor(255, 0, 0));   // bright red
     animation->setEasingCurve(QEasingCurve::InOutSine);
     animation->start();
+}
+
+void Screens::setUpRecomendedMove()
+{
+    QString QLabelStyleSmallFont =
+        "QLabel {"
+        "    background-color: rgba(50, 25, 20, 225);"
+        "    border: none;"
+        "    color: white;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    padding: 6px;"
+        "    qproperty-alignment: 'AlignCenter';"
+        "}";
+    ui->practiceBestMoveLabel->setStyleSheet(QLabelStyleSmallFont);
 }
 
 void Screens::moveToStartScreen()
