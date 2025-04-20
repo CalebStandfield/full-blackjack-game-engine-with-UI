@@ -30,6 +30,7 @@ void TableView::setUpTableViewConnects()
 
 void TableView::createPlayerCardContainers(unsigned int playerCount)
 {
+    this->playerCount = playerCount;
     playerCards.resize(playerCount);
 
     for (unsigned int i = 0; i < playerCount; i++)
@@ -38,7 +39,7 @@ void TableView::createPlayerCardContainers(unsigned int playerCount)
     }
 }
 
-void TableView::addPlayerCardContanierAt(unsigned int indexAt)
+void TableView::addPlayerCardContainerAt(unsigned int indexAt)
 {
     // Index check
     if (indexAt > playerCards.size())
@@ -46,6 +47,65 @@ void TableView::addPlayerCardContanierAt(unsigned int indexAt)
 
     // Insert an empty vector at the specified index
     playerCards.insert(playerCards.begin() + indexAt, std::vector<AnimatableCardItem*>());
+}
+
+void TableView::splitPlayerHand(unsigned int playerIndex, unsigned int seatIndex, unsigned int handIndex, unsigned int totalHandCount){
+    if (playerIndex > playerCards.size())
+        return;
+    addPlayerCardContainerAt(playerIndex + 1);
+
+    totalHandCount++;
+
+    AnimatableCardItem* firstCard = playerCards[playerIndex][1];
+    AnimatableCardItem* secondCard = playerCards[playerIndex][2];
+    QPointF firstPos = getCardEndPosition(seatIndex, handIndex, totalHandCount);
+    qreal firstRot = getCardEndRotation(seatIndex, handIndex, totalHandCount);
+    const QString& firstImagePath = firstCard->imagePath;
+    const QString& secondImagePath = secondCard->imagePath;
+    QPointF secondPos = getCardEndPosition(seatIndex, handIndex + 1, totalHandCount);
+    qreal secondRot = getCardEndRotation(seatIndex, handIndex + 1, totalHandCount);
+
+    playerCards[playerIndex].clear();
+    playerCards[playerIndex + 1].clear();
+
+    QParallelAnimationGroup* animFirst = createAnimationCardItem(firstCard, firstCard->pos(), firstPos,
+                                                                 firstCard->rotation(), firstRot);
+    QParallelAnimationGroup* animSecond = createAnimationCardItem(secondCard, secondCard->pos(), secondPos,
+                                                                 secondCard->rotation(), secondRot);
+
+    connect(animFirst, &QParallelAnimationGroup::finished, this, [=]() {
+        scene->removeItem(firstCard);
+        delete firstCard;
+        addPlayerCardAt(playerIndex, firstImagePath, firstPos, firstRot);
+    });
+    connect(animSecond, &QParallelAnimationGroup::finished, this, [=]() {
+        scene->removeItem(secondCard);
+        delete secondCard;
+        addPlayerCardAt(playerIndex + 1, secondImagePath, secondPos, secondRot);
+    });
+}
+
+QPointF TableView::getCardEndPosition(int seatIndex, int handIndex, int totalHandCount)
+{
+    if(seatIndex == -1)
+        return QPointF(550, 70);
+    qreal xOffset = 550;
+    qreal yOffset = -10;
+    qreal r = 450; //radius
+
+    qreal tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
+    qreal newX = xOffset + r * qCos(tempAngle);
+    qreal newY = yOffset + r * qSin(tempAngle);
+
+    return QPointF(newX, newY);
+}
+
+qreal TableView::getCardEndRotation(int seatIndex, int handIndex, int totalHandCount)
+{
+    if(seatIndex == -1)
+        return 0;
+    qreal tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
+    return qRadiansToDegrees(tempAngle - M_PI_2);
 }
 
 void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
@@ -59,9 +119,19 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
     }
     else
     {
+        qreal cardOffset = 6;
+        qreal angleRadians = qDegreesToRadians(rotationAngle);
+
+        qreal cosA = qCos(angleRadians);
+        qreal sinA = qSin(angleRadians);
+
+        // Rotate vector
+        qreal rotatedX = cardOffset * sinA + cardOffset * cosA;
+        qreal rotatedY = cardOffset * cosA - cardOffset * sinA;
+
         endPos = QPointF(
-            endPos.x() + playerCards[playerIndex].size() * 7,
-            endPos.y() - playerCards[playerIndex].size() * 7
+            endPos.x() + playerCards[playerIndex].size() * rotatedX,
+            endPos.y() - playerCards[playerIndex].size() * rotatedY
             );
     }
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
@@ -113,14 +183,14 @@ void TableView::applyShadowToWidget(AnimatableCardItem *card)
 
 void TableView::createDealerPile()
 {
-    QPointF startPos = QPointF(100, 50);
+    QPointF startPos = QPointF(-100, 50);
 
     for (int i = 0; i < 26; i++)
     {
         int delay = i * 50; // 100ms delay between each card
 
         QTimer::singleShot(delay, this, [=]() {
-            QPointF endPos = QPointF(500, 75 - i); // Slight vertical offset per card
+            QPointF endPos = QPointF(450, 75 - i); // Slight vertical offset per card
 
             AnimatableCardItem* cardItem = createCardItem(":/cardImages/cards_pngsource/back_of_card.png", startPos, 90, true);
 
@@ -139,7 +209,7 @@ void TableView::createDealerPile()
 
 void TableView::revealDealerCard(const QString& imagePath)
 {
-    QPointF endPos = QPointF(550, 50);
+    QPointF endPos = QPointF(550, 70);
     createCardItem(imagePath, endPos, 0, false);
 }
 
@@ -150,7 +220,7 @@ AnimatableCardItem* TableView::createCardItem(const QString& imagePath, QPointF 
     // Scale the card
     QPixmap scaledPixmap = cardPixmap.scaled(sizeX, sizeY, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    auto* cardItem = new AnimatableCardItem(scaledPixmap);
+    auto* cardItem = new AnimatableCardItem(scaledPixmap, imagePath);
     if (setShadow)
     {
         applyShadowToWidget(cardItem);
@@ -158,6 +228,7 @@ AnimatableCardItem* TableView::createCardItem(const QString& imagePath, QPointF 
     cardItem->setPos(startPos);
     cardItem->setRotation(rotationAngle);
     cardItem->setZValue(1);
+    cardItem->setTransformOriginPoint(cardItem->boundingRect().center());
     scene->addItem(cardItem);
     return cardItem;
 }

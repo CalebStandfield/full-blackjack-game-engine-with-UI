@@ -719,7 +719,7 @@ void Screens::acceptSettingsButtonPressed()
 
     tableView->createPlayerCardContainers(playerCount);
 
-    emit sendSettingsAccepted(players, deckCount, 0);
+    emit sendSettingsAccepted(players, deckCount, 1);
 
     // timer between start and bet/anims
     emit sendGameSetupCompleteStartBetting();
@@ -731,32 +731,11 @@ void Screens::acceptSettingsButtonPressed()
 
 void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)
 {
-    QString cardPNG = imagePath;
     QPointF startPos(500, 49);
-    QPointF endPos;
-    qreal rotation = 0;
+    QPointF endPos = tableView->getCardEndPosition(seatIndex, handIndex, totalHandCount);
+    qreal rotation = tableView->getCardEndRotation(seatIndex, handIndex, totalHandCount);
 
-    if(seatIndex < 0 || seatIndex > 5)
-    {
-        endPos = QPointF(550, 50);
-        rotation = 0;
-    }
-    else
-    {
-        int xOffset = 550;
-        int yOffset = -10;
-        int r = 450; //radius
-
-        double tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
-        double newX = xOffset + r * qCos(tempAngle);
-        double newY = yOffset + r * qSin(tempAngle);
-        double angle = tempAngle - M_PI_2;
-
-        endPos = QPointF(newX, newY);
-        rotation = qRadiansToDegrees(angle);
-    }
-
-    tableView->addCardAnimated(seatIndex, cardPNG, startPos, endPos, rotation);
+    tableView->addCardAnimated(seatIndex, imagePath, startPos, endPos, rotation);
 }
 
 int Screens::indexToSeat(unsigned int playerIndex)
@@ -873,9 +852,9 @@ void Screens::updateShowDealerCardBool(bool flipped)
 
 void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
 {
-    // TODO
-    // Animation: move second card from index of originalIndex to the location of newPlayer
-    tableView->addPlayerCardContanierAt(originalIndex + 1);
+    int playerIndex = originalIndex - players[originalIndex].playerHandIndex;
+    int handCount = players[playerIndex].playerHandCount;
+    tableView->splitPlayerHand(originalIndex, indexToSeat(originalIndex), originalIndex - playerIndex, handCount);
     players[originalIndex].hand.removeLastCard();
 
     // Create the new player and add half of their hand into the player vector
