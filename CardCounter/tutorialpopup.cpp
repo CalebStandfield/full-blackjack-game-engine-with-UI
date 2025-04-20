@@ -2,20 +2,8 @@
 
 TutorialPopup::TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent) : QObject(parent), ui(ui)
 {
-    QString qLabelStyle =
-        "QLabel {"
-        "    background-color: transparent;"
-        "    border: none;"
-        "    color: white;"
-        "    font-size: 14px;"
-        "    font-weight: bold;"
-        "    padding: 6px;"
-        "}";
 
-    ui->tutorialWidget->setStyleSheet(qWidgetStyle);
-    ui->tutorialContinueButton->setStyleSheet(qPushButtonStyle);
-    ui->tutorialLabel->setStyleSheet(qLabelStyle);
-
+    setUpTutorialButtons(qWidgetStyle, qPushButtonStyle);
     popupMessages = new std::vector<QString>();
     moveOrder = new std::vector<MOVE>();
     createMessages();
@@ -172,7 +160,19 @@ void TutorialPopup::resetAndHideTutorial()
     moveIndex = 0;
 }
 
-void TutorialPopup::setUpTutorialButtons()
+void TutorialPopup::setUpTutorialButtons( QString qWidgetStyle, QString qPushButtonStyle)
 {
-    ui->tutorialWidget->
+    QString qLabelStyle =
+        "QLabel {"
+        "    background-color: transparent;"
+        "    border: none;"
+        "    color: white;"
+        "    font-size: 14px;"
+        "    font-weight: bold;"
+        "    padding: 6px;"
+        "}";
+
+    ui->tutorialWidget->setStyleSheet(qWidgetStyle);
+    ui->tutorialContinueButton->setStyleSheet(qPushButtonStyle);
+    ui->tutorialLabel->setStyleSheet(qLabelStyle);
 }

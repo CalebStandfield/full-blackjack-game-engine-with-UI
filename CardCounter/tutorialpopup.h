@@ -99,7 +99,7 @@ private:
     /**
      * @brief setUpTutorialButtons Styalizes the tutorial buttons
      */
-    void setUpTutorialButtons();
+    void setUpTutorialButtons(QString qWidgetStyle, QString qPushButtonStyle);
 };
 
 #endif // TUTORIALPOPUP_H
