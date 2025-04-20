@@ -549,6 +549,7 @@ void Screens::moveToPlayScreen()
         mode = GAMEPLAYMODE::BLACKJACKTUTORIAL;
         playerCount = 1;
         acceptSettingsButtonPressed();
+        toggleVisableRecommendedMove(false);
         updateBetLabelText(0);
     }
     else if (name == "blackjackPracticeButton")
