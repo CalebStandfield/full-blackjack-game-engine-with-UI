@@ -510,7 +510,7 @@ void Screens::setUpRecomendedMove()
         "    padding: 6px;"
         "    qproperty-alignment: 'AlignCenter';"
         "}";
-    ui->practiceBestMoveLabel->setStyleSheet(QLabelStyleSmallFont);
+    ui->practiceBestMoveWidget->setStyleSheet(QLabelStyleSmallFont);
 }
 
 void Screens::moveToStartScreen()
@@ -541,6 +541,7 @@ void Screens::moveToPlayScreen()
     {
         mode = GAMEPLAYMODE::BLACKJACK;
         toggleVisibleSettingsPopup(true);
+        toggleVisableRecommendedMove(false);
         updateBetLabelText(1);
     }
     else if (name == "blackjackTutorialButton")
@@ -555,6 +556,7 @@ void Screens::moveToPlayScreen()
         mode = GAMEPLAYMODE::BLACKJACKPRACTICE;
         playerCount = 1;
         acceptSettingsButtonPressed();
+        toggleVisableRecommendedMove(true);
         updateBetLabelText(0);
     }
     else
@@ -609,7 +611,18 @@ void Screens::toggleVisableBankruptcyMenu(bool show)
     {
         ui->bankruptcyMenu->hide();
     }
+}
 
+void Screens::toggleVisableRecommendedMove(bool show)
+{
+    if (show)
+    {
+        ui->practiceBestMoveWidget->show();
+    }
+    else
+    {
+        ui->practiceBestMoveWidget->hide();
+    }
 }
 
 
@@ -783,7 +796,6 @@ void Screens::acceptSettingsButtonPressed()
     }
 
     toggleEnabledGamePlayButtons(false);
-
 }
 
 void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)

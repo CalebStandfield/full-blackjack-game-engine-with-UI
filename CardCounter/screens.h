@@ -223,15 +223,21 @@ private:
 
     /**
      * @brief toggleVisibleSettingsPopup Sets the visibility of the settings popup
-     * @param show The state to set the setting popup
+     * @param show The state to set the gameplay buttons
      */
     void toggleVisibleGamePlayButtons(bool show);
 
     /**
      * @brief toggleVisableBankruptcyMenu Sets the visibility of the game over screen
-     * @param show The state to set the setting popup
+     * @param show The state to set the bankruptcy popup
      */
     void toggleVisableBankruptcyMenu(bool show);
+
+    /**
+     * @brief toggleVisableRecommendedMove Sets the visibility of the recommended move box
+     * @param show The state to set the recommended move box
+     */
+    void toggleVisableRecommendedMove(bool show);
 
     /**
      * @brief acceptSettingsButtonPressed Logic for sending the setting values to the controller
