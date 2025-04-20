@@ -2,6 +2,10 @@
 #define TUTORIALPOPUP_H
 
 #include "ui_mainwindow.h"
+#include "statistics.h"
+#include "timermanager.h"
+
+using Move::MOVE;
 
 class TutorialPopup : public QObject
 {
@@ -11,7 +15,12 @@ public:
      * @brief TutorialPopup Creates the popup message class for the tutorial
      * @param ui The ui holding all elements on the screen
      */
-    explicit TutorialPopup(Ui::MainWindow* ui, QObject *parent = nullptr);
+    explicit TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent = nullptr);
+
+    /**
+     * @brief Deconstructor
+     */
+    ~TutorialPopup();
 
     /**
      * @brief showNextPopup Shows the next popup message on screen
@@ -19,17 +28,42 @@ public:
      */
     void toggleVisableTutorialPopup(bool show);
 
+    /**
+     * @brief nextIsTip Gets if the next message will be a tip message
+     * @return True if the next message is a tip, false otherwise
+     */
+    bool nextIsTip() const;
+
 signals:
     /**
      * @brief sendNextRound Signal to move to the next round of blackjack
      */
     void sendNextRound();
 
+    /**
+     * @brief enableButton Signal to set the passed button to enabled
+     * @param button The button to change
+     * @param enabled The value of true for on, or false for off
+     */
+    void enableButton(QPushButton* button, bool enabled);
+
+    /**
+     * @brief delayedEnableButton Signal to set the passed button to enabled after a delay
+     * @param button The button to change
+     * @param enabled The value of true for on, or false for off
+     */
+    void delayedEnableButton(QPushButton* button, bool enabled);
+
 public slots:
     /**
      * @brief onContinuePressed Slot for when the continue button is pressed on the popup page
      */
     void onContinuePressed();
+
+    /**
+     * @brief resetAndHideTutorial Hides the popup and resets to the start
+     */
+    void resetAndHideTutorial();
 
 private:
     /**
@@ -43,9 +77,19 @@ private:
     std::vector<QString>* popupMessages;
 
     /**
+     * @brief toggleButtonOrder A vector containing the MOVE at each message popup so the correct button is turned on
+     */
+    std::vector<MOVE>* moveOrder;
+
+    /**
      * @brief messageIndex The current index in the messages list
      */
     int messageIndex;
+
+    /**
+     * @brief moveIndex The current index in the moves list
+     */
+    int moveIndex;
 
     /**
      * @brief createMessages Helper method to create all of the popup messages and add them to the list

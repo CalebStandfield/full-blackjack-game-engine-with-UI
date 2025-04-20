@@ -52,7 +52,6 @@ void Deck::shuffle()
             "AC",
             "7D",
             "8H",
-            "3S",
             "7S", // Third scenario done
             "TH",
             "6C",
@@ -108,7 +107,6 @@ void Deck::shuffle()
             "7D",
             "7H",
             "TC" // Thirteenth scenario done
-
         };
 
         // Clear and rebuild shuffledDeck in that exact order

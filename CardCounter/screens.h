@@ -13,6 +13,7 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsScene>
 #include "timermanager.h"
+#include "tutorialpopup.h"
 
 using PlayerStatus::PLAYERSTATUS;
 
@@ -29,6 +30,8 @@ private:
     TableView *tableView;
     TimerManager* timer;
     box2Dbase *m_scene;
+    TutorialPopup *tutorialPopup;
+
 
     enum GAMEPLAYMODE {
         BLACKJACK,

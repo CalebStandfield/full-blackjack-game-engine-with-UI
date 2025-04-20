@@ -14,8 +14,8 @@ Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
     moveToStartScreen();
 
     // Set up function calls
-    setUpTable();
     setUpQStyleSheets();
+    setUpTable();
     setUpStartMenuButtons();
     setUpGamePlayButtons();
     setUpSettingsPopup();
@@ -25,17 +25,22 @@ Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
     setUpBettingMenu();
     setUpBankruptcyMenu();
     setUpRecomendedMove();
-    // Connects
-    setUpScreenConnects();
 
     // Set up timer
     timer = new TimerManager();
+
+    // Set up tutorial popup
+    tutorialPopup = new TutorialPopup(ui, QWidgetStyle, QPushButtonStyleSmallFont);
+
+    // Connects
+    setUpScreenConnects();
 }
 
 Screens::~Screens()
 {
     delete timer;
     delete tableView;
+    delete tutorialPopup;
 }
 
 void Screens::setUpScreenConnects()
@@ -147,6 +152,39 @@ void Screens::setUpScreenConnects()
             &QPushButton::clicked,
             this,
             &Screens::onPressPlayAgain);
+    connect(this,
+            &Screens::sendStopEverything,
+            tutorialPopup,
+            &TutorialPopup::resetAndHideTutorial);
+
+    // Tutorial Buttons
+    connect(ui->tutorialContinueButton,
+            &QPushButton::clicked,
+            tutorialPopup,
+            &TutorialPopup::onContinuePressed);
+    connect(tutorialPopup,
+            &TutorialPopup::enableButton,
+            this,
+            &Screens::toggleEnabledQPushButton);
+    connect(tutorialPopup,
+            &TutorialPopup::sendNextRound,
+            this,
+            &Screens::onPressNextRound);
+    connect(tutorialPopup,
+            &TutorialPopup::delayedEnableButton,
+            this,
+            [this](QPushButton* button){
+
+                // when the deal‐animation finishes, enable just this one
+                connect(this,
+                        &Screens::dealAnimationComplete,
+                        this,
+                        [this,button]() {
+                            toggleEnabledGamePlayButtons(false);
+                            toggleEnabledQPushButton(button, true);
+                        },
+                        Qt::SingleShotConnection);
+            });
 }
 
 void Screens::setUpTable()
@@ -537,7 +575,7 @@ void Screens::moveToPlayScreen()
 
     QString name = button->objectName();
 
-    if (name == "blackjackPlayButton")
+    if (name == "blackjackPlayButton" || name == "playAgain")
     {
         mode = GAMEPLAYMODE::BLACKJACK;
         toggleVisibleSettingsPopup(true);
@@ -751,7 +789,8 @@ void Screens::acceptSettingsButtonPressed()
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         toggleVisibleBettingView(true);
-        determinedDeck = 0;
+        //determinedDeck = 0;
+        determinedDeck = 2;
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -800,32 +839,11 @@ void Screens::acceptSettingsButtonPressed()
 
 void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)
 {
-    QString cardPNG = imagePath;
     QPointF startPos(500, 49);
-    QPointF endPos;
-    qreal rotation = 0;
+    QPointF endPos = tableView->getCardEndPosition(seatIndex, handIndex, totalHandCount);
+    qreal rotation = tableView->getCardEndRotation(seatIndex, handIndex, totalHandCount);
 
-    if(seatIndex < 0 || seatIndex > 5)
-    {
-        endPos = QPointF(550, 50);
-        rotation = 0;
-    }
-    else
-    {
-        int xOffset = 550;
-        int yOffset = -10;
-        int r = 450; //radius
-
-        double tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
-        double newX = xOffset + r * qCos(tempAngle);
-        double newY = yOffset + r * qSin(tempAngle);
-        double angle = tempAngle - M_PI_2;
-
-        endPos = QPointF(newX, newY);
-        rotation = qRadiansToDegrees(angle);
-    }
-
-    tableView->addCardAnimated(seatIndex, cardPNG, startPos, endPos, rotation);
+    tableView->addCardAnimated(seatIndex, imagePath, startPos, endPos, rotation);
 }
 
 int Screens::indexToSeat(unsigned int playerIndex)
@@ -895,7 +913,10 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
     }
 
     timer->scheduleSingleShot(waitTime, [=]() {
-        toggleEnabledGamePlayButtons(true);
+        if (mode != GAMEPLAYMODE::BLACKJACKTUTORIAL)
+        {
+            toggleEnabledGamePlayButtons(true);
+        }
         emit dealAnimationComplete();
     });
 }
@@ -947,9 +968,9 @@ void Screens::updateShowDealerCardBool(bool flipped)
 
 void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
 {
-    // TODO
-    // Animation: move second card from index of originalIndex to the location of newPlayer
-    tableView->addPlayerCardContanierAt(originalIndex + 1);
+    int playerIndex = originalIndex - players[originalIndex].playerHandIndex;
+    int handCount = players[playerIndex].playerHandCount;
+    tableView->splitPlayerHand(originalIndex, indexToSeat(originalIndex), originalIndex - playerIndex, handCount);
     players[originalIndex].hand.removeLastCard();
 
     // Create the new player and add half of their hand into the player vector
@@ -971,6 +992,14 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
 
 void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
 {
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && players[nextPlayerIndex].isUser && tutorialPopup->nextIsTip())
+    {
+        toggleEnabledGamePlayButtons(false);
+        // show the next tip
+        tutorialPopup->toggleVisableTutorialPopup(true);
+        return;
+    }
+
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
@@ -1028,6 +1057,12 @@ void Screens::endRound(const std::vector<Player>& players)
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
 
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
+    {
+        tutorialPopup->toggleVisableTutorialPopup(true);
+        return;
+    }
+
     std::vector<Player> localPlayers = players;
 
     for(Player& player : localPlayers)
@@ -1046,6 +1081,14 @@ void Screens::endRound(const std::vector<Player>& players)
 
 void Screens::onPressNextRound()
 {
+    // in tutorial mode, don’t advance the table—just forward to the popup
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && ui->tutorialWidget->isVisible())
+    {
+        tutorialPopup->onContinuePressed();
+        return;
+    }
+
+    tutorialPopup->toggleVisableTutorialPopup(false);
     // if the scene is active/valid
     if (m_scene) {
         m_scene->stopSpawning();
