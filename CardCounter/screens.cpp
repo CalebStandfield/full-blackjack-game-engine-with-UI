@@ -7,8 +7,8 @@
 #include <QTimer>
 #include <QtMath>
 
-Screens::Screens(Ui::MainWindow *ui, QWidget *parent)
-    : QStackedWidget(parent), ui(ui)
+Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
+    : QStackedWidget(parent), ui(ui), m_scene(m_scene)
 {
     // Ensure the start Screen in displayed
     moveToStartScreen();
@@ -154,9 +154,18 @@ void Screens::setUpTable()
     if (!ui->table->layout()) {
         ui->table->setLayout(new QVBoxLayout());
     }
+
     tableView->setStyleSheet(QGraphicsViewStyle);
     ui->table->setStyleSheet(QWidgetStyle);
     ui->table->layout()->addWidget(tableView);
+
+    ui->table->setStyleSheet("background: transparent; border: none;");
+
+    // Ensure the TableView's viewport is transparent
+    tableView->setAttribute(Qt::WA_TranslucentBackground);
+    tableView->viewport()->setAttribute(Qt::WA_TranslucentBackground);
+
+    ui->coinAnimView->raise();
 }
 
 void Screens::setUpStartMenuButtons()
@@ -174,7 +183,6 @@ void Screens::setUpStartMenuButtons()
     ui->basicStrategyChartButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackPracticeButton->setStyleSheet(QPushButtonStyle);
     ui->blackjackTutorialButton->setStyleSheet(QPushButtonStyle);
-
 }
 
 void Screens::setUpSettingsPopup()
@@ -991,10 +999,27 @@ void Screens::endRound(const std::vector<Player>& players)
 {
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
+
+    std::vector<Player> localPlayers = players;
+
+    for(Player& player : localPlayers)
+    {
+        ui->coinAnimView->viewport()->update();
+
+        if(player.status == PLAYERSTATUS::WON && player.isUser){
+            qDebug() << "Player won game";
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 30);
+        }
+    }
 }
 
 void Screens::onPressNextRound()
 {
+    // if the scene is active/valid
+    if (m_scene) {
+        m_scene->stopSpawning();
+    }
+
     timer->cancelAllTimers();
     tableView->clearTable();
 

@@ -10,6 +10,8 @@
 #include "controller.h"
 #include "screens.h"
 #include "playerinfoview.h"
+#include "box2dbase.h"
+#include "gamestate.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,11 +27,15 @@ public:
     MainWindow(Controller* controller, QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setupCoinAnimViews();
+
 private:
     Ui::MainWindow *ui;
     Controller *controller;
     Screens *screens;
     PlayerInfoView *infoBar;
+    box2Dbase* m_scene;
+    GameState *state;
 
     void setUpMainWindowConnects();
 };
