@@ -42,3 +42,7 @@ void TutorialPopup::onContinuePressed()
     }
 }
 
+void TutorialPopup::setUpTutorialButtons()
+{
+    ui->tutorialWidget->
+}

@@ -51,6 +51,11 @@ private:
      * @brief createMessages Helper method to create all of the popup messages and add them to the list
      */
     void createMessages();
+
+    /**
+     * @brief setUpTutorialButtons Styalizes the tutorial buttons
+     */
+    void setUpTutorialButtons();
 };
 
 #endif // TUTORIALPOPUP_H

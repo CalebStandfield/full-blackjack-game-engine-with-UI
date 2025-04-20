@@ -626,7 +626,6 @@ void Screens::toggleVisableRecommendedMove(bool show)
     }
 }
 
-
 void Screens::applyShadowToWidget(QWidget *widget)
 {
     // Create a shadow effect
