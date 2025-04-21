@@ -86,7 +86,7 @@ void Controller::advanceToNextPlayer()
 
     // Switch to next player
     const Player& player = model->getPlayer(currentPlayerIndex);
-    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet());
+    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet(), player.hand.getTotal());
     model->setPlayerActive(currentPlayerIndex);
 
     if(!player.isUser)
@@ -156,7 +156,7 @@ void Controller::advanceToNextBet()
     }
 
     const Player& player = model->getPlayer(currentPlayerIndex);
-    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet());
+    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet(), player.hand.getTotal());
 
     if(!player.isUser)
          botBet();

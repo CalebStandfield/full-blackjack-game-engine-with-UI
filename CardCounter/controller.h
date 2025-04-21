@@ -108,8 +108,9 @@ signals:
      * @param nextPlayerIndex The index of the next player that is up now
      * @param money The money of the current player's turn
      * @param bet The bet of the current player's turn
+     * @param handTotal The total of the cards in the player's hand
      */
-    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet, int handTotal);
 
     /**
      * @brief flipDealerCard Signal to flip over the dealer's first card

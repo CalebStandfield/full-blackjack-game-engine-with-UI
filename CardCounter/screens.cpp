@@ -1008,7 +1008,7 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
     });
 }
 
-void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
+void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet, int handTotal)
 {
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {

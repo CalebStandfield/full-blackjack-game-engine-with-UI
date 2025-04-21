@@ -108,7 +108,7 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
                              "QLabel{%1"
                              "border-radius:12px;"
                              "padding:12px 20px;"
-                             "font-size:19px;"
+                             "font-size:16px;"
                              "font-weight:600;}").arg(labelColor));
 }
 
@@ -153,7 +153,7 @@ void PlayerInfoView::refreshSeat(int seat, const Player& player)
         return;
 
     paintBorder(seatLabels[seat], player.status);
-    setSeatText(seat, player.money, player.hand.getBet(), player.status);
+    setSeatText(seat, player.money, player.hand.getBet(), player.status, player.hand.getTotal());
 }
 
 void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int total)
@@ -164,7 +164,7 @@ void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int 
     // Updates text and border for the playerIndex label
     int seat = modelToSeat[playerIndex];
     paintBorder(seatLabels[seat], player.status);
-    setSeatText(playerIndex, player.money, player.hand.getBet(), player.status);
+    setSeatText(playerIndex, player.money, player.hand.getBet(), player.status, total);
 }
 
 void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
@@ -182,17 +182,17 @@ void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPla
         refreshSeat(modelToSeat[originalIndex], originalPlayer);
 }
 
-void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet)
+void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet, int handTotal)
 {
     if (newPlayerIndex >= modelToSeat.size())
         return;
 
     int seat = modelToSeat[newPlayerIndex];
     paintBorder(seatLabels[seat], PLAYERSTATUS::ACTIVE);
-    setSeatText(seat, money, bet, PLAYERSTATUS::ACTIVE);
+    setSeatText(seat, money, bet, PLAYERSTATUS::ACTIVE, handTotal);
 }
 
-void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS status)
+void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS status, int handTotal)
 {
     if (seat < 0 || seat >= seatCount)
         return;
@@ -223,6 +223,7 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
         QString(QByteArrayLiteral(
                 "<span style='color:%6;'>%1</span><br>"
                 "<span style='color:white;'>Bet: $%3</span><br>"
+                "<span style='color:white;'>Hand Total: %7</span><br>"
                 "<span style='color: %4;'>%5</span><br>"
                 "<span style='color:white;'>Money: $%2</span><br>")
                 )
@@ -232,6 +233,7 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
             .arg(statusTextColor)
             .arg(QString::fromStdString(statusString))
             .arg(textColor)
+            .arg(handTotal)
         );
 
     seatLabels[seat]->show();

@@ -408,7 +408,7 @@ signals:
      */
     void sendDealerDonePlaying();
 
-private slots://TODO
+private slots:
     /**
      * @brief dealCard Deals a card to the correct player's hand.
      * @param seatIndex Player/Dealer to be dealt to
@@ -458,8 +458,9 @@ public slots:
      * @param nextPlayerIndex The index of the next player that is up now
      * @param money The money of the current player
      * @param bet The bet of the current player
+     * @param handTotal The total value of the cards in the player's hand
      */
-    void currentPlayerTurn(int nextPlayerIndex, int money, int bet);
+    void currentPlayerTurn(int nextPlayerIndex, int money, int bet, int handTotal);
 
     /**
      * @brief endBetting Slot for changing from betting phase to playing phase

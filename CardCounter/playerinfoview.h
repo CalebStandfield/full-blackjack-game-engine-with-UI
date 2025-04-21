@@ -59,8 +59,9 @@ public slots:
      * @param newPlayerIndex The index of the player to select
      * @param money The money of the current player's turn
      * @param bet The bet of the current player's turn
+     * @param handTotal The total value of the cards in the player's hand
      */
-    void onCurrentPlayerTurn(int newPlayerIndex, int money, int bet);
+    void onCurrentPlayerTurn(int newPlayerIndex, int money, int bet, int handTotal);
 
     /**
      * @brief onStopEverything Hide the player info bar
@@ -109,14 +110,14 @@ private:
 
     /**
      * @brief insertSplitMapping Inserts a new player into the modelToSeat to get the proper label index after a split
-     * @param modelIndex
+     * @param modelIndex The index of the original player
      */
     void insertSplitMapping(int modelIndex);
 
     /**
      * @brief refreshSeat Refreshes the label for the player at the given seat
-     * @param seat
-     * @param player
+     * @param seat The seat to refresh
+     * @param player The player info to use
      */
     void refreshSeat(int seat, const Player& player);
 
@@ -132,8 +133,9 @@ private:
      * @param seat The seat to update
      * @param money The money the label should display
      * @param bet The bet the label should display
+     * @param handTotal The value of cards in the player's hand
      */
-    void setSeatText(int seat, int money, int bet, PLAYERSTATUS status);
+    void setSeatText(int seat, int money, int bet, PLAYERSTATUS status, int handTotal);
 
     /**
      * @brief getStatusColor Gets the QString representation of the player status
