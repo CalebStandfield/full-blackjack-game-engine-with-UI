@@ -1,6 +1,5 @@
 #include "gamestate.h"
 #include "playerStatus.h"
-#include "qdebug.h"
 
 using PlayerStatus::PLAYERSTATUS;
 

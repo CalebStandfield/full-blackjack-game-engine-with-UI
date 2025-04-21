@@ -332,6 +332,8 @@ private:
      * @return the seat index associated with this player
      */
     int indexToSeat(unsigned int playerIndex);
+
+    void updateRecommendedMove(const Hand& playerHand);
 signals:
 
     // Settings accept

@@ -1,4 +1,5 @@
 #include "screens.h"
+#include "botstrategy.h"
 #include <QPalette>
 #include <QPixmap>
 #include <qdebug.h>
@@ -861,11 +862,11 @@ int Screens::indexToSeat(unsigned int playerIndex)
 void Screens::playerUpdated(int playerIndex, const Player& player, int total)
 {
     int handCount = players[playerIndex - player.playerHandIndex].playerHandCount;
-    if(player.hand.getCards().size() == 1)
+    if (player.hand.getCards().size() == 1)
     {
         dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[0].getImagePath());
     }
-    else if(player.hand.getCards().size() >= 2)
+    else if (player.hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
 
@@ -882,6 +883,11 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int total)
                 dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());
             });
         }
+    }
+
+    if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE && players[userIndex].hand.getCards().size() >= 2)
+    {
+        updateRecommendedMove(players[userIndex].hand);
     }
     players[playerIndex].hand = player.hand;
     players[playerIndex].money = player.money;
@@ -919,6 +925,23 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         }
         emit dealAnimationComplete();
     });
+
+    if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE && players[userIndex].hand.getCards().size() >= 2)
+    {
+        updateRecommendedMove(players[userIndex].hand);
+    }
+}
+
+void Screens::updateRecommendedMove(const Hand& playerHand)
+{
+    if (dealerHand.getCards().size() < 2)
+    {
+        return;
+    }
+    MOVE move = BotStrategy::getNextMove(playerHand, dealerHand.getCards()[1]);
+    QString moveString = QString::fromStdString(Move::toString(move));
+
+    ui->practiceBestMoveLabel->setText(QString("Best move is:\n%1").arg(moveString));
 }
 
 void Screens::dealerUpdated(const Hand& hand, int total)
@@ -938,7 +961,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
         waitTime = 600;
 
         QString imagePath = dealerHand.getCards().at(0).getImagePath();
-        tableView->revealDealerCard(imagePath);
+        tableView->revealDealerCard(imagePath);        
     }
 
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
@@ -957,6 +980,13 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     {
         timer->scheduleSingleShot(waitTime, [=]() {
             emit sendDealerDonePlaying();
+        });
+    }
+
+    if (dealerHand.getCards().size() == 2 && mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
+    {
+        timer->scheduleSingleShot(waitTime / 1.5, [=]() {
+            updateRecommendedMove(players[userIndex].hand);
         });
     }
 }
@@ -1123,6 +1153,7 @@ void Screens::onPressNextRound()
         timer->scheduleSingleShot(2100, [=]() {
             onPressPlacedBetButton();
         });
+        ui->practiceBestMoveLabel->setText("Best move is: \n");
     }
 }
 
