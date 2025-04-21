@@ -872,7 +872,7 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int total)
 
     if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE && players[userIndex].hand.getCards().size() >= 2)
     {
-        updateRecommendedMove(players[userIndex].hand);
+        updateRecommendedMove(player.hand);
     }
     players[playerIndex].hand = player.hand;
     players[playerIndex].money = player.money;
