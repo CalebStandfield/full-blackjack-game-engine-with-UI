@@ -17,15 +17,15 @@ public:
     ~TableView();
 
     void createPlayerCardContainers(unsigned int playerCount);
-    void addPlayerCardContainerAt(unsigned int indexAt);
-    void splitPlayerHand(unsigned int playerIndex, unsigned int seatIndex, unsigned int handIndex, unsigned int totalHandCount);
+    void addPlayerHandContainerAt(unsigned int playerIndex, unsigned int handIndex);
 
-    int playerCount;
-    QPointF getCardEndPosition(int seatIndex, int handIndex, int totalHandCount);
-    qreal getCardEndRotation(int seatIndex, int handIndex, int totalHandCount);
+    void splitPlayerHand(unsigned int playerIndex, unsigned int handIndex);
 
-    void addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
-    void addPlayerCardAt(int playerIndex, const QString& imagePath, QPointF pos, qreal rotationAngle);
+    QPointF getCardEndPosition(int playerIndex, int handIndex, int cardIndex);
+    qreal getCardEndRotation(int playerIndex, int handIndex);
+
+    void addCardAnimated(int playerIndex, int handIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
+    void addPlayerCardAt(int playerIndex, int handIndex, const QString& imagePath, QPointF pos, qreal rotationAngle);
     void addDealerCardAt(const QString& imagePath, QPointF pos, qreal rotationAngle);
     void createDealerPile();
 
@@ -38,7 +38,8 @@ public:
     void clearTable();
 
 private:
-    std::vector<std::vector<AnimatableCardItem*>> playerCards;
+    // Vector of players, hands of the players, and cards in said hands
+    std::vector<std::vector<std::vector<AnimatableCardItem*>>> playerCards;
     std::vector<AnimatableCardItem*> dealerCards;
 
     unsigned int sizeX = 63;
@@ -53,6 +54,8 @@ private:
 
     void applyShadowToWidget(AnimatableCardItem *card);
 
+    void updateCardPosition(unsigned int playerIndex, unsigned int oldHandIndex, unsigned int oldCardIndex,
+                                                      unsigned int newHandIndex, unsigned int newCardIndex);
 };
 
 // ---- Internal AnimatableCardItem Class ----
@@ -62,10 +65,8 @@ class AnimatableCardItem : public QObject, public QGraphicsPixmapItem {
     Q_PROPERTY(qreal rotation READ rotation WRITE setRotation)
 
 public:
-    QString imagePath;
-
-    explicit AnimatableCardItem(const QPixmap& pixmap, const QString& imagePath, QGraphicsItem* parent = nullptr)
-        : QObject(), QGraphicsPixmapItem(pixmap, parent), imagePath(imagePath){}
+    AnimatableCardItem(const QPixmap& pixmap, QGraphicsItem* parent = nullptr)
+        : QObject(), QGraphicsPixmapItem(pixmap, parent){}
 };
 
 #endif // TABLEVIEW_H

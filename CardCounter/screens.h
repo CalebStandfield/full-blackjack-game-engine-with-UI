@@ -403,7 +403,7 @@ signals:
      */
     void sendDealerDonePlaying();
 
-private slots:
+private slots://TODO
     /**
      * @brief dealCard Deals a card to the correct player's hand.
      * @param seatIndex Player/Dealer to be dealt to
@@ -411,8 +411,7 @@ private slots:
      * @param totalHandCount The number of hands a player has
      * @param imagePath Image of the card to deal
      */
-    void dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath);
-
+    void dealCard(int playerIndex, int handIndex, QString imagePath);
     /**
      * @brief updateBetLabelText Updates the betting lable for the betting view
      * @param value The value to set the label to display

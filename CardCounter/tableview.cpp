@@ -34,110 +34,100 @@ void TableView::setUpTableViewConnects()
 
 void TableView::createPlayerCardContainers(unsigned int playerCount)
 {
-    this->playerCount = playerCount;
     playerCards.resize(playerCount);
 
     for (unsigned int i = 0; i < playerCount; i++)
     {
-        playerCards[i] = std::vector<AnimatableCardItem*>();
+        playerCards[i] = std::vector<std::vector<AnimatableCardItem*>>();
+        playerCards[i].resize(1);
+        playerCards[i][0] = std::vector<AnimatableCardItem*>();
     }
 }
 
-void TableView::addPlayerCardContainerAt(unsigned int indexAt)
+void TableView::addPlayerHandContainerAt(unsigned int playerIndex, unsigned int handIndex)
 {
     // Index check
-    if (indexAt > playerCards.size())
+    if (playerIndex > playerCards.size())
         return;
 
     // Insert an empty vector at the specified index
-    playerCards.insert(playerCards.begin() + indexAt, std::vector<AnimatableCardItem*>());
+    playerCards[playerIndex].insert(playerCards[playerIndex].begin() + handIndex + 1, std::vector<AnimatableCardItem*>());
 }
 
-void TableView::splitPlayerHand(unsigned int playerIndex, unsigned int seatIndex, unsigned int handIndex, unsigned int totalHandCount){
+void TableView::splitPlayerHand(unsigned int playerIndex, unsigned int handIndex){
     if (playerIndex > playerCards.size())
         return;
-    addPlayerCardContainerAt(playerIndex + 1);
+    addPlayerHandContainerAt(playerIndex, handIndex);
+    for(int i = 0; i < (int)playerCards[playerIndex].size(); i++){
+        for(int j = 0; j < (int)playerCards[playerIndex][handIndex].size(); j++){
+            if(i <= (int)handIndex){
+                updateCardPosition(playerIndex, i, j, i, j);
+                continue;
+            }
+            updateCardPosition(playerIndex, i, j, i + 1, j);
+        }
+    }
+}
 
-    totalHandCount++;
+void TableView::updateCardPosition(unsigned int playerIndex, unsigned int oldHandIndex, unsigned int oldCardIndex,
+                                                             unsigned int newHandIndex, unsigned int newCardIndex){
+    if(playerIndex >= playerCards.size() || oldHandIndex >= playerCards[playerIndex].size()
+        || newHandIndex >= playerCards[playerIndex].size() || oldCardIndex >= playerCards[playerIndex][oldHandIndex].size())
+        return;
+    while(newCardIndex >= playerCards[playerIndex][newHandIndex].size()){
+        playerCards[playerIndex][newHandIndex].push_back(nullptr);
+    }
 
-    AnimatableCardItem* firstCard = playerCards[playerIndex][1];
-    AnimatableCardItem* secondCard = playerCards[playerIndex][2];
-    QPointF firstPos = getCardEndPosition(seatIndex, handIndex, totalHandCount);
-    qreal firstRot = getCardEndRotation(seatIndex, handIndex, totalHandCount);
-    const QString& firstImagePath = firstCard->imagePath;
-    const QString& secondImagePath = secondCard->imagePath;
-    QPointF secondPos = getCardEndPosition(seatIndex, handIndex + 1, totalHandCount);
-    qreal secondRot = getCardEndRotation(seatIndex, handIndex + 1, totalHandCount);
+    AnimatableCardItem* card = playerCards[playerIndex][oldHandIndex][oldCardIndex];
+    //May need to make card a copy here.
+    QPointF newPos = getCardEndPosition(playerIndex, newHandIndex, newCardIndex);
+    qreal newRot = getCardEndRotation(playerIndex, newHandIndex);
 
-    playerCards[playerIndex].clear();
-    playerCards[playerIndex + 1].clear();
-
-    QParallelAnimationGroup* animFirst = createAnimationCardItem(firstCard, firstCard->pos(), firstPos,
-                                                                 firstCard->rotation(), firstRot);
-    QParallelAnimationGroup* animSecond = createAnimationCardItem(secondCard, secondCard->pos(), secondPos,
-                                                                 secondCard->rotation(), secondRot);
-
-    connect(animFirst, &QParallelAnimationGroup::finished, this, [=]() {
-        scene->removeItem(firstCard);
-        delete firstCard;
-        addPlayerCardAt(playerIndex, firstImagePath, firstPos, firstRot);
-    });
-    connect(animSecond, &QParallelAnimationGroup::finished, this, [=]() {
-        scene->removeItem(secondCard);
-        delete secondCard;
-        addPlayerCardAt(playerIndex + 1, secondImagePath, secondPos, secondRot);
+    QParallelAnimationGroup* cardAnim = createAnimationCardItem(card, card->pos(), newPos,
+                                                                 card->rotation(), newRot);
+    connect(cardAnim, &QParallelAnimationGroup::finished, this, [=]() {
+        //scene->removeItem(card);
+        //delete card;
+        playerCards[playerIndex][newHandIndex][newCardIndex] = card;
     });
 }
 
-QPointF TableView::getCardEndPosition(int seatIndex, int handIndex, int totalHandCount)
+QPointF TableView::getCardEndPosition(int playerIndex, int handIndex, int cardIndex)
 {
-    if(seatIndex == -1)
-        return QPointF(550, 70);
+    if(playerIndex == -1)
+        return QPointF(550 + dealerCards.size() * 40, 70);
     qreal xOffset = 550;
     qreal yOffset = -10;
+    qreal cardOffset = 11;
     qreal r = 450; //radius
 
-    qreal tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
+    qreal tempAngle = ((playerIndex + 1) * M_PI / (playerCards.size() + 2)) + ((handIndex + 1) * M_PI / ((playerCards.size() + 2) * (playerCards[playerIndex].size() + 1)));
     qreal newX = xOffset + r * qCos(tempAngle);
     qreal newY = yOffset + r * qSin(tempAngle);
+
+    tempAngle -= M_PI_2;
+    qreal cosA = qCos(tempAngle);
+    qreal sinA = qSin(tempAngle);
+    qreal rotatedX = cardOffset * sinA + cardOffset * cosA;
+    qreal rotatedY = cardOffset * cosA - cardOffset * sinA;
+
+    newX += cardIndex * rotatedX;
+    newY -= cardIndex * rotatedY;
 
     return QPointF(newX, newY);
 }
 
-qreal TableView::getCardEndRotation(int seatIndex, int handIndex, int totalHandCount)
+qreal TableView::getCardEndRotation(int playerIndex, int handIndex)
 {
-    if(seatIndex == -1)
+    if(playerIndex == -1)
         return 0;
-    qreal tempAngle = ((seatIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (totalHandCount + 1)));
+    int playerCount = playerCards.size();
+    qreal tempAngle = ((playerIndex + 1) * M_PI / (playerCount + 2)) + ((handIndex + 1) * M_PI / ((playerCount + 2) * (playerCards[playerIndex].size() + 1)));
     return qRadiansToDegrees(tempAngle - M_PI_2);
 }
 
-void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
+void TableView::addCardAnimated(int playerIndex, int handIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle)
 {
-    if (playerIndex == -1)
-    {
-        endPos = QPointF(
-            endPos.x() + dealerCards.size() * 40,
-            endPos.y()
-            );
-    }
-    else
-    {
-        qreal cardOffset = 6;
-        qreal angleRadians = qDegreesToRadians(rotationAngle);
-
-        qreal cosA = qCos(angleRadians);
-        qreal sinA = qSin(angleRadians);
-
-        // Rotate vector
-        qreal rotatedX = cardOffset * sinA + cardOffset * cosA;
-        qreal rotatedY = cardOffset * cosA - cardOffset * sinA;
-
-        endPos = QPointF(
-            endPos.x() + playerCards[playerIndex].size() * rotatedX,
-            endPos.y() - playerCards[playerIndex].size() * rotatedY
-            );
-    }
     AnimatableCardItem* cardItem = createCardItem(imagePath, startPos, rotationAngle, true);
     cardItem->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
@@ -153,18 +143,18 @@ void TableView::addCardAnimated(int playerIndex, const QString& imagePath, QPoin
         });
         return;
     }
-    playerCards[playerIndex].push_back(cardItem);
+    playerCards[playerIndex][handIndex].push_back(cardItem);
     connect(anim, &QParallelAnimationGroup::finished, this, [=]() {
         scene->removeItem(cardItem);
         delete cardItem;
-        addPlayerCardAt(playerIndex, imagePath, endPos, rotationAngle);
+        addPlayerCardAt(playerIndex, handIndex, imagePath, endPos, rotationAngle);
     });
 }
 
-void TableView::addPlayerCardAt(int playerIndex, const QString& imagePath, QPointF pos, qreal rotationAngle)
+void TableView::addPlayerCardAt(int playerIndex, int handIndex, const QString& imagePath, QPointF pos, qreal rotationAngle)
 {
     AnimatableCardItem* cardItem = createCardItem(imagePath, pos, rotationAngle, false);
-    playerCards[playerIndex].push_back(cardItem);
+    playerCards[playerIndex][handIndex].push_back(cardItem);
 }
 
 void TableView::addDealerCardAt(const QString& imagePath, QPointF pos, qreal rotationAngle)
@@ -225,7 +215,7 @@ AnimatableCardItem* TableView::createCardItem(const QString& imagePath, QPointF 
     // Scale the card
     QPixmap scaledPixmap = cardPixmap.scaled(sizeX, sizeY, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-    auto* cardItem = new AnimatableCardItem(scaledPixmap, imagePath);
+    auto* cardItem = new AnimatableCardItem(scaledPixmap);
     if (setShadow)
     {
         applyShadowToWidget(cardItem);
@@ -275,8 +265,13 @@ void TableView::clearTable()
     }
     dealerCards.clear();
 
-    for (std::vector<AnimatableCardItem*>& hand : playerCards)
+    for (std::vector<std::vector<AnimatableCardItem*>>& player : playerCards)
     {
-        hand.clear();
+        for (std::vector<AnimatableCardItem*>& hand : player)
+        {
+            hand.clear();
+        }
+        player.clear();
+        player.resize(1);
     }
 }
