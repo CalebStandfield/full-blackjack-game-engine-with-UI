@@ -170,21 +170,6 @@ void Screens::setUpScreenConnects()
             &TutorialPopup::sendNextRound,
             this,
             &Screens::onPressNextRound);
-    connect(tutorialPopup,
-            &TutorialPopup::delayedEnableButton,
-            this,
-            [this](QPushButton* button){
-
-                // when the deal‐animation finishes, enable just this one
-                connect(this,
-                        &Screens::dealAnimationComplete,
-                        this,
-                        [this,button]() {
-                            toggleEnabledGamePlayButtons(false);
-                            toggleEnabledQPushButton(button, true);
-                        },
-                        Qt::SingleShotConnection);
-            });
 }
 
 void Screens::setUpTable()
@@ -992,11 +977,14 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
 
 void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet)
 {
-    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && players[nextPlayerIndex].isUser && tutorialPopup->nextIsTip())
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
-        toggleEnabledGamePlayButtons(false);
-        // show the next tip
-        tutorialPopup->toggleVisableTutorialPopup(true);
+        if (tutorialPopup->nextIsTip())
+        {
+            toggleEnabledGamePlayButtons(false);
+            // show the next tip
+            tutorialPopup->toggleVisableTutorialPopup(true);
+        }
         return;
     }
 

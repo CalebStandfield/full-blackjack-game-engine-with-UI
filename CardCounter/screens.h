@@ -332,6 +332,7 @@ private:
      * @return the seat index associated with this player
      */
     int indexToSeat(unsigned int playerIndex);
+
 signals:
 
     // Settings accept

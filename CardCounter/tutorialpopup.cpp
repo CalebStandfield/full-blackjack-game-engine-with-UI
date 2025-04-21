@@ -6,6 +6,7 @@ TutorialPopup::TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString q
     setUpTutorialButtons(qWidgetStyle, qPushButtonStyle);
     popupMessages = new std::vector<QString>();
     moveOrder = new std::vector<MOVE>();
+    timer = new TimerManager();
     createMessages();
 
     toggleVisableTutorialPopup(false);
@@ -15,6 +16,7 @@ TutorialPopup::~TutorialPopup()
 {
     delete popupMessages;
     delete moveOrder;
+    delete timer;
 }
 
 void TutorialPopup::createMessages()
@@ -81,7 +83,15 @@ void TutorialPopup::toggleVisableTutorialPopup(bool show)
     if (show)
     {
         ui->tutorialLabel->setText(popupMessages->at(messageIndex));
-        ui->tutorialWidget->show();
+
+        // if (messageIndex == 0)
+        // {
+        //     timer->scheduleSingleShot(2000, [=](){
+        //         ui->tutorialWidget->show();
+        //     });
+        // }
+        // else
+            ui->tutorialWidget->show();
     }
     else
     {
@@ -127,11 +137,11 @@ void TutorialPopup::onContinuePressed()
         }
         if (button)
         {
-            if (messageIndex == 0)
-            {
-                emit delayedEnableButton(button, true);
-            }
-            else
+            // if (messageIndex == 0)
+            // {
+            //     emit delayedEnableButton(button, true);
+            // }
+            // else
                 emit enableButton(button, true);
         }
     }
@@ -156,6 +166,7 @@ void TutorialPopup::onContinuePressed()
 void TutorialPopup::resetAndHideTutorial()
 {
     toggleVisableTutorialPopup(false);
+    timer->cancelAllTimers();
     messageIndex = 0;
     moveIndex = 0;
 }
