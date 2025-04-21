@@ -333,6 +333,7 @@ private:
      */
     int indexToSeat(unsigned int playerIndex);
 
+    void updateRecommendedMove(const Hand& playerHand);
 signals:
 
     // Settings accept

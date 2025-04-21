@@ -1,5 +1,4 @@
 #include "controller.h"
-#include "qdebug.h"
 #include "statistics.h"
 #include <QTimer>
 

@@ -6,7 +6,6 @@
 
 namespace Rank {
 
-
 /**
  * @brief RANK An enum of card ranks
  */

@@ -76,7 +76,7 @@ SUIT Card::getSuit() const
     return suit;
 }
 
-Rank::RANK Card::getRank() const
+RANK Card::getRank() const
 {
     return rank;
 }
