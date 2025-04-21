@@ -3,7 +3,6 @@
 
 #include "ui_mainwindow.h"
 #include "statistics.h"
-#include "timermanager.h"
 
 using Move::MOVE;
 
@@ -74,11 +73,6 @@ private:
      * @brief ui The mainwindow ui holding all on screen elements
      */
     Ui::MainWindow *ui;
-
-    /**
-     * @brief timer Timer class for scheduling method calls
-     */
-    TimerManager *timer;
 
     /**
      * @brief popupMessages A vector containing all of the popup messages

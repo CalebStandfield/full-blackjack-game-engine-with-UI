@@ -1091,7 +1091,7 @@ void Screens::endRound(const std::vector<Player>& players)
         ui->coinAnimView->viewport()->update();
 
         if(player.status == PLAYERSTATUS::WON && player.isUser){
-            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 15);
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 10);
         }
         else if (player.status == PLAYERSTATUS::BLACKJACK && player.isUser)
         {
@@ -1108,8 +1108,8 @@ void Screens::onPressNextRound()
         tutorialPopup->onContinuePressed();
         return;
     }
-
     tutorialPopup->toggleVisableTutorialPopup(false);
+
     // if the scene is active/valid
     if (m_scene) {
         m_scene->stopSpawning();

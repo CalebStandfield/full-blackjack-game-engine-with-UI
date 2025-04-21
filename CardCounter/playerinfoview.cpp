@@ -189,7 +189,7 @@ void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet)
 
     int seat = modelToSeat[newPlayerIndex];
     paintBorder(seatLabels[seat], PLAYERSTATUS::ACTIVE);
-    setSeatText(newPlayerIndex, money, bet, PLAYERSTATUS::ACTIVE);
+    setSeatText(seat, money, bet, PLAYERSTATUS::ACTIVE);
 }
 
 void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS status)
@@ -220,10 +220,11 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
 
     seatLabels[seat]->setTextFormat(Qt::RichText);
     seatLabels[seat]->setText(
-        QString("<span style='color:%6;'>%1</span><br>"
+        QString(QByteArrayLiteral(
+                "<span style='color:%6;'>%1</span><br>"
                 "<span style='color:white;'>Bet: $%3</span><br>"
                 "<span style='color: %4;'>%5</span><br>"
-                "<span style='color:white;'>Money: $%2</span><br>"
+                "<span style='color:white;'>Money: $%2</span><br>")
                 )
             .arg(name)
             .arg(money)
