@@ -827,13 +827,13 @@ void Screens::acceptSettingsButtonPressed()
     toggleEnabledGamePlayButtons(false);
 }
 
-void Screens::dealCard(int seatIndex, int handIndex, int totalHandCount, QString imagePath)
+void Screens::dealCard(int playerIndex, int handIndex, QString imagePath)
 {
     QPointF startPos(500, 49);
-    QPointF endPos = tableView->getCardEndPosition(seatIndex, handIndex, totalHandCount);
-    qreal rotation = tableView->getCardEndRotation(seatIndex, handIndex, totalHandCount);
+    QPointF endPos = tableView->getCardEndPosition(indexToSeat(playerIndex), handIndex, players[playerIndex].hand.getCards().size());
+    qreal rotation = tableView->getCardEndRotation(indexToSeat(playerIndex), handIndex);
 
-    tableView->addCardAnimated(seatIndex, imagePath, startPos, endPos, rotation);
+    tableView->addCardAnimated(indexToSeat(playerIndex), handIndex, imagePath, startPos, endPos, rotation);
 }
 
 int Screens::indexToSeat(unsigned int playerIndex)
@@ -853,7 +853,7 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int total)
     int handCount = players[playerIndex - player.playerHandIndex].playerHandCount;
     if (player.hand.getCards().size() == 1)
     {
-        dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[0].getImagePath());
+        dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[0].getImagePath());
     }
     else if (player.hand.getCards().size() >= 2)
     {
@@ -864,12 +864,12 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int total)
         {
             if (firstLoop)
             {
-                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());
+                dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath());
                 firstLoop = false;
                 continue;
             }
             timer->scheduleSingleShot(600, [=]() {
-                dealCard(indexToSeat(playerIndex), player.playerHandIndex, handCount, player.hand.getCards()[i].getImagePath());
+                dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath());
             });
         }
     }
@@ -956,7 +956,7 @@ void Screens::dealerUpdated(const Hand& hand, int total)
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
         timer->scheduleSingleShot(waitTime, [=]() {
-            dealCard(-1, 0, 0, dealerHand.getCards()[i].getImagePath());
+            dealCard(-1, 0, dealerHand.getCards()[i].getImagePath());
         });
         if(!showDealerCard)
         {
@@ -988,8 +988,7 @@ void Screens::updateShowDealerCardBool(bool flipped)
 void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
 {
     int playerIndex = originalIndex - players[originalIndex].playerHandIndex;
-    int handCount = players[playerIndex].playerHandCount;
-    tableView->splitPlayerHand(originalIndex, indexToSeat(originalIndex), originalIndex - playerIndex, handCount);
+    tableView->splitPlayerHand(indexToSeat(originalIndex), originalIndex - playerIndex);
     players[originalIndex].hand.removeLastCard();
 
     // Create the new player and add half of their hand into the player vector
