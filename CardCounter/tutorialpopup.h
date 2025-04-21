@@ -47,13 +47,6 @@ signals:
      */
     void enableButton(QPushButton* button, bool enabled);
 
-    /**
-     * @brief delayedEnableButton Signal to set the passed button to enabled after a delay
-     * @param button The button to change
-     * @param enabled The value of true for on, or false for off
-     */
-    void delayedEnableButton(QPushButton* button, bool enabled);
-
 public slots:
     /**
      * @brief onContinuePressed Slot for when the continue button is pressed on the popup page
@@ -70,6 +63,11 @@ private:
      * @brief ui The mainwindow ui holding all on screen elements
      */
     Ui::MainWindow *ui;
+
+    /**
+     * @brief timer Timer class for scheduling method calls
+     */
+    TimerManager *timer;
 
     /**
      * @brief popupMessages A vector containing all of the popup messages
