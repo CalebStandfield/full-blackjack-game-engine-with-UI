@@ -132,11 +132,11 @@ void Deck::shuffle()
     }
     else
     {
-        unsigned int i = 0;
-        // Implement determined shuffle for single player
-        for (SUIT suit : Suit::allSuits)
-            for (RANK rank : Rank::allRanks)
-                shuffledDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
+        shuffledDeck.clear();
+        // All twos baby
+        for(int i = 0; i < 100; i++){
+            shuffledDeck.emplace_back(SUIT::SPADES, RANK::TWO, Card::getImageFromVector(0));
+        }
     }
 }
 

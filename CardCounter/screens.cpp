@@ -779,8 +779,8 @@ void Screens::acceptSettingsButtonPressed()
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         toggleVisibleBettingView(true);
-        determinedDeck = 0;
-        //determinedDeck = 2; // USE TO TEST SPLITTING
+        //determinedDeck = 0;
+        determinedDeck = 2; // USE TO TEST SPLITTING
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {

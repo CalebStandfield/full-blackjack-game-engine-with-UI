@@ -60,6 +60,10 @@ void TableView::splitPlayerHand(unsigned int playerIndex, unsigned int handIndex
     addPlayerHandContainerAt(playerIndex, handIndex);
     for(int i = 0; i < (int)playerCards[playerIndex].size(); i++){
         for(int j = 0; j < (int)playerCards[playerIndex][handIndex].size(); j++){
+            if(i == (int)handIndex && j == 1){
+                updateCardPosition(playerIndex, i, j, i + 1, 0);
+                continue;
+            }
             if(i <= (int)handIndex){
                 updateCardPosition(playerIndex, i, j, i, j);
                 continue;
@@ -143,7 +147,7 @@ void TableView::addCardAnimated(int playerIndex, int handIndex, const QString& i
         });
         return;
     }
-    playerCards[playerIndex][handIndex].push_back(cardItem);
+    //playerCards[playerIndex][handIndex].push_back(cardItem);
     connect(anim, &QParallelAnimationGroup::finished, this, [=]() {
         scene->removeItem(cardItem);
         delete cardItem;
