@@ -47,6 +47,12 @@ signals:
      */
     void enableButton(QPushButton* button, bool enabled);
 
+    /**
+     * @brief toggleFirstTutorialRound Signal to toggle first tutorial round
+     * @param enabled The state to set first tutorial round
+     */
+    void toggleTutorialFirstRound(bool enabled);
+
 public slots:
     /**
      * @brief onContinuePressed Slot for when the continue button is pressed on the popup page
@@ -57,6 +63,11 @@ public slots:
      * @brief resetAndHideTutorial Hides the popup and resets to the start
      */
     void resetAndHideTutorial();
+
+    /**
+     * @brief onDealAnimationComplete Starts the tutorial popup once received for the first round
+     */
+    void onDealAnimationComplete();
 
 private:
     /**
@@ -80,6 +91,11 @@ private:
     std::vector<MOVE>* moveOrder;
 
     /**
+     * @brief storedButton The next button to activate
+     */
+    QPushButton *storedButton = nullptr;
+
+    /**
      * @brief messageIndex The current index in the messages list
      */
     int messageIndex;
@@ -98,6 +114,11 @@ private:
      * @brief setUpTutorialButtons Styalizes the tutorial buttons
      */
     void setUpTutorialButtons(QString qWidgetStyle, QString qPushButtonStyle);
+
+    /**
+     * @brief firstTutorialRound True when it is the first tutorial round, false afterwards
+     */
+    bool firstTutorialRound = true;
 };
 
 #endif // TUTORIALPOPUP_H

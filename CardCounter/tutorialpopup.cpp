@@ -83,15 +83,7 @@ void TutorialPopup::toggleVisableTutorialPopup(bool show)
     if (show)
     {
         ui->tutorialLabel->setText(popupMessages->at(messageIndex));
-
-        // if (messageIndex == 0)
-        // {
-        //     timer->scheduleSingleShot(2000, [=](){
-        //         ui->tutorialWidget->show();
-        //     });
-        // }
-        // else
-            ui->tutorialWidget->show();
+        ui->tutorialWidget->show();
     }
     else
     {
@@ -137,12 +129,10 @@ void TutorialPopup::onContinuePressed()
         }
         if (button)
         {
-            // if (messageIndex == 0)
-            // {
-            //     emit delayedEnableButton(button, true);
-            // }
-            // else
+            if (!firstTutorialRound)
                 emit enableButton(button, true);
+            else
+                storedButton = button;
         }
     }
     else if (currentMessage.startsWith("Lesson"))
@@ -166,6 +156,8 @@ void TutorialPopup::onContinuePressed()
 void TutorialPopup::resetAndHideTutorial()
 {
     toggleVisableTutorialPopup(false);
+    storedButton = nullptr;
+    firstTutorialRound = true;
     timer->cancelAllTimers();
     messageIndex = 0;
     moveIndex = 0;
@@ -186,4 +178,14 @@ void TutorialPopup::setUpTutorialButtons( QString qWidgetStyle, QString qPushBut
     ui->tutorialWidget->setStyleSheet(qWidgetStyle);
     ui->tutorialContinueButton->setStyleSheet(qPushButtonStyle);
     ui->tutorialLabel->setStyleSheet(qLabelStyle);
+}
+
+void TutorialPopup::onDealAnimationComplete()
+{
+    if (firstTutorialRound && storedButton)
+    {
+        qDebug() << "reached";
+        emit enableButton(storedButton, true);
+    }
+    firstTutorialRound = false;
 }

@@ -171,6 +171,10 @@ void Screens::setUpScreenConnects()
             &TutorialPopup::sendNextRound,
             this,
             &Screens::onPressNextRound);
+    connect(this,
+            &Screens::dealAnimationComplete,
+            tutorialPopup,
+            &TutorialPopup::onDealAnimationComplete);
 }
 
 void Screens::setUpTable()

@@ -333,7 +333,12 @@ private:
      */
     int indexToSeat(unsigned int playerIndex);
 
+    /**
+     * @brief updateRecommendedMove Updates the reccomended move in practice mode
+     * @param playerHand The players hand to use to get the recommended move
+     */
     void updateRecommendedMove(const Hand& playerHand);
+
 signals:
 
     // Settings accept
