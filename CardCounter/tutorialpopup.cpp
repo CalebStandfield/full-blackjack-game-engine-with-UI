@@ -184,7 +184,6 @@ void TutorialPopup::onDealAnimationComplete()
 {
     if (firstTutorialRound && storedButton)
     {
-        qDebug() << "reached";
         emit enableButton(storedButton, true);
     }
     firstTutorialRound = false;
