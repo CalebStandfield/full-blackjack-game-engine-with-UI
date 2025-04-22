@@ -6,7 +6,7 @@
 #include "deck.h"
 
 /**
- * @brief The GameState class
+ * @brief The GameState class is the core model of the blackjack game. Handles all game logic
  *
  * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/21/2025
