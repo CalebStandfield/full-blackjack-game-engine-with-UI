@@ -35,10 +35,29 @@ public:
     ~Screens();
 
 private:
+    /**
+     * @brief ui The ui to apply changes to
+     */
     Ui::MainWindow *ui;
+
+    /**
+     * @brief tableView An instance of TableView to display the tabble
+     */
     TableView *tableView;
+
+    /**
+     * @brief timer An instance of TimerManager to wrap singleshot timers
+     */
     TimerManager* timer;
+
+    /**
+     * @brief m_scene An instance of Box2D for winning animations
+     */
     box2Dbase *m_scene;
+
+    /**
+     * @brief tutorialPopup An instance of the TutorialPopup
+     */
     TutorialPopup *tutorialPopup;
 
     /**

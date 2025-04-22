@@ -22,21 +22,58 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-
 public:
+    /**
+     * @brief MainWindow Constructor for the MainWindow
+     * @param controller A pointer to the controller to handle game logic
+     * @param parent The parent of this object
+     */
     MainWindow(Controller* controller, QWidget *parent = nullptr);
+
+    /**
+     * @brief ~MainWindow Deconstructor fot the MainWindow
+     */
     ~MainWindow();
 
-    void setupCoinAnimViews();
-
 private:
+    /**
+     * @brief ui The main windows visuals
+     */
     Ui::MainWindow *ui;
+
+    /**
+     * @brief controller Handles conneciting to the game logic
+     */
     Controller *controller;
+
+    /**
+     * @brief screens Handles all ui processes
+     */
     Screens *screens;
+
+    /**
+     * @brief infoBar Handles the players info
+     */
     PlayerInfoView *infoBar;
+
+    /**
+     * @brief m_scene Box2D for winning animations
+     */
     box2Dbase* m_scene;
+
+    /**
+     * @brief state The state of the game
+     */
     GameState *state;
 
+    /**
+     * @brief setupCoinAnimViews sets up the box2D visual area
+     */
+    void setupCoinAnimViews();
+
+    /**
+     * @brief setUpMainWindowConnects Creats all the QT connect statments
+     */
     void setUpMainWindowConnects();
 };
 #endif // MAINWINDOW_H

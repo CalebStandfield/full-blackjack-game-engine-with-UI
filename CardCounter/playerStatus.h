@@ -5,6 +5,9 @@
 
 namespace PlayerStatus {
 
+/**
+ * @brief The PLAYERSTATUS enum An enum for all the possible blackjack states a player could be in
+ */
 enum class PLAYERSTATUS {
     ACTIVE,
     BUST,

@@ -5,6 +5,9 @@
 
 namespace Suit {
 
+/**
+ * @brief The SUIT enum An enum for the suits of playing cards
+ */
 enum class SUIT {
     SPADES,
     HEARTS,

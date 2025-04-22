@@ -5,6 +5,10 @@
 
 namespace Move
 {
+
+/**
+ * @brief The MOVE enum An enum for the moves of backjack
+ */
 enum class MOVE {
     HIT,
     DOUBLE,
@@ -36,16 +40,31 @@ inline std::string toString(MOVE move)
 
 using Move::MOVE;
 
-class Statistics : public QObject
+/**
+ * @brief The Statistics class A class that holds the tables of correct moves for blackjack
+ */
+class Statistics
 {
-    Q_OBJECT
-public:
-    explicit Statistics(QObject *parent = nullptr);
 
+public:
+    /**
+     * @brief Statistics Constructor for the Statisitics class
+     */
+    explicit Statistics();
+
+    /**
+     * @brief HardTable The table for hard hand's correct moves
+     */
     static const MOVE HardTable[17][10];
 
+    /**
+     * @brief SoftTable The table for soft hand's correct moves
+     */
     static const MOVE SoftTable[9][10];
 
+    /**
+     * @brief PairTable The table for pair hand's correct moves
+     */
     static const MOVE PairTable[10][10];
 };
 

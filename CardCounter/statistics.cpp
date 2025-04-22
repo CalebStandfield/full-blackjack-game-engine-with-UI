@@ -45,6 +45,5 @@ const MOVE Statistics::PairTable[10][10] = {
     { MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT, MOVE::SPLIT }            // A,A
 };
 
-Statistics::Statistics(QObject *parent)
-    : QObject{parent}
+Statistics::Statistics()
 {}

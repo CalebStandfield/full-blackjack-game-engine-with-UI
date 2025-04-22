@@ -159,7 +159,7 @@ void TableView::addDealerCardAt(const QString& imagePath, QPointF pos, qreal rot
     dealerCards.push_back(cardItem);
 }
 
-void TableView::applyShadowToWidget(AnimatableCardItem *card)
+void TableView::applyShadowToCard(AnimatableCardItem *card)
 {
     // Create a shadow effect
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect();
@@ -214,7 +214,7 @@ AnimatableCardItem* TableView::createCardItem(const QString& imagePath, QPointF 
     auto* cardItem = new AnimatableCardItem(scaledPixmap);
     if (setShadow)
     {
-        applyShadowToWidget(cardItem);
+        applyShadowToCard(cardItem);
     }
     cardItem->setPos(startPos);
     cardItem->setRotation(rotationAngle);
