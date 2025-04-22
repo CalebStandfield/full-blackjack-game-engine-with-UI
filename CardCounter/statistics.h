@@ -8,6 +8,9 @@ namespace Move
 
 /**
  * @brief The MOVE enum An enum for the moves of backjack
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/20/2025
  */
 enum class MOVE {
     HIT,
@@ -42,6 +45,9 @@ using Move::MOVE;
 
 /**
  * @brief The Statistics class A class that holds the tables of correct moves for blackjack
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/20/2025
  */
 class Statistics
 {

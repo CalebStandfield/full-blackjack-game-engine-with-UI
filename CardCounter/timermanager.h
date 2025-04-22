@@ -5,6 +5,12 @@
 #include "qtimer.h"
 #include <QList>
 
+/**
+ * @brief The TimerManager class hands calling and cancelling any single shot callback functions
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/18/2025
+ */
 class TimerManager : public QObject
 {
     Q_OBJECT

@@ -5,6 +5,12 @@
 #include "player.h"
 #include "deck.h"
 
+/**
+ * @brief The GameState class
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/21/2025
+ */
 class GameState
 {
 public:

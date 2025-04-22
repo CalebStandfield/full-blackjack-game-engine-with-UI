@@ -19,6 +19,12 @@ class MainWindow;
 }
 QT_END_NAMESPACE
 
+/**
+ * @brief The MainWindow class creates the window screen of the application and sets up QT connections
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/21/2025
+ */
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

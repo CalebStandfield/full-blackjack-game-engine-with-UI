@@ -12,6 +12,12 @@
 #include <QGraphicsPixmapItem>
 #include <QQueue>
 
+/**
+ * @brief The box2Dbase class
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/22/2025
+ */
 class box2Dbase : public QGraphicsScene{
     Q_OBJECT
 public:

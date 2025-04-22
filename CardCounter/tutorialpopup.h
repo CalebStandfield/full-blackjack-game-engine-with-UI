@@ -7,6 +7,13 @@
 // Forward Declaration
 using Move::MOVE;
 
+/**
+ * @brief The TutorialPopup class handles displaying informational popup messages for the tutorial.
+ * Additionally, handles activating the correct gameplay button after a tip message to control game flow
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/22/2025
+ */
 class TutorialPopup : public QObject
 {
     Q_OBJECT

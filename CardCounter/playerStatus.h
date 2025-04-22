@@ -7,6 +7,9 @@ namespace PlayerStatus {
 
 /**
  * @brief The PLAYERSTATUS enum An enum for all the possible blackjack states a player could be in
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/20/2025
  */
 enum class PLAYERSTATUS {
     ACTIVE,

@@ -17,6 +17,12 @@
 
 using PlayerStatus::PLAYERSTATUS;
 
+/**
+ * @brief The Screens class
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @date 4/22/2025
+ */
 class Screens : public QStackedWidget
 {
     Q_OBJECT

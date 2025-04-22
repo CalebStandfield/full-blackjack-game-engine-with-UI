@@ -10,6 +10,12 @@
 
 using PlayerStatus::PLAYERSTATUS;
 
+/**
+ * @brief The PlayerInfoView class is responsible for creating and maintaining player info cards in the info bar in the UI
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/21/2025
+ */
 class PlayerInfoView : public QObject
 {
     Q_OBJECT

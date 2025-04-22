@@ -4,6 +4,12 @@
 #include <vector>
 #include "card.h"
 
+/**
+ * @brief The Hand class reprsents a single blackjack hand. It holds the cards, bet, and supporting functions
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/22/2025
+ */
 class Hand
 {
 public:
