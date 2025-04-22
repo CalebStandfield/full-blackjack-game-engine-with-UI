@@ -80,6 +80,11 @@ public:
      */
     void stopSpawning();
 
+    /**
+     * @brief clearCoins Clears all current coins in the scene
+     */
+    void clearCoins();
+
 private:
     /**
      * @brief m_world The physics world where our Box2D bodies are instantiated

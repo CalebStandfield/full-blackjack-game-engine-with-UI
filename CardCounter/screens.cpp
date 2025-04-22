@@ -1129,6 +1129,8 @@ void Screens::onPressNextRound()
     // if the scene is active/valid
     if (m_scene) {
         m_scene->stopSpawning();
+        m_scene->clearCoins();
+        m_scene->update();
     }
 
     timer->cancelAllTimers();
@@ -1181,6 +1183,8 @@ void Screens::resetEverything()
     emit sendStopEverything();
     if (m_scene) {
         m_scene->stopSpawning();
+        m_scene->clearCoins();
+        m_scene->clear();
     }
     tableView->stopEverything();
     timer->cancelAllTimers();

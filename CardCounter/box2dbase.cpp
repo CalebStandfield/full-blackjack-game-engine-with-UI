@@ -63,7 +63,7 @@ void box2Dbase::advance(){
     m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
 
     // vector of all bodies that have left world bounds
-    QVector<b2Body*> bodiesToDelete;
+    QVector<b2Body*> bodiesOutofBounds;
 
     // iterate through all current bodies spawned
     for (b2Body* body = m_world->GetBodyList(); body; body = body->GetNext()) {
@@ -73,11 +73,12 @@ void box2Dbase::advance(){
         // out of world bounds check
         if (position.x < 0 || position.x > WORLD_WIDTH ||
             position.y < 0 || position.y > WORLD_HEIGHT) {
-            bodiesToDelete.append(body);
+            bodiesOutofBounds.append(body);
         }
     }
 
-    for (b2Body* body : bodiesToDelete) {
+    // remove all bodies out of bounds
+    for (b2Body* body : bodiesOutofBounds) {
         if (body->GetUserData()) {
             QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
             removeItem(item);  // Remove from scene
@@ -231,4 +232,20 @@ void box2Dbase::stopSpawning(){
 
 bool box2Dbase::isCoinSpawning() {
     return m_coinTimer->isActive();
+}
+
+void box2Dbase::clearCoins(){
+    stopSpawning();
+
+    b2Body* body = m_world->GetBodyList();
+    while (body) {
+        b2Body* next = body->GetNext();
+        if (body->GetUserData()) {
+            QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
+            removeItem(item);
+            delete item;
+        }
+        m_world->DestroyBody(body);
+        body = next;
+    }
 }
