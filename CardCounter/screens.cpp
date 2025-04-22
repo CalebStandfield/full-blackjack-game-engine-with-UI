@@ -694,6 +694,13 @@ void Screens::setUpBasicStrategyCharts()
 void Screens::onPressHitButton()
 {
     emit sendHitButtonPressed();
+
+    // In tutorial mode, if the next message is a Tip, show it immediately
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && tutorialPopup->nextIsTip())
+    {
+        toggleEnabledGamePlayButtons(false);
+        tutorialPopup->toggleVisableTutorialPopup(true);
+    }
 }
 
 void Screens::onPressStandButton()
@@ -779,8 +786,8 @@ void Screens::acceptSettingsButtonPressed()
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         toggleVisibleBettingView(true);
-        //determinedDeck = 0;
-        determinedDeck = 2; // USE TO TEST SPLITTING
+        determinedDeck = 0;
+        //determinedDeck = 2; // USE TO TEST SPLITTING
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -1006,6 +1013,13 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
     timer->scheduleSingleShot(600 * 2, [=]() {
         playerUpdated(originalIndex + 1, newPlayer, newPlayer.hand.getTotal());
     });
+
+    if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
+    {
+        toggleEnabledGamePlayButtons(false);
+        // show the next tip
+        tutorialPopup->toggleVisableTutorialPopup(true);
+    }
 }
 
 void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet, int handTotal)
