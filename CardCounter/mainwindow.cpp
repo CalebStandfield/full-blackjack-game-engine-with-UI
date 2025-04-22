@@ -22,6 +22,7 @@ MainWindow::~MainWindow()
     delete ui;
     delete screens;
     delete infoBar;
+    delete m_scene;
 }
 
 void MainWindow::setupCoinAnimViews(){

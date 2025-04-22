@@ -5,7 +5,6 @@
 #include <qdebug.h>
 #include <QGraphicsDropShadowEffect>
 #include <QRandomGenerator>
-#include <QTimer>
 #include <QtMath>
 
 Screens::Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent)
@@ -792,7 +791,6 @@ void Screens::acceptSettingsButtonPressed()
         onEditChipCountLineEdit();
         toggleVisibleBettingView(true);
         determinedDeck = 0;
-        //determinedDeck = 2; // USE TO TEST SPLITTING
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -860,9 +858,8 @@ int Screens::indexToSeat(unsigned int playerIndex)
     return seatIndex;
 }
 
-void Screens::playerUpdated(int playerIndex, const Player& player, int total)
+void Screens::playerUpdated(int playerIndex, const Player& player, int)
 {
-    int handCount = players[playerIndex - player.playerHandIndex].playerHandCount;
     if (player.hand.getCards().size() == 1)
     {
         dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[0].getImagePath());
@@ -945,7 +942,7 @@ void Screens::updateRecommendedMove(const Hand& playerHand)
     ui->practiceBestMoveLabel->setText(QString("Best move is:\n%1").arg(moveString));
 }
 
-void Screens::dealerUpdated(const Hand& hand, int total)
+void Screens::dealerUpdated(const Hand& hand, int)
 {
     toggleEnabledGamePlayButtons(false);
     int prevHandSize = dealerHand.getCards().size();
@@ -1027,7 +1024,7 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
     }
 }
 
-void Screens::currentPlayerTurn(int nextPlayerIndex, int money, int bet, int handTotal)
+void Screens::currentPlayerTurn(int nextPlayerIndex, int, int, int)
 {
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {

@@ -1,5 +1,4 @@
 #include "botstrategy.h"
-#include "qdebug.h"
 #include "statistics.h"
 #include "rank.h"
 
@@ -23,28 +22,6 @@ MOVE BotStrategy::getHardHandMove(const Hand& playerHand, const Card& dealerCard
 {
     int row = playerHand.getTotal() - 5;
 
-    // qDebug() << "Hard Hand";
-    // qDebug() << "Hand Total: " << playerHand.getTotal();
-    // qDebug() << "Dealer Card: " << Rank::toString(dealerCard.getRank());
-    // MOVE move = Statistics::HardTable[row][cardToIndex(dealerCard)];
-    // std::string str;
-    // switch (move)
-    // {
-    // case MOVE::HIT:
-    //     str = "Hit";
-    //     break;
-    // case MOVE::DOUBLE:
-    //     str = "Double";
-    //     break;
-    // case MOVE::SPLIT:
-    //     str = "Split";
-    //     break;
-    // case MOVE::STAND:
-    //     str = "Stand";
-    //     break;
-    // }
-    // qDebug() << "MOVE: " << str;
-
     return Statistics::HardTable[row][cardToIndex(dealerCard)];
 }
 
@@ -53,27 +30,6 @@ MOVE BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard
     int effective = playerHand.getTotal() - 11;
     int row = effective - 2;
 
-    // qDebug() << "Soft Hand";
-    // qDebug() << "Soft Total: " << playerHand.getTotal();
-    // qDebug() << "Dealer Card: " << toString(dealerCard.getRank());
-    // MOVE move = Statistics::SoftTable[row][cardToIndex(dealerCard)];
-    // std::string str;
-    // switch (move)
-    // {
-    // case MOVE::HIT:
-    //     str = "Hit";
-    //     break;
-    // case MOVE::DOUBLE:
-    //     str = "Double";
-    //     break;
-    // case MOVE::SPLIT:
-    //     str = "Split";
-    //     break;
-    // case MOVE::STAND:
-    //     str = "Stand";
-    //     break;
-    // }
-    // qDebug() << "MOVE: " << str;
     return Statistics::SoftTable[row][cardToIndex(dealerCard)];
 }
 

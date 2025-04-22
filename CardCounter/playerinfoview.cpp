@@ -72,7 +72,7 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
         break; // orange
     case PLAYERSTATUS::BLACKJACK:
         color = "#9C27B0";
-        break; // casino green
+        break; // purple
     case PLAYERSTATUS::WON:
         color = "#D4AF37";
         break; // golden

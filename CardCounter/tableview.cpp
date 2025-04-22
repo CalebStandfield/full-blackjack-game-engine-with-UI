@@ -1,5 +1,4 @@
 #include "tableview.h"
-#include <QtCore/qtimer.h>
 #include <QtWidgets/qgraphicseffect.h>
 
 TableView::TableView(QWidget *parent)

@@ -65,7 +65,6 @@ SOURCES += \
     playerinfoview.cpp \
     screens.cpp \
     statistics.cpp \
-    statsview.cpp \
     tableview.cpp \
     timermanager.cpp \
     tutorialpopup.cpp
@@ -132,7 +131,6 @@ HEADERS += \
     rank.h \
     screens.h \
     statistics.h \
-    statsview.h \
     suits.h \
     tableview.h \
     timermanager.h \
