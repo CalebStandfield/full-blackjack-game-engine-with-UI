@@ -4,6 +4,7 @@
 #include "ui_mainwindow.h"
 #include "statistics.h"
 
+// Forward Declaration
 using Move::MOVE;
 
 class TutorialPopup : public QObject

@@ -21,8 +21,17 @@ class Screens : public QStackedWidget
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Screens Constructor for all the UI visuals
+     * @param ui The ui to adjust ui elements on
+     * @param m_scene A box2D for winning animations
+     * @param parent The parent of this object
+     */
     explicit Screens(Ui::MainWindow *ui,  box2Dbase* m_scene, QWidget *parent = nullptr);
 
+    /**
+     * @brief ~Screens Deconstructor for the Screens class
+     */
     ~Screens();
 
 private:
@@ -32,7 +41,9 @@ private:
     box2Dbase *m_scene;
     TutorialPopup *tutorialPopup;
 
-
+    /**
+     * @brief The GAMEPLAYMODE enum An enum to represent what mode the program should run in
+     */
     enum GAMEPLAYMODE {
         BLACKJACK,
         BLACKJACKTUTORIAL,
@@ -341,8 +352,6 @@ private:
 
 signals:
 
-    // Settings accept
-
     /**
      * @brief sendSettingsAccepted Singal to send for when the suer has accepted the settings
      * @param players The number of players in the game
@@ -351,14 +360,10 @@ signals:
      */
     void sendSettingsAccepted(std::vector<Player>& players, int decks, int deterministic);
 
-    // Betting
-
     /**
      * @brief sendGameSetupCompleteStartBetting
      */
     void sendGameSetupCompleteStartBetting();
-
-    // Game play buttons
 
     /**
      * @brief sendHitButtonPressed Signal to send for when the user presses hit
@@ -386,13 +391,11 @@ signals:
      */
     void sendOnBet(int playerBet);
 
-    // During game play
     /**
      * @brief dealAnimationComplete Signal to send for when the deal animation is complete
      */
     void dealAnimationComplete();
 
-    // End game
     /**
      * @brief sendNewRound Signal to send for when the user presses new round
      */
@@ -452,7 +455,6 @@ public slots:
      */
     void dealerUpdated(const Hand& hand, int total);
 
-    // used for changing POV
     /**
      * @brief currentPlayerTurn Slot for changing to the player at given index
      * @param nextPlayerIndex The index of the next player that is up now
