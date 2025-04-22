@@ -205,6 +205,12 @@ private:
      * @brief botBet Performs a bet for a bot player
      */
     void botBet();
+
+    /**
+     * @brief getPlayerMoney Returns the amount of money a player has
+     * @param playerIndex the index of the player whose money to return
+     */
+    int getPlayerMoney(unsigned int playerIndex);
 };
 
 #endif // CONTROLLER_H

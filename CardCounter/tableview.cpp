@@ -58,17 +58,13 @@ void TableView::splitPlayerHand(unsigned int playerIndex, unsigned int handIndex
     if (playerIndex > playerCards.size())
         return;
     addPlayerHandContainerAt(playerIndex, handIndex);
-    for(int i = 0; i < (int)playerCards[playerIndex].size(); i++){
-        for(int j = 0; j < (int)playerCards[playerIndex][handIndex].size(); j++){
+    for(int i = (int)playerCards[playerIndex].size() - 1; i >= 0; i--){
+        for(int j = 0; j < (int)playerCards[playerIndex][i].size(); j++){
             if(i == (int)handIndex && j == 1){
                 updateCardPosition(playerIndex, i, j, i + 1, 0);
                 continue;
             }
-            if(i <= (int)handIndex){
-                updateCardPosition(playerIndex, i, j, i, j);
-                continue;
-            }
-            updateCardPosition(playerIndex, i, j, i + 1, j);
+            updateCardPosition(playerIndex, i, j, i, j);
         }
     }
 }
@@ -78,9 +74,6 @@ void TableView::updateCardPosition(unsigned int playerIndex, unsigned int oldHan
     if(playerIndex >= playerCards.size() || oldHandIndex >= playerCards[playerIndex].size()
         || newHandIndex >= playerCards[playerIndex].size() || oldCardIndex >= playerCards[playerIndex][oldHandIndex].size())
         return;
-    while(newCardIndex >= playerCards[playerIndex][newHandIndex].size()){
-        playerCards[playerIndex][newHandIndex].push_back(nullptr);
-    }
 
     AnimatableCardItem* card = playerCards[playerIndex][oldHandIndex][oldCardIndex];
     //May need to make card a copy here.
@@ -90,9 +83,8 @@ void TableView::updateCardPosition(unsigned int playerIndex, unsigned int oldHan
     QParallelAnimationGroup* cardAnim = createAnimationCardItem(card, card->pos(), newPos,
                                                                  card->rotation(), newRot);
     connect(cardAnim, &QParallelAnimationGroup::finished, this, [=]() {
-        //scene->removeItem(card);
-        //delete card;
-        playerCards[playerIndex][newHandIndex][newCardIndex] = card;
+        playerCards[playerIndex][oldHandIndex].erase(playerCards[playerIndex][oldHandIndex].begin() + oldCardIndex);
+        playerCards[playerIndex][newHandIndex].insert(playerCards[playerIndex][newHandIndex].begin() + newCardIndex, card);
     });
 }
 

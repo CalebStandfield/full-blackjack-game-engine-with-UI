@@ -51,9 +51,9 @@ void Controller::onDoubleDown()
 void Controller::onSplit()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    if(player.money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
-        return;
-    }
+    // if(player.money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
+    //     return;
+    // }
     model->split(currentPlayerIndex);
 
     emit splitPlayers(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getPlayer(currentPlayerIndex + 1));
@@ -231,3 +231,4 @@ void Controller::onStopEverything()
 {
     timer->cancelAllTimers();
 }
+

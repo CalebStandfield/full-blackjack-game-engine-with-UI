@@ -193,6 +193,11 @@ const Player& GameState::getPlayer(int index) const
     return players.at(index);
 }
 
+const Player& GameState::getOriginalPlayer(int index) const
+{
+    return players[index - players[index].playerHandIndex];
+}
+
 const Hand& GameState::getDealerHand() const
 {
     return dealerHand;
