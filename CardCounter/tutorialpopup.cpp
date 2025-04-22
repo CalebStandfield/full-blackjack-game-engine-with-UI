@@ -30,7 +30,7 @@ void TutorialPopup::createMessages()
         "Lesson: Don't mess with a great hand, especially when a dealer is likely to bust. Never split 10's", // scenario 4 done
         "Tip: 11 is the best hand to double on. Most cards will get you close to or at 21",
         "Lesson: Always double on 11", // scenario 5 done
-        "Tip: Soft 18 isn't great vs a dealer 10. Doubling only gets you one card and you might be stuck at a worse position. Strategy is to hit if the dealer's card is greater than yours with a 10 and over 7",
+        "Tip: Soft 18 isn't great vs a dealer 9 or 10. Doubling only gets you one card and you might be stuck at a worse position. Strategy is to hit if the dealer's card is greater than yours and over 7 as long as you are under 17",
         "Tip: You now have 21, always stand",
         "Lesson: Don't overcommit against strong dealer upcard", // scenario 6 done
         "Lesson: Sometimes there's no escaping a loss. Unfortunetly, that's part of the game", // scenario 7 done
@@ -51,7 +51,8 @@ void TutorialPopup::createMessages()
         "Tip: You reached 21! Always stand once at or above hard 17",
         "Lesson: Never stand on a 16 vs a dealer 7 or higher. Take the risk to reduce the dealer's advantage", // scenario 12 done
         "Tip: You should always stand on any hard 17 or higher. Hitting a 17 has too high of a chance to bust, and one hit won't guarentee beeing the dealer's 10",
-        "Lesson: Hard 17 is a 'stand no exception' hand, even vs a dealer 10. You still managed to push which is a wash of a round" // scenario 13 done
+        "Lesson: Hard 17 is a 'stand no exception' hand, even vs a dealer 10. You still managed to push which is a wash of a round", // scenario 13 done
+        "Tutorial Complete: You have now finished the tutorial, pressing continue will bring you back to the main menu. There is a practice mode to help continue learning blackjack" // main menu
     };
 
     const std::initializer_list<MOVE> tutorialButtonMoves = {
@@ -156,7 +157,19 @@ void TutorialPopup::onContinuePressed()
         emit enableButton(ui->splitButton, false);
 
         // then move on to the next round
-        emit sendNextRound();
+        if(popupMessages->at(messageIndex + 1).startsWith("Tutorial"))
+        {
+            messageIndex++;
+            toggleVisableTutorialPopup(true);
+            return;
+        }
+        else
+            emit sendNextRound();
+    }
+    else
+    {
+        emit backToMainMenu();
+        return;
     }
 
     if (messageIndex < (int)popupMessages->size() - 1)

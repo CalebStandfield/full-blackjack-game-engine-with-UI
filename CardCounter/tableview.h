@@ -6,6 +6,7 @@
 #include <QGraphicsPixmapItem>
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
+#include "timermanager.h"
 
 // Forward declaration
 class AnimatableCardItem;
@@ -37,6 +38,11 @@ public:
     // void clearHands();
     void clearTable();
 
+    /**
+     * @brief stopEverything Stops all timers and animations
+     */
+    void stopEverything();
+
 private:
     // Vector of players, hands of the players, and cards in said hands
     std::vector<std::vector<std::vector<AnimatableCardItem*>>> playerCards;
@@ -56,6 +62,8 @@ private:
 
     void updateCardPosition(unsigned int playerIndex, unsigned int oldHandIndex, unsigned int oldCardIndex,
                                                       unsigned int newHandIndex, unsigned int newCardIndex);
+
+    TimerManager *timer;
 };
 
 // ---- Internal AnimatableCardItem Class ----

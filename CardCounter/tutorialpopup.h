@@ -52,6 +52,11 @@ signals:
      */
     void toggleTutorialFirstRound(bool enabled);
 
+    /**
+     * @brief backToMainMenu Signal to move back to the main menu
+     */
+    void backToMainMenu();
+
 public slots:
     /**
      * @brief onContinuePressed Slot for when the continue button is pressed on the popup page

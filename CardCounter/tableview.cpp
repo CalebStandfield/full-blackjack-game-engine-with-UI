@@ -5,6 +5,7 @@
 TableView::TableView(QWidget *parent)
     : QGraphicsView(parent), scene(new QGraphicsScene(this)) {
 
+    timer = new TimerManager();
     setScene(scene);
 
     setRenderHints(
@@ -24,7 +25,7 @@ TableView::TableView(QWidget *parent)
 
 TableView::~TableView()
 {
-
+    delete timer;
 }
 
 void TableView::setUpTableViewConnects()
@@ -180,7 +181,7 @@ void TableView::createDealerPile()
     {
         int delay = i * 50; // 100ms delay between each card
 
-        QTimer::singleShot(delay, this, [=]() {
+        timer->scheduleSingleShot(delay, [=]() {
             QPointF endPos = QPointF(450, 75 - i); // Slight vertical offset per card
 
             AnimatableCardItem* cardItem = createCardItem(":/cardImages/cards_pngsource/back_of_card.png", startPos, 90, true);
@@ -270,4 +271,9 @@ void TableView::clearTable()
         player.clear();
         player.resize(1);
     }
+}
+
+void TableView::stopEverything()
+{
+    timer->cancelAllTimers();
 }

@@ -175,6 +175,10 @@ void Screens::setUpScreenConnects()
             &Screens::dealAnimationComplete,
             tutorialPopup,
             &TutorialPopup::onDealAnimationComplete);
+    connect(tutorialPopup,
+            &TutorialPopup::backToMainMenu,
+            this,
+            &Screens::onPressMainMenuButton);
 }
 
 void Screens::setUpTable()
@@ -785,9 +789,10 @@ void Screens::acceptSettingsButtonPressed()
     int determinedDeck;
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
+        onEditChipCountLineEdit();
         toggleVisibleBettingView(true);
         determinedDeck = 0;
-        determinedDeck = 2; // USE TO TEST SPLITTING
+        //determinedDeck = 2; // USE TO TEST SPLITTING
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -1180,6 +1185,7 @@ void Screens::resetEverything()
     if (m_scene) {
         m_scene->stopSpawning();
     }
+    tableView->stopEverything();
     timer->cancelAllTimers();
     players.clear();
 }
