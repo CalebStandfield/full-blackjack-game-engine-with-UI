@@ -1107,7 +1107,7 @@ void Screens::endRound(const std::vector<Player>& players)
         ui->coinAnimView->viewport()->update();
 
         if(player.status == PLAYERSTATUS::WON && player.isUser){
-            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 10);
+            m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 0);
         }
         else if (player.status == PLAYERSTATUS::BLACKJACK && player.isUser)
         {
