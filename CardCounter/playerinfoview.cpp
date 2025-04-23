@@ -1,3 +1,10 @@
+/**
+ * @brief Implementation of The PlayerInfoView class. It is responsible for creating and maintaining player info cards in the info bar in the UI
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/21/2025
+ */
+
 #include "playerinfoview.h"
 #include "ui_mainwindow.h"
 #include <QHBoxLayout>

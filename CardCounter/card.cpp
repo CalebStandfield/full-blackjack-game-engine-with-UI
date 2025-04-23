@@ -1,3 +1,10 @@
+/**
+ * @brief Implementation of The Card class. It handles a single card object. Holds a SUIT, RANK, and image path corresponding to its png
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/19/2025
+ */
+
 #include "card.h"
 #include "suits.h"
 #include "rank.h"

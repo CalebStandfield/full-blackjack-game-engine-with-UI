@@ -1,3 +1,10 @@
+/**
+ * @brief Implementation of The MainWindow class. It creates the window screen of the application and sets up QT connections
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/21/2025
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

@@ -1,3 +1,11 @@
+/**
+ * @brief Implementation of The BotStrategy class. It computes the reccomended blackack move based on proper stretegy.
+ * It is based on the player's hand and dealer face up card
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/20/2025
+ */
+
 #include "botstrategy.h"
 #include "statistics.h"
 #include "rank.h"

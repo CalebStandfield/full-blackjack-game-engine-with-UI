@@ -1,3 +1,10 @@
+/**
+ * @brief Implementation of The Hand class. It reprsents a single blackjack hand. It holds the cards, bet, and supporting functions
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/22/2025
+ */
+
 #include "hand.h"
 #include "rank.h"
 #include <utility>

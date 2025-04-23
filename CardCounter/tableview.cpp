@@ -1,3 +1,10 @@
+/**
+ * @brief Implementation of The TableView class. It is responsible for animating and displaying the player and dealer cards on the blackjack table
+ *
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @date 4/22/2025
+ */
+
 #include "tableview.h"
 #include <QtWidgets/qgraphicseffect.h>
 
