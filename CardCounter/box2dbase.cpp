@@ -12,6 +12,14 @@ box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
 
     setBackgroundBrush(Qt::transparent);
 
+    QMediaPlayer *jackpotNoise = new QMediaPlayer(this);
+    QAudioOutput *audioOutput = new QAudioOutput(this);
+
+    jackpotNoise->setAudioOutput(audioOutput);
+    jackpotNoise->setSource(QUrl("qrc::/sounds/otherimg/jackpot.mp3"));
+
+    audioOutput->setVolume(30);  // 0-100
+
     // // Create ground body (position it at the bottom)
     // b2BodyDef groundBodyDef;
     // groundBodyDef.position.Set(WORLD_WIDTH/2.0f, WORLD_HEIGHT - 1.0f); // Centered X, 1m from bottom
@@ -122,6 +130,8 @@ void box2Dbase::onWinSpawnCoins(QPointF position, int coinsToSpawn) {
         m_coinTimer->start(100); // Slightly slower for visibility
     }
 
+    // play the noise
+    jackpotNoise->play();
 }
 
 void box2Dbase::spawnNextCoin() {
