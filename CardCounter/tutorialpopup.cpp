@@ -117,6 +117,7 @@ void TutorialPopup::onContinuePressed()
 
     const QString& currentMessage = popupMessages->at(messageIndex);
 
+    // If the next message will be a tip for a move
     if (currentMessage.startsWith("Tip"))
     {
         // it’s a Tip, disable everything, then enable the one move button
@@ -150,6 +151,7 @@ void TutorialPopup::onContinuePressed()
                 storedButton = button;
         }
     }
+    // If the next message will be a lesson at the end of the round
     else if (currentMessage.startsWith("Lesson"))
     {
         // it’s a Lesson so disable all play buttons
@@ -158,16 +160,18 @@ void TutorialPopup::onContinuePressed()
         emit enableButton(ui->doubleButton, false);
         emit enableButton(ui->splitButton, false);
 
-        // then move on to the next round
+        // This is the last lesson, so show the final message
         if(popupMessages->at(messageIndex + 1).startsWith("Tutorial"))
         {
             messageIndex++;
             toggleVisableTutorialPopup(true);
             return;
         }
+        // End of round, start next round
         else
             emit sendNextRound();
     }
+    // On last message, go back to main screen
     else
     {
         emit backToMainMenu();
@@ -182,6 +186,7 @@ void TutorialPopup::onContinuePressed()
 
 void TutorialPopup::resetAndHideTutorial()
 {
+    // Reset all variables to default and hide popup
     toggleVisableTutorialPopup(false);
     storedButton = nullptr;
     firstTutorialRound = true;
@@ -208,6 +213,7 @@ void TutorialPopup::setUpTutorialButtons( QString qWidgetStyle, QString qPushBut
 
 void TutorialPopup::onDealAnimationComplete()
 {
+    // Delay the activation of the gameplay buttons for the first round
     if (firstTutorialRound && storedButton)
     {
         emit enableButton(storedButton, true);
