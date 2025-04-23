@@ -7,8 +7,6 @@
 #include <QPropertyAnimation>
 #include <QParallelAnimationGroup>
 #include "timermanager.h"
-#include <QMediaPlayer>
-#include <QAudioOutput>
 
 // Forward Declaration
 class AnimatableCardItem;
@@ -202,23 +200,6 @@ private:
      * @brief timer An instance of the timer class
      */
     TimerManager *timer;
-
-    /**
-     * @brief shuffleNoise Stores a reference to the scard shuffling noise to play it
-     */
-    QMediaPlayer *shuffleNoise;
-
-    /**
-     * @brief dealerdeckNoise The audio that plays when the dealer piles the deck at the beginning
-     */
-    QMediaPlayer *dealerdeckNoise;
-
-    QMediaPlayer *buttonclick;
-
-    /**
-     * @brief audioOutput Connects the output device to play the audio/MediaPlayer file attached
-     */
-    QAudioOutput *audioOutput = new QAudioOutput(this);
 };
 
 /**
