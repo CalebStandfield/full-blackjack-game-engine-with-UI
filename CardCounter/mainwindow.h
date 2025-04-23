@@ -73,7 +73,7 @@ private:
     GameState *state;
 
     /**
-     * @brief setupCoinAnimViews sets up the box2D visual area
+     * @brief setupCoinAnimViews sets up the box2D visual area fro the coin animations to play
      */
     void setupCoinAnimViews();
 

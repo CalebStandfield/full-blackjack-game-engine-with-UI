@@ -17,6 +17,7 @@ Controller::~Controller()
 
 void Controller::checkTurnEnd(const Player& player){
     emit playerUpdated(currentPlayerIndex, player, model->getOriginalPlayer(currentPlayerIndex).money, player.hand.getTotal());
+    // Move to the next player if the current player's turn is over
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
         advanceToNextPlayer();
         return;
@@ -41,6 +42,7 @@ void Controller::onStand()
 void Controller::onDoubleDown()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
+    // Check if the player has enough money to double down
     if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet()){
         return;
     }
@@ -51,11 +53,13 @@ void Controller::onDoubleDown()
 void Controller::onSplit()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
+    // Check if the player has enough money to split
     if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
         return;
     }
     model->split(currentPlayerIndex);
 
+    // Update card positions and hand count
     emit splitPlayers(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getPlayer(currentPlayerIndex + 1));
     emit splitPlayerUpdateInfo(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getOriginalPlayer(currentPlayerIndex).money);
     checkTurnEnd(model->getPlayer(currentPlayerIndex));
@@ -70,6 +74,7 @@ void Controller::onBet(int bet)
 void Controller::advanceToNextPlayer()
 {
     currentPlayerIndex++;
+    // Get to the next player who is able to play
     while(currentPlayerIndex < model->getPlayerCount() && (model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::BANKRUPT
                                                             || model->getPlayer(currentPlayerIndex).status == PLAYERSTATUS::STAND))
     {
@@ -109,6 +114,7 @@ void Controller::onDealerDonePlaying()
     model->endRound();
     emit endRound(model->getAllPlayers());
 
+    // If at least one user is not bankrupt, the game continues
     for(int i = 0; i < model->getPlayerCount(); i++){
         if(model->getPlayer(i).isUser && model->getPlayer(i).status != PLAYERSTATUS::BANKRUPT)
             return;

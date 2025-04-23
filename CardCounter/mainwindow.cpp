@@ -28,6 +28,8 @@ MainWindow::~MainWindow()
 void MainWindow::setupCoinAnimViews(){
     ui->coinAnimView->setStyleSheet("background: transparent");
     ui->coinAnimView->setScene(m_scene);
+
+    //get rid of scroll bars
     ui->coinAnimView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->coinAnimView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->coinAnimView->setRenderHint(QPainter::Antialiasing);
