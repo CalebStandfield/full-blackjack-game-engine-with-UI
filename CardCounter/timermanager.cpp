@@ -26,6 +26,7 @@ void TimerManager::scheduleSingleShot(int delay, std::function<void()> callBack)
 
 void TimerManager::cancelAllTimers()
 {
+    // Delete all timers
     for (QTimer* timer : timers) {
         timer->stop();
         timer->deleteLater();
