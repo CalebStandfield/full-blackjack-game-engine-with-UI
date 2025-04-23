@@ -67,10 +67,4 @@
     <qresource prefix="/StrategyCharts">
         <file>BasicStrategyCharts.png</file>
     </qresource>
-    <qresource prefix="/sounds">
-        <file>otherimg/card_across_table.mp3</file>
-        <file>otherimg/jackpot.mp3</file>
-        <file>otherimg/dealerpile_shuffle.mp3</file>
-        <file>otherimg/button_click.mp3</file>
-    </qresource>
 </RCC>

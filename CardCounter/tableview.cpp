@@ -1,10 +1,6 @@
 #include "tableview.h"
 #include <QtWidgets/qgraphicseffect.h>
 
-#include <QMediaPlayer>
-#include <QSoundEffect>
-#include <QAudioOutput>
-
 TableView::TableView(QWidget *parent)
     : QGraphicsView(parent), scene(new QGraphicsScene(this)) {
 
@@ -24,23 +20,6 @@ TableView::TableView(QWidget *parent)
     scene->setSceneRect(tablePixmap.rect());
     this->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    // Setup all the sounds
-    audioOutput = new QAudioOutput(this); // same audio output for all sounds
-
-    // Player card shuffle
-    shuffleNoise = new QMediaPlayer(this);
-    shuffleNoise->setSource(QUrl("qrc:/sounds/otherimg/card_across_table.mp3"));
-
-    // Dealer deck shuffle
-    dealerdeckNoise = new QMediaPlayer(this);
-    dealerdeckNoise->setSource(QUrl("qrc:/sounds/otherimg/dealerpile_shuffle.mp3"));
-
-    // Button Click
-    buttonclick = new QMediaPlayer(this);
-    buttonclick->setSource(QUrl("qrc:/sounds/otherimg/button_click.mp3"));
-
-    audioOutput->setVolume(30);
 }
 
 TableView::~TableView()
@@ -150,10 +129,6 @@ void TableView::addCardAnimated(int playerIndex, int handIndex, const QString& i
 
     QParallelAnimationGroup* anim = createAnimationCardItem(cardItem, startPos, endPos, 90, rotationAngle);
 
-    // Play sound
-    shuffleNoise->setAudioOutput(audioOutput);
-    shuffleNoise->play();
-
     if (playerIndex == -1)
     {
         dealerCards.push_back(cardItem);
@@ -204,10 +179,6 @@ void TableView::createDealerPile()
     for (int i = 0; i < 26; i++)
     {
         int delay = i * 50; // 100ms delay between each card
-
-        // play sound
-        dealerdeckNoise->setAudioOutput(audioOutput);
-        dealerdeckNoise->play();
 
         timer->scheduleSingleShot(delay, [=]() {
             QPointF endPos = QPointF(450, 75 - i); // Slight vertical offset per card
