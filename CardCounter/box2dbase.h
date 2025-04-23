@@ -11,6 +11,8 @@
 #include <QPixmap>
 #include <QGraphicsPixmapItem>
 #include <QQueue>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 /**
  * @brief The box2Dbase class
@@ -143,6 +145,9 @@ private:
      * @brief m_coinsPerSecond Adjusts spawn rate
      */
     int m_coinsPerSecond = 10;
+
+    QMediaPlayer *jackpotNoise;
+    QAudioOutput *audioOutput;
 
 signals:
 
