@@ -55,10 +55,11 @@ void GameState::hit(int playerIndex)
 void GameState::doubleDown(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
+    Player &originalPlayer = players[playerIndex - currPlayer.playerHandIndex];
 
     // Move the doubled money from the player's money to their current bet
     int currentBet = currPlayer.hand.getBet();
-    currPlayer.money -= currentBet;
+    originalPlayer.money -= currentBet;
     currPlayer.hand.setBet(currentBet * 2);
 
     // Do one hit and then stand/check bust
@@ -78,6 +79,7 @@ void GameState::stand(int playerIndex)
 void GameState::split(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
+    Player &originalPlayer = players[playerIndex - currPlayer.playerHandIndex];
     int handIndex = 1;
     for(int i = playerIndex; i >= 0; i--){
         if(players[i].originalHand)
@@ -91,7 +93,7 @@ void GameState::split(int playerIndex)
     Player secondHandPlayer = Player(0, currPlayer.hand.getBet(), currPlayer.isUser, 0, handIndex);
 
     // Remove money for new bet from current player
-    currPlayer.money -= currPlayer.hand.getBet();
+    originalPlayer.money -= currPlayer.hand.getBet();
 
     // Splits the hand of the original player and hits once for original and new hand
     const Card& removedCard = currPlayer.hand.removeLastCard();

@@ -16,7 +16,7 @@ Controller::~Controller()
 }
 
 void Controller::checkTurnEnd(const Player& player){
-    emit playerUpdated(currentPlayerIndex, player, player.hand.getTotal());
+    emit playerUpdated(currentPlayerIndex, player, model->getOriginalPlayer(currentPlayerIndex).money, player.hand.getTotal());
     if(player.status == PLAYERSTATUS::BUST || player.status == PLAYERSTATUS::STAND){
         advanceToNextPlayer();
         return;
@@ -41,7 +41,7 @@ void Controller::onStand()
 void Controller::onDoubleDown()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    if(player.money < player.hand.getBet()){
+    if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet()){
         return;
     }
     model->doubleDown(currentPlayerIndex);
@@ -51,12 +51,13 @@ void Controller::onDoubleDown()
 void Controller::onSplit()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    // if(player.money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
-    //     return;
-    // }
+    if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet() || !botStrategy->isPair(player.hand)){
+        return;
+    }
     model->split(currentPlayerIndex);
 
     emit splitPlayers(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getPlayer(currentPlayerIndex + 1));
+    emit splitPlayerUpdateInfo(currentPlayerIndex, model->getPlayer(currentPlayerIndex), model->getOriginalPlayer(currentPlayerIndex).money);
     checkTurnEnd(model->getPlayer(currentPlayerIndex));
 }
 
@@ -86,7 +87,7 @@ void Controller::advanceToNextPlayer()
 
     // Switch to next player
     const Player& player = model->getPlayer(currentPlayerIndex);
-    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet(), player.hand.getTotal());
+    emit currentPlayerTurn(currentPlayerIndex, model->getOriginalPlayer(currentPlayerIndex).money, player.hand.getBet(), player.hand.getTotal());
     model->setPlayerActive(currentPlayerIndex);
 
     if(!player.isUser)
@@ -123,7 +124,7 @@ void Controller::startBetting()
     model->clearHands();
     for(int i = 0; i < model->getPlayerCount(); i++){
         const Player& player = model->getPlayer(i);
-        emit playerUpdated(i, player, player.hand.getTotal());
+        emit playerUpdated(i, player, player.money, player.hand.getTotal());
     }
     emit dealerUpdated(model->getDealerHand(), model->getDealerHand().getTotal());
 
@@ -136,7 +137,7 @@ void Controller::advanceToNextBet()
     if(currentPlayerIndex >= 0)
     {
         const Player& betPlayer = model->getPlayer(currentPlayerIndex);
-        emit playerUpdated(currentPlayerIndex, betPlayer, betPlayer.hand.getTotal());
+        emit playerUpdated(currentPlayerIndex, betPlayer, betPlayer.money, betPlayer.hand.getTotal());
     }
 
     currentPlayerIndex++;
@@ -156,7 +157,7 @@ void Controller::advanceToNextBet()
     }
 
     const Player& player = model->getPlayer(currentPlayerIndex);
-    emit currentPlayerTurn(currentPlayerIndex, player.money, player.hand.getBet(), player.hand.getTotal());
+    emit currentPlayerTurn(currentPlayerIndex, model->getOriginalPlayer(currentPlayerIndex).money, player.hand.getBet(), player.hand.getTotal());
 
     if(!player.isUser)
          botBet();

@@ -208,7 +208,7 @@ void Screens::setUpStartMenuButtons()
     // TitleCard
     ui->startMenuTitleCard->setStyleSheet(QLabelStyle);
     ui->startMenuTitleCard->setAlignment(Qt::AlignCenter);
-    ui->startMenuTitleCard->setText("Blackjack \nCardCounting");
+    ui->startMenuTitleCard->setText("Blackjack Card Simulator");
 
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);

@@ -44,7 +44,7 @@ public slots:
      * @param money The money the player has
      * @param status The status of the player
      */
-    void onPlayerUpdated(int playerIndex, const Player &player, int total);//TODO
+    void onPlayerUpdated(int playerIndex, const Player &player, int money, int total);//TODO
 
     /**
      * @brief onUpdateAllPlayers Slot to update all of the players
@@ -56,9 +56,9 @@ public slots:
      * @brief onSplitPlayers Slot that a player split
      * @param originalIndex The index of the original player who split
      * @param originalPlayer The original player
-     * @param newPlayer The newly split player
+     * @param money The money of the first hand
      */
-    void onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+    void onSplitPlayers(int originalIndex, const Player& originalPlayer, int money);
 
     /**
      * @brief onCurrentPlayerTurn Slot to select a new player
@@ -124,8 +124,9 @@ private:
      * @brief refreshSeat Refreshes the label for the player at the given seat
      * @param seat The seat to refresh
      * @param player The player info to use
+     * @param money The money of the original player
      */
-    void refreshSeat(int seat, const Player& player);
+    void refreshSeat(int seat, const Player& player, int money);
 
     /**
      * @brief paintBorder Paints the border around a label to the given status

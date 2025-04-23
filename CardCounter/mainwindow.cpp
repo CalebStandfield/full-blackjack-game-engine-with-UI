@@ -166,7 +166,7 @@ void MainWindow::setUpMainWindowConnects()
             infoBar,
             &PlayerInfoView::onUpdateAllPlayers);
     connect(controller,
-            &Controller::splitPlayers,
+            &Controller::splitPlayerUpdateInfo,
             infoBar,
             &PlayerInfoView::onSplitPlayers);
     connect(controller,

@@ -101,7 +101,7 @@ signals:
      * @param money The money they have left
      * @param status The status of the player
      */
-    void playerUpdated(int playerIndex, const Player& player, int total);//TODO
+    void playerUpdated(int playerIndex, const Player& player, int money, int total);//TODO
 
     /**
      * @brief dealerUpdated Signal that the dealer has updated with their updated info
@@ -160,6 +160,14 @@ signals:
      * @param newPlayer The new player
      */
     void splitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+
+    /**
+     * @brief splitPlayerUpdateInfo Signal to playerinfoview to update player information
+     * @param originalIndex The index of the player to update
+     * @param originalPlayer The original player
+     * @param money Money of the first hand
+     */
+    void splitPlayerUpdateInfo(int originalIndex, const Player& originalPlayer, int money);
 
 private:
     /**
