@@ -209,9 +209,8 @@ void Controller::botMove()
     }
     else if(move == MOVE::SPLIT)
     {
-        // Call onSplit once implemented
         timer->scheduleSingleShot(waitTime, [=]() {
-            onHit();});
+            onSplit();});
     }
     else
         timer->scheduleSingleShot(waitTime, [=]() {

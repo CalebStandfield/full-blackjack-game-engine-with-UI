@@ -107,7 +107,8 @@ void GameState::split(int playerIndex)
         currPlayer.status = PLAYERSTATUS::STAND;
         secondHandPlayer.status = PLAYERSTATUS::STAND;
     }
-    else{
+    else
+    {
         currPlayer.status = PLAYERSTATUS::ACTIVE;
         secondHandPlayer.status = PLAYERSTATUS::WAITING;
     }

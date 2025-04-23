@@ -234,16 +234,12 @@ void Screens::setUpSettingsPopup()
 
     // Labels
     ui->settingsMenuTitle->setStyleSheet(QLabelStyle);
-
     ui->playerCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
-
     ui->deckCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
-
     ui->chipCountTextSettingsLabel->setStyleSheet(tempQLabelStyle);
 
     // Sliders
     ui->playerCountSettingsSlider->setStyleSheet(QSliderStyle);
-
     ui->deckCountSettingsSlider->setStyleSheet(QSliderStyle);
 
     toggleEnabledQPushButton(ui->acceptSettingsButton, false);
@@ -1117,7 +1113,7 @@ void Screens::endRound(const std::vector<Player>& players)
 
 void Screens::onPressNextRound()
 {
-    // in tutorial mode, don’t advance the table—just forward to the popup
+    // In tutorial mode, don’t advance the table, just forward to the popup
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL && ui->tutorialWidget->isVisible())
     {
         tutorialPopup->onContinuePressed();
@@ -1144,18 +1140,22 @@ void Screens::onPressNextRound()
             players[i].playerHandCount = 1;
     }
 
+    // Start the next round in the model
     emit sendNewRound();
+
+    // Set buttons and betting to correct state
     toggleEnabledQPushButton(ui->nextRound, false);
     toggleEnabledGamePlayButtons(false);
-
     tableView->createDealerPile();
     ui->betSlider->setMaximum(players[userIndex].money);
 
+    // If blackjack, show betting
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         toggleVisibleBettingView(true);
         toggleVisibleGamePlayButtons(false);
     }
+    // If tutorial or practice, wait for dealerpile to finish and then start next round
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL || mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
         timer->scheduleSingleShot(2100, [=]() {
@@ -1180,6 +1180,8 @@ void Screens::onPressPlayAgain()
 void Screens::resetEverything()
 {
     emit sendStopEverything();
+
+    // If win money still spawning, stop it and clear coins
     if (m_scene) {
         m_scene->stopSpawning();
         m_scene->clearCoins();
@@ -1188,4 +1190,5 @@ void Screens::resetEverything()
     tableView->stopEverything();
     timer->cancelAllTimers();
     players.clear();
+    ui->practiceBestMoveLabel->setText("Best move is: \n");
 }
