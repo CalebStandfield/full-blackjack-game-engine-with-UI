@@ -143,20 +143,20 @@ void PlayerInfoView::onSettingsAccepted(const std::vector<Player> &players, int,
     {
         if(players[i].isUser)
             userIndex = i;
-        refreshSeat(modelToSeat[i], players[i]);
+        refreshSeat(modelToSeat[i], players[i], players[i].money);
     }
 }
 
-void PlayerInfoView::refreshSeat(int seat, const Player& player)
+void PlayerInfoView::refreshSeat(int seat, const Player& player, int money)
 {
     if (seat >= seatCount)
         return;
 
     paintBorder(seatLabels[seat], player.status);
-    setSeatText(seat, player.money, player.hand.getBet(), player.status, player.hand.getTotal());
+    setSeatText(seat, money, player.hand.getBet(), player.status, player.hand.getTotal());
 }
 
-void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int total)
+void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int money, int total)
 {
     if (playerIndex >= modelToSeat.size())
         return;
@@ -164,22 +164,22 @@ void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int 
     // Updates text and border for the playerIndex label
     int seat = modelToSeat[playerIndex];
     paintBorder(seatLabels[seat], player.status);
-    setSeatText(playerIndex, player.money, player.hand.getBet(), player.status, total);
+    setSeatText(seat, money, player.hand.getBet(), player.status, total);
 }
 
 void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
 {
     rebuildMapping();
     for (int i = 0; i < static_cast<int>(players.size()) && i < modelToSeat.size(); i++)
-        refreshSeat(modelToSeat[i], players[i]);
+        refreshSeat(modelToSeat[i], players[i], players[i].money);
 }
 
-void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player&)
+void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPlayer, int money)
 {
     // Adds a new person after originalIndex and updates the label
     insertSplitMapping(originalIndex);
     if (originalIndex < modelToSeat.size())
-        refreshSeat(modelToSeat[originalIndex], originalPlayer);
+        refreshSeat(modelToSeat[originalIndex], originalPlayer, money);
 }
 
 void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet, int handTotal)
@@ -246,8 +246,38 @@ void PlayerInfoView::onStopEverything()
 
 void PlayerInfoView::onEndRound(const std::vector<Player>& players)
 {
-    for(int i = 0; i < static_cast<int>(players.size()); i++)
+    std::vector<int> bestHandsIndex = std::vector<int>(seatCount);
+    int player = -1;
+    for(int i = 0; i < static_cast<int>(players.size()); i++){
+        if(players[i].originalHand){
+            player++;
+            bestHandsIndex[player] = i;
+            continue;
+        }
+        PLAYERSTATUS bestHandStatus = players[bestHandsIndex[player]].status;
+        switch(players[i].status){
+            case PLAYERSTATUS::BLACKJACK:
+                bestHandsIndex[player] = i;
+                break;
+            case PLAYERSTATUS::WON:
+                if(bestHandStatus != PLAYERSTATUS::BLACKJACK)
+                    bestHandsIndex[player] = i;
+                break;
+            case PLAYERSTATUS::PUSHED:
+                if(bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON)
+                    bestHandsIndex[player] = i;
+                break;
+            case PLAYERSTATUS::LOST:
+                if(bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON && bestHandStatus != PLAYERSTATUS::PUSHED)
+                    bestHandsIndex[player] = i;
+                break;
+            default:
+                break;
+        }
+    }
+
+    for(int i = 0; i < static_cast<int>(bestHandsIndex.size()); i++)
     {
-        refreshSeat(i, players[i]);
+        refreshSeat(i, players[bestHandsIndex[i]], players[bestHandsIndex[i] - players[bestHandsIndex[i]].playerHandIndex].money);
     }
 }
