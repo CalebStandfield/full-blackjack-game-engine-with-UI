@@ -2,7 +2,7 @@
 
 TutorialPopup::TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent) : QObject(parent), ui(ui)
 {
-
+    // Setup the tutorial
     setUpTutorialButtons(qWidgetStyle, qPushButtonStyle);
     popupMessages = new std::vector<QString>();
     moveOrder = new std::vector<MOVE>();
@@ -19,6 +19,7 @@ TutorialPopup::~TutorialPopup()
 
 void TutorialPopup::createMessages()
 {
+    // Create all of the tutorial messages
     const std::initializer_list<QString> tutorialMessages = {
         "Tip: The dealer has a 2, which is a bust card (2-6), but it is too small to justify standing when you also have a bad total. Strategy is to hit because your odds to bust are lower than the dealer's advantage", // Add messages in order here
         "Lesson: Even though you bust, it was still the right play. Long-term odds favor hitting on 12 vs 2", // scenario one done
@@ -55,6 +56,7 @@ void TutorialPopup::createMessages()
         "Tutorial Complete: You have now finished the tutorial, pressing continue will bring you back to the main menu. There is a practice mode to help continue learning blackjack" // main menu
     };
 
+    // Create all the tutorial moves
     const std::initializer_list<MOVE> tutorialButtonMoves = {
         MOVE::HIT, // Add moves in order here || scenario 1 done
         MOVE::STAND, // scenario 2 done

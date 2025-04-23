@@ -2,7 +2,6 @@
 #include "botstrategy.h"
 #include <QPalette>
 #include <QPixmap>
-#include <qdebug.h>
 #include <QGraphicsDropShadowEffect>
 #include <QRandomGenerator>
 #include <QtMath>
@@ -208,7 +207,7 @@ void Screens::setUpStartMenuButtons()
     // TitleCard
     ui->startMenuTitleCard->setStyleSheet(QLabelStyle);
     ui->startMenuTitleCard->setAlignment(Qt::AlignCenter);
-    ui->startMenuTitleCard->setText("Blackjack Card Simulator");
+    ui->startMenuTitleCard->setText("Blackjack\nCard Simulator");
 
     // Buttons
     ui->blackjackPlayButton->setStyleSheet(QPushButtonStyle);

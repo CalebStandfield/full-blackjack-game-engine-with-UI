@@ -12,30 +12,6 @@ box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
 
     setBackgroundBrush(Qt::transparent);
 
-    // // Create ground body (position it at the bottom)
-    // b2BodyDef groundBodyDef;
-    // groundBodyDef.position.Set(WORLD_WIDTH/2.0f, WORLD_HEIGHT - 1.0f); // Centered X, 1m from bottom
-    // b2Body* groundBody = m_world->CreateBody(&groundBodyDef);
-
-    // // Create the groundBody fixture
-    // b2PolygonShape groundBox;
-    // groundBox.SetAsBox(WORLD_WIDTH/2.0f, 1.0f); // Full width, 2m tall (1m up and down from center)
-    // groundBody->CreateFixture(&groundBox, 0.0f);
-
-    // // Create graphics item for ground
-    // float groundWidth = WORLD_WIDTH * pixels_PerMeter;
-    // float groundHeight = 2.0f * pixels_PerMeter;
-    // float groundX = 0;
-    // float groundY = (WORLD_HEIGHT - 2.0f) * pixels_PerMeter;
-
-    // QGraphicsRectItem *groundShape = new QGraphicsRectItem(groundX, groundY, groundWidth, groundHeight);
-    // groundShape->setBrush(Qt::gray);
-    // groundShape->setPen(Qt::NoPen);
-    // addItem(groundShape);
-
-    // // Link physics and graphics
-    // groundBody->SetUserData(groundShape);
-
     // Set graphics scene size to match physics world
     setSceneRect(0, 0, WORLD_WIDTH * pixels_PerMeter, WORLD_HEIGHT * pixels_PerMeter);
 
