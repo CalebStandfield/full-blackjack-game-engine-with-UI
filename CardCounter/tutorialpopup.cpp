@@ -2,7 +2,7 @@
  * @brief Implementation of The TutorialPopup class. It handles displaying informational popup messages for the tutorial.
  * Additionally, handles activating the correct gameplay button after a tip message to control game flow
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/22/2025
  */
 

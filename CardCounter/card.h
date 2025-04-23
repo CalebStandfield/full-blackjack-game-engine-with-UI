@@ -11,7 +11,7 @@ using Suit::SUIT;
 /**
  * @brief The Card class handles a single card object. Holds a SUIT, RANK, and image path corresponding to its png
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/19/2025
  */
 class Card

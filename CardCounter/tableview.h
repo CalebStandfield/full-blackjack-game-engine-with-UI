@@ -14,7 +14,7 @@ class AnimatableCardItem;
 /**
  * @brief The TableView class is responsible for animating and displaying the player and dealer cards on the blackjack table
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/22/2025
  */
 class TableView : public QGraphicsView {

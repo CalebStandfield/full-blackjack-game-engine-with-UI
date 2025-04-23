@@ -15,7 +15,7 @@
 /**
  * @brief The box2Dbase class that includes all logic for creating coin objects that simulate physics such as collisions and weights
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/22/2025
  */
 class box2Dbase : public QGraphicsScene{

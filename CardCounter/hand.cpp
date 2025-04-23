@@ -1,7 +1,7 @@
 /**
  * @brief Implementation of The Hand class. It reprsents a single blackjack hand. It holds the cards, bet, and supporting functions
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/22/2025
  */
 

@@ -9,7 +9,7 @@ namespace Rank {
 /**
  * @brief RANK An enum of card ranks
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/13/2025
  */
 enum class RANK {

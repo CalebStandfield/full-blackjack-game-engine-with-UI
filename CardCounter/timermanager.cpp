@@ -1,7 +1,7 @@
 /**
  * @brief Implementation of The TimerManager class. It handles calling and cancelling any single shot callback functions
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/18/2025
  */
 

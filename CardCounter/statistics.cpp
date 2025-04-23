@@ -1,7 +1,7 @@
 /**
  * @brief Implementation of The Statistics class. A class that holds the tables of correct moves for blackjack
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/20/2025
  */
 

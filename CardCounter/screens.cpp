@@ -2,7 +2,7 @@
  * @brief Implementation of The Screens class. It handles all main screens of the program (main menu, playing blackjack, practice blackjack, and strategy screens)
  * It is the view for playing blackjack and takes all information from controller.
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen, John Chen
  * @date 4/22/2025
  */
 
@@ -786,18 +786,20 @@ void Screens::onGameOver()
 
 void Screens::acceptSettingsButtonPressed()
 {
-    toggleVisibleGamePlayButtons(false);
+    toggleVisibleGamePlayButtons(false); // Hide gameplay buttons during setup
 
     int determinedDeck;
+
+    // Set up based on game mode
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
-        onEditChipCountLineEdit();
-        toggleVisibleBettingView(true);
+        onEditChipCountLineEdit();       // Validate chip count
+        toggleVisibleBettingView(true);  // Show betting UI
         determinedDeck = 0;
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
-        initialMoney = 1000000;
+        initialMoney = 1000000;          // Set large starting money
         determinedDeck = 1;
         deckCount = 2;
     }
@@ -808,22 +810,24 @@ void Screens::acceptSettingsButtonPressed()
         deckCount = 1;
     }
 
-    ui->betSlider->setMaximum(initialMoney);
-    toggleEnabledQPushButton(ui->placeBetButton, false);
+    ui->betSlider->setMaximum(initialMoney);              // Adjust bet slider
+    toggleEnabledQPushButton(ui->placeBetButton, false);  // Disable bet button
 
-    userIndex = QRandomGenerator::global()->bounded(playerCount);
+    userIndex = QRandomGenerator::global()->bounded(playerCount); // Pick random user
 
+    // Initialize players
     for (unsigned int i = 0; i < playerCount; i++) {
         players.emplace_back(initialMoney, currentBet, i == userIndex, 1, 0);
         players[i].originalHand = true;
     }
 
-    tableView->createPlayerCardContainers(playerCount);
+    tableView->createPlayerCardContainers(playerCount); // Prepare card containers
 
-    emit sendSettingsAccepted(players, deckCount, determinedDeck);
+    emit sendSettingsAccepted(players, deckCount, determinedDeck); // Notify model
 
-    tableView->createDealerPile();
+    tableView->createDealerPile(); // Show dealer's card pile
 
+    // Start game or delay start depending on mode
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
         emit sendGameSetupCompleteStartBetting();
@@ -837,8 +841,9 @@ void Screens::acceptSettingsButtonPressed()
         });
     }
 
-    toggleEnabledGamePlayButtons(false);
+    toggleEnabledGamePlayButtons(false); // Ensure buttons remain disabled initially
 }
+
 
 void Screens::dealCard(int playerIndex, int handIndex, QString imagePath)
 {
@@ -863,15 +868,17 @@ int Screens::indexToSeat(unsigned int playerIndex)
 
 void Screens::playerUpdated(int playerIndex, const Player& player, int)
 {
+    // If only one card, deal it immediately
     if (player.hand.getCards().size() == 1)
     {
         dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[0].getImagePath());
     }
+    // If multiple cards, animate new ones only
     else if (player.hand.getCards().size() >= 2)
     {
         int prevHandSize = players[playerIndex].hand.getCards().size();
-
         bool firstLoop = true;
+
         for (int i = prevHandSize; i < static_cast<int>(player.hand.getCards().size()); i++)
         {
             if (firstLoop)
@@ -880,20 +887,25 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int)
                 firstLoop = false;
                 continue;
             }
+            // Delay dealing additional cards for animation effect
             timer->scheduleSingleShot(600, [=]() {
                 dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath());
             });
         }
     }
 
+    // If in practice mode, show recommended move after 2 cards
     if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE && players[userIndex].hand.getCards().size() >= 2)
     {
         updateRecommendedMove(player.hand);
     }
+
+    // Update player state
     players[playerIndex].hand = player.hand;
     players[playerIndex].money = player.money;
     players[playerIndex].status = player.status;
 }
+
 
 void Screens::allPlayersUpdated(const std::vector<Player>& players)
 {
@@ -1097,6 +1109,7 @@ void Screens::endRound(const std::vector<Player>& players)
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
 
+    // Check if in tutorial mode
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
         tutorialPopup->toggleVisableTutorialPopup(true);
@@ -1109,6 +1122,7 @@ void Screens::endRound(const std::vector<Player>& players)
     {
         ui->coinAnimView->viewport()->update();
 
+        // Check player status and spawn coins if user won or has blackjack
         if(player.status == PLAYERSTATUS::WON && player.isUser){
             m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 0);
         }
@@ -1118,6 +1132,7 @@ void Screens::endRound(const std::vector<Player>& players)
         }
     }
 }
+
 
 void Screens::onPressNextRound()
 {

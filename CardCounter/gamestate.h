@@ -8,7 +8,7 @@
 /**
  * @brief The GameState class is the core model of the blackjack game. Handles all game logic
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/21/2025
  */
 class GameState
