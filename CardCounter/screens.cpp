@@ -194,6 +194,7 @@ void Screens::setUpTable()
         ui->table->setLayout(new QVBoxLayout());
     }
 
+    // Set style for the scene
     tableView->setStyleSheet(QGraphicsViewStyle);
     ui->table->setStyleSheet(QWidgetStyle);
     ui->table->layout()->addWidget(tableView);
@@ -558,6 +559,7 @@ void Screens::moveToStartScreen()
 
 void Screens::moveToPlayScreen()
 {
+    // Hide all gameplay features initially
     toggleEnabledGamePlayButtons(false);
     toggleVisibleGamePlayButtons(false);
     toggleVisableBankruptcyMenu(false);
@@ -786,20 +788,24 @@ void Screens::onGameOver()
 
 void Screens::acceptSettingsButtonPressed()
 {
-    toggleVisibleGamePlayButtons(false); // Hide gameplay buttons during setup
+    // Hide gameplay buttons during setup
+    toggleVisibleGamePlayButtons(false);
 
     int determinedDeck;
 
     // Set up based on game mode
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
-        onEditChipCountLineEdit();       // Validate chip count
-        toggleVisibleBettingView(true);  // Show betting UI
+        // Validate chip count
+        onEditChipCountLineEdit();
+
+        // Show betting UI
+        toggleVisibleBettingView(true);
         determinedDeck = 0;
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
-        initialMoney = 1000000;          // Set large starting money
+        initialMoney = 1000000;
         determinedDeck = 1;
         deckCount = 2;
     }
@@ -810,10 +816,11 @@ void Screens::acceptSettingsButtonPressed()
         deckCount = 1;
     }
 
-    ui->betSlider->setMaximum(initialMoney);              // Adjust bet slider
-    toggleEnabledQPushButton(ui->placeBetButton, false);  // Disable bet button
+    ui->betSlider->setMaximum(initialMoney);
+    toggleEnabledQPushButton(ui->placeBetButton, false);
 
-    userIndex = QRandomGenerator::global()->bounded(playerCount); // Pick random user
+    // Choose random start location for user
+    userIndex = QRandomGenerator::global()->bounded(playerCount);
 
     // Initialize players
     for (unsigned int i = 0; i < playerCount; i++) {
@@ -821,11 +828,14 @@ void Screens::acceptSettingsButtonPressed()
         players[i].originalHand = true;
     }
 
-    tableView->createPlayerCardContainers(playerCount); // Prepare card containers
+    // Prepare card containers
+    tableView->createPlayerCardContainers(playerCount);
 
-    emit sendSettingsAccepted(players, deckCount, determinedDeck); // Notify model
+    // Notify model
+    emit sendSettingsAccepted(players, deckCount, determinedDeck);
 
-    tableView->createDealerPile(); // Show dealer's card pile
+    // Show dealer's card pile
+    tableView->createDealerPile();
 
     // Start game or delay start depending on mode
     if (mode == GAMEPLAYMODE::BLACKJACK)
@@ -841,7 +851,8 @@ void Screens::acceptSettingsButtonPressed()
         });
     }
 
-    toggleEnabledGamePlayButtons(false); // Ensure buttons remain disabled initially
+    // Ensure buttons remain disabled initially
+    toggleEnabledGamePlayButtons(false);
 }
 
 
@@ -881,6 +892,7 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int)
 
         for (int i = prevHandSize; i < static_cast<int>(player.hand.getCards().size()); i++)
         {
+            // If first card updated, deal immediately
             if (firstLoop)
             {
                 dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath());
@@ -913,6 +925,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
     unsigned int waitTime = 0;
     std::vector<Player> tempPlayers;
 
+    // Creates temporary players to allow for dealing animation
     for(const Player& player : players)
     {
         tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser, player.playerHandCount, player.playerHandIndex);
@@ -920,6 +933,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
 
     for(int j = 0; j < 2; j++)
     {
+        // Deal one card to each player
         for(int i = 0; i < static_cast<int>(tempPlayers.size()); i++)
         {
             tempPlayers[i].hand.addCard(players[i].hand.getCards()[j]);
@@ -931,6 +945,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
         waitTime += 600;
     }
 
+    // Round can start once deal animation is complete
     timer->scheduleSingleShot(waitTime, [=]() {
         if (mode != GAMEPLAYMODE::BLACKJACKTUTORIAL)
         {
@@ -951,6 +966,7 @@ void Screens::updateRecommendedMove(const Hand& playerHand)
     {
         return;
     }
+    // Get best move from botstrategy
     MOVE move = BotStrategy::getNextMove(playerHand, dealerHand.getCards()[1]);
     QString moveString = QString::fromStdString(Move::toString(move));
 
@@ -959,16 +975,20 @@ void Screens::updateRecommendedMove(const Hand& playerHand)
 
 void Screens::dealerUpdated(const Hand& hand, int)
 {
+    // Turn off buttons and update the dealer hand in the vector
     toggleEnabledGamePlayButtons(false);
     int prevHandSize = dealerHand.getCards().size();
     dealerHand = hand;
 
+    // If middle of round, change first card to show back of card
     if (!showDealerCard && dealerHand.getCards().size() > 0)
     {
         dealerHand.setCardImagePath(0, ":/cardImages/cards_pngsource/back_of_card.png");
     }
+
     unsigned int waitTime = 600 * players.size();
 
+    // If dealer card flipped, get the correct card image
     if (showDealerCard)
     {
         waitTime = 600;
@@ -977,6 +997,7 @@ void Screens::dealerUpdated(const Hand& hand, int)
         tableView->revealDealerCard(imagePath);        
     }
 
+    // Deal card to dealer
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
         timer->scheduleSingleShot(waitTime, [=]() {
@@ -989,6 +1010,7 @@ void Screens::dealerUpdated(const Hand& hand, int)
         waitTime += 800;
     }
 
+    // Show end of round results once dealer is done playing
     if (showDealerCard)
     {
         timer->scheduleSingleShot(waitTime, [=]() {
@@ -996,6 +1018,7 @@ void Screens::dealerUpdated(const Hand& hand, int)
         });
     }
 
+    // Show the first reccomended move after dealer gets cards
     if (dealerHand.getCards().size() == 2 && mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
         timer->scheduleSingleShot(waitTime / 1.5, [=]() {
@@ -1043,20 +1066,22 @@ void Screens::currentPlayerTurn(int nextPlayerIndex, int, int, int)
 {
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
+        // If the next popup is a tip, show it to the user
         if (tutorialPopup->nextIsTip())
         {
             toggleEnabledGamePlayButtons(false);
-            // show the next tip
             tutorialPopup->toggleVisableTutorialPopup(true);
         }
         return;
     }
 
+    // Turn buttons on if the player is user
     if(players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
         toggleEnabledQPushButton(ui->placeBetButton, true);
     }
+    // Turn off the buttons if it isn't a user
     else
     {
         toggleEnabledGamePlayButtons(false);

@@ -14,7 +14,7 @@ using PlayerStatus::PLAYERSTATUS;
  * @brief The Controller class is responsible for managing the gamestate(model) and connecting it with the view.
  * It handles user input as well as bot input to make the game flow
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/21/2025
  */
 class Controller : public QObject

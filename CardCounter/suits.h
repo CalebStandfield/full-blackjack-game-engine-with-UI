@@ -8,7 +8,7 @@ namespace Suit {
 /**
  * @brief The SUIT enum An enum for the suits of playing cards
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/13/2025
  */
 enum class SUIT {

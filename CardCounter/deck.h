@@ -8,7 +8,7 @@
  * @brief The Deck class represents one or more standard 52-card decks.
  * Provides a shuffle (random or determined) and card dealing functionality
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/22/2025
  */
 class Deck

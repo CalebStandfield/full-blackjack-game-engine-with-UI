@@ -7,7 +7,7 @@
 /**
  * @brief The Player class represents a single player in a blackjack game. Stores the current state, hand, money, and user status of the player
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/20/2025
  */
 class Player
