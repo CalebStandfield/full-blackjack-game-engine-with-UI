@@ -45,7 +45,6 @@ void GameState::clearHands()
 void GameState::hit(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
-    currPlayer.status = PLAYERSTATUS::ACTIVE;
     currPlayer.hand.addCard(deck.getNextCard());
     if(isBust(currPlayer.hand)){
         currPlayer.status = PLAYERSTATUS::BUST;
@@ -80,6 +79,7 @@ void GameState::split(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
     Player &originalPlayer = players[playerIndex - currPlayer.playerHandIndex];
+    // Get the index of the current hand
     int handIndex = 1;
     for(int i = playerIndex; i >= 0; i--){
         if(players[i].originalHand)
@@ -135,6 +135,7 @@ void GameState::endRound()
     {
         Player &player = players[i];
         Player &originalPlayer = players[i - player.playerHandIndex];
+        // If player busts, they either simply lose or go bankrupt
         if(player.status == PLAYERSTATUS::BUST)
         {
             player.status = PLAYERSTATUS::LOST;
@@ -161,11 +162,13 @@ void GameState::endRound()
                 player.status = PLAYERSTATUS::WON;
             }
         }
+        // Player gets their money back if they have the same total
         else if(playerTotal == dealerTotal)
         {
             originalPlayer.money += player.hand.getBet();
             player.status = PLAYERSTATUS::PUSHED;
         }
+        // Player loses
         else
         {
             player.status = PLAYERSTATUS::LOST;
