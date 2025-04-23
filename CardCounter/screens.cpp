@@ -796,8 +796,9 @@ void Screens::acceptSettingsButtonPressed()
     // Set up based on game mode
     if (mode == GAMEPLAYMODE::BLACKJACK)
     {
-        // Validate chip count
+        // Validate chip count and player count
         onEditChipCountLineEdit();
+        playerCount = ui->playerCountSettingsSlider->value();
 
         // Show betting UI
         toggleVisibleBettingView(true);

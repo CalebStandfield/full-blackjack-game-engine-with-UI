@@ -1,7 +1,7 @@
 /**
  * @brief Implementation of The GameState class. It is the core model of the blackjack game. Handles all game logic
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/21/2025
  */
 
