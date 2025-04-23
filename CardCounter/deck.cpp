@@ -9,6 +9,7 @@ Deck::Deck(int deckNumber, int deterministic) : deterministic(deterministic)
 {
     createDeck();
 
+    // Insert master deck into shuffled deck deckNumber times (creates a deck the size of deckNumber)
     for(int i = 0; i < deckNumber; i++)
         shuffledDeck.insert(shuffledDeck.end(), masterDeck.begin(), masterDeck.end());
 
@@ -20,6 +21,7 @@ void Deck::createDeck()
     masterDeck.reserve(52);
     unsigned int i = 0;
 
+    // Creates a deck of all 52 cards
     for (RANK rank : Rank::allRanks)
         for (SUIT suit : Suit::allSuits)
             masterDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
@@ -28,12 +30,14 @@ void Deck::createDeck()
 
 void Deck::shuffle()
 {
+    // Random shuffle
     if(deterministic == 0)
     {
         std::default_random_engine rand(std::random_device{}());
         std::shuffle(shuffledDeck.begin(), shuffledDeck.end(), rand);
         currentDeckIndex = 0;
     }
+    // Tutorial ordered deck
     else if(deterministic == 1)
     {
         const std::initializer_list<const char*> tutorialOrder = {
@@ -130,6 +134,7 @@ void Deck::shuffle()
         }
 
     }
+    // Sets the entire deck to TWO of SPADES
     else
     {
         shuffledDeck.clear();
@@ -142,6 +147,7 @@ void Deck::shuffle()
 
 Card Deck::getNextCard()
 {
+    // Reshuffles if inside the last 20% of the deck
     if (currentDeckIndex > (shuffledDeck.size() * 0.8))
     {
         shuffle();

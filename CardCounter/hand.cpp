@@ -10,6 +10,7 @@ Hand::Hand(const Hand& hand)
 {
     this->bet = hand.getBet();
 
+    // Copy all of the cards in the given hand
     for(const Card& card : hand.getCards())
     {
         cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());
@@ -21,6 +22,8 @@ Hand& Hand::operator=(const Hand hand)
     this->bet = hand.getBet();
 
     cards.clear();
+
+    // Copy all of the cards in the given hand
     for(const Card& card : hand.getCards())
     {
         cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());

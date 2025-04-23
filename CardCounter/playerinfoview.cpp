@@ -7,6 +7,7 @@ PlayerInfoView::PlayerInfoView(Ui::MainWindow *ui, QObject *parent) : QObject(pa
 
 void PlayerInfoView::buildLayout(int seats)
 {
+    // Sets seatcount to seats or a max of 5
     seatCount = qMin(seats,5);
     seatLabels.resize(seatCount);
 
@@ -22,6 +23,7 @@ void PlayerInfoView::buildLayout(int seats)
 
     ui->playInfoContainer->setStyleSheet(QWidgetStyle);
 
+    // Sets layout to add labels from right to left
     QHBoxLayout *layout = ui->horizontalPlayerInfoLayout;
     layout->setDirection(QBoxLayout::RightToLeft);
 
@@ -84,9 +86,9 @@ QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
 
 void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
 {
-    QString borderColor = getStatusColor(status);
+    QString statusColor = getStatusColor(status);
 
-    // Choose label background color
+    // Create label backgound color
     const char *darkBase =
         "background-color:qlineargradient(x1:0,y1:0,x2:1,y2:1,"
         " stop:0 #222, stop:1 #333);"
@@ -94,14 +96,16 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
 
     QString labelColor;
 
+    // For end of round status', paint the whole card status color
     if(fillWholeCard(status))
     {
         labelColor = QString("background-color:%1;color:white;"
-                            "border:3px solid #000000;").arg(borderColor);
+                            "border:3px solid #000000;").arg(statusColor);
     }
+    // For mid round status', paint just the border status color
     else
     {
-        labelColor = QString("%1border:3px solid %2;").arg(darkBase, borderColor);
+        labelColor = QString("%1border:3px solid %2;").arg(darkBase, statusColor);
     }
 
     label->setStyleSheet(QString(
@@ -120,6 +124,7 @@ bool PlayerInfoView::fillWholeCard(PLAYERSTATUS status)
 
 void PlayerInfoView::rebuildMapping()
 {
+    // Reset modelToSeat to just have seatCount spots
     modelToSeat.clear();
     for (int i = 0; i < seatCount; i++)
         modelToSeat.push_back(i);
@@ -141,8 +146,11 @@ void PlayerInfoView::onSettingsAccepted(const std::vector<Player> &players, int,
     rebuildMapping();
     for (int i = 0; i < static_cast<int>(players.size()); i++)
     {
+        // Stores userIndex for creating name of label
         if(players[i].isUser)
+        {
             userIndex = i;
+        }
         refreshSeat(modelToSeat[i], players[i], players[i].money);
     }
 }
@@ -169,6 +177,7 @@ void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int 
 
 void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
 {
+    // Resets all labels and then updates with new info
     rebuildMapping();
     for (int i = 0; i < static_cast<int>(players.size()) && i < modelToSeat.size(); i++)
         refreshSeat(modelToSeat[i], players[i], players[i].money);
@@ -176,7 +185,7 @@ void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
 
 void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPlayer, int money)
 {
-    // Adds a new person after originalIndex and updates the label
+    // Adds a new person to vector after originalIndex and updates the label's money
     insertSplitMapping(originalIndex);
     if (originalIndex < modelToSeat.size())
         refreshSeat(modelToSeat[originalIndex], originalPlayer, money);
@@ -187,6 +196,7 @@ void PlayerInfoView::onCurrentPlayerTurn(int newPlayerIndex, int money, int bet,
     if (newPlayerIndex >= modelToSeat.size())
         return;
 
+    // Set the border to active for the current player's turn
     int seat = modelToSeat[newPlayerIndex];
     paintBorder(seatLabels[seat], PLAYERSTATUS::ACTIVE);
     setSeatText(seat, money, bet, PLAYERSTATUS::ACTIVE, handTotal);
@@ -197,17 +207,19 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
     if (seat < 0 || seat >= seatCount)
         return;
 
-    QString borderColor = getStatusColor(status);
+    // Get the status color and string
+    QString statusColor = getStatusColor(status);
     std::string statusString = PlayerStatus::toString(status);
 
+    // Set all text besides status to white
     QString textColor = "#ffffff";
 
     // Make the status text white if the background is filled in
     bool isFilled = fillWholeCard(status);
-    QString statusTextColor = isFilled ? textColor : borderColor;
+    QString statusTextColor = isFilled ? textColor : statusColor;
 
     QString name;
-    // If seat is is the user, set name as User
+    // If seat is the user, set name as User
     if(seat == userIndex)
         name = "User";
     // If seat is not user, use Player
@@ -246,14 +258,17 @@ void PlayerInfoView::onStopEverything()
 
 void PlayerInfoView::onEndRound(const std::vector<Player>& players)
 {
+    // Keeps track of best hand for a split player
     std::vector<int> bestHandsIndex = std::vector<int>(seatCount);
     int player = -1;
     for(int i = 0; i < static_cast<int>(players.size()); i++){
+        // If original hand of a player, add to bestHands
         if(players[i].originalHand){
             player++;
             bestHandsIndex[player] = i;
             continue;
         }
+        // Sets the status of best player if it is better than what is currently stored
         PLAYERSTATUS bestHandStatus = players[bestHandsIndex[player]].status;
         switch(players[i].status){
             case PLAYERSTATUS::BLACKJACK:
@@ -276,6 +291,7 @@ void PlayerInfoView::onEndRound(const std::vector<Player>& players)
         }
     }
 
+    // Refresh all labels
     for(int i = 0; i < static_cast<int>(bestHandsIndex.size()); i++)
     {
         refreshSeat(i, players[bestHandsIndex[i]], players[bestHandsIndex[i] - players[bestHandsIndex[i]].playerHandIndex].money);
