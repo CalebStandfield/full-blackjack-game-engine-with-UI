@@ -33,7 +33,6 @@ void Deck::createDeck()
     for (RANK rank : Rank::allRanks)
         for (SUIT suit : Suit::allSuits)
             masterDeck.emplace_back(suit, rank, Card::getImageFromVector(i++));
-
 }
 
 void Deck::shuffle()

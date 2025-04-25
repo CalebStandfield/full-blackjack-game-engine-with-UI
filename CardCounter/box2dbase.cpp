@@ -33,6 +33,8 @@ box2Dbase::~box2Dbase(){
 
     // Delete Box2D world
     delete m_world;
+
+    delete m_coinTimer;
 }
 
 float box2Dbase::randomFloat(float min, float max){

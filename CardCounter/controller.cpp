@@ -50,8 +50,8 @@ void Controller::onStand()
 void Controller::onDoubleDown()
 {
     const Player& player = model->getPlayer(currentPlayerIndex);
-    // Check if the player has enough money to double down
-    if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet()){
+    // Check if the player has enough money  and only 2 cards to double down
+    if(model->getOriginalPlayer(currentPlayerIndex).money < player.hand.getBet() || player.hand.getCards().size() != 2){
         return;
     }
     model->doubleDown(currentPlayerIndex);
@@ -206,7 +206,7 @@ void Controller::botMove()
             onHit();});
     else if(move == MOVE::DOUBLE)
     {
-        // If not enough money to double down, hit instead
+        // If not enough money or too many cards to double down, hit instead
         if(player.money < player.hand.getBet() || player.hand.getCards().size() != 2){
             timer->scheduleSingleShot(waitTime, [=]() {
                 onHit();});

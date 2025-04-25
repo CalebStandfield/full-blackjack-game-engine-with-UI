@@ -2,7 +2,7 @@
  * @brief Implementation of The Screens class. It handles all main screens of the program (main menu, playing blackjack, practice blackjack, and strategy screens)
  * It is the view for playing blackjack and takes all information from controller.
  *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen, John Chen
+ * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
  * @date 4/22/2025
  */
 
