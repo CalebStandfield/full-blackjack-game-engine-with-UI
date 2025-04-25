@@ -20,11 +20,11 @@ void TimerManager::scheduleSingleShot(int delay, std::function<void()> callBack)
     timer->setSingleShot(true);
 
     // Creates the timer with the given callBack and has it delte itself afterwards
-    connect(timer, &QTimer::timeout, this, [=]() {
+    connect(timer, &QTimer::timeout, this, [=]()
+            {
         callBack();
         timers.removeOne(timer);
-        timer->deleteLater();
-    });
+        timer->deleteLater(); });
 
     // Add and start the timer
     timers.append(timer);
@@ -34,7 +34,8 @@ void TimerManager::scheduleSingleShot(int delay, std::function<void()> callBack)
 void TimerManager::cancelAllTimers()
 {
     // Delete all timers
-    for (QTimer* timer : timers) {
+    for (QTimer *timer : timers)
+    {
         timer->stop();
         timer->deleteLater();
     }

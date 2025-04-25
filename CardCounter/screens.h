@@ -34,7 +34,7 @@ public:
      * @param m_scene A box2D for winning animations
      * @param parent The parent of this object
      */
-    explicit Screens(Ui::MainWindow *ui,  box2Dbase* m_scene, QWidget *parent = nullptr);
+    explicit Screens(Ui::MainWindow *ui, box2Dbase *m_scene, QWidget *parent = nullptr);
 
     /**
      * @brief ~Screens Deconstructor for the Screens class
@@ -55,7 +55,7 @@ private:
     /**
      * @brief timer An instance of TimerManager to wrap singleshot timers
      */
-    TimerManager* timer;
+    TimerManager *timer;
 
     /**
      * @brief m_scene An instance of Box2D for winning animations
@@ -70,7 +70,8 @@ private:
     /**
      * @brief The GAMEPLAYMODE enum An enum to represent what mode the program should run in
      */
-    enum GAMEPLAYMODE {
+    enum GAMEPLAYMODE
+    {
         BLACKJACK,
         BLACKJACKTUTORIAL,
         BLACKJACKPRACTICE,
@@ -223,8 +224,8 @@ private:
      * @brief getQSliderStylenQString of the general QWidget StyleSheet
      */
     QString QSliderStyle;
-    
-    /** 
+
+    /**
      * @brief getQWidgetStylenQString of the general QTextBrowser StyleSheet
      */
     QString QTextBrowserStyle;
@@ -374,7 +375,7 @@ private:
      * @brief updateRecommendedMove Updates the reccomended move in practice mode
      * @param playerHand The players hand to use to get the recommended move
      */
-    void updateRecommendedMove(const Hand& playerHand);
+    void updateRecommendedMove(const Hand &playerHand);
 
 signals:
 
@@ -384,7 +385,7 @@ signals:
      * @param decks The number of decks to play with
      * @param deterministic 0 = random shuffle, 1 = shuffle for single player, 2 = shuffle for 3 players
      */
-    void sendSettingsAccepted(std::vector<Player>& players, int decks, int deterministic);
+    void sendSettingsAccepted(std::vector<Player> &players, int decks, int deterministic);
 
     /**
      * @brief sendGameSetupCompleteStartBetting
@@ -450,7 +451,7 @@ private slots:
      * @brief updateBetLabelText Updates the betting lable for the betting view
      * @param value The value to set the label to display
      */
-    void updateBetLabelText(unsigned int  value);
+    void updateBetLabelText(unsigned int value);
 
     /**
      * @brief updateSettingsSlider Updates the slider that calls this method to the value
@@ -466,20 +467,20 @@ public slots:
      * @param money The money they have left
      * @param status The status of the player
      */
-    void playerUpdated(int playerIndex, const Player& player, int total); //TODO
+    void playerUpdated(int playerIndex, const Player &player, int total); // TODO
 
     /**
      * @brief allPlayersUpdated Slot for receiving all of the updated players to display
      * @param players The vector containing all of the players
      */
-    void allPlayersUpdated(const std::vector<Player>& players);
+    void allPlayersUpdated(const std::vector<Player> &players);
 
     /**
      * @brief dealerUpdated Slot for receiving updated dealer info
      * @param hand The new hand of the dealer
      * @param total The total value of their cards
      */
-    void dealerUpdated(const Hand& hand, int total);
+    void dealerUpdated(const Hand &hand, int total);
 
     /**
      * @brief currentPlayerTurn Slot for changing to the player at given index
@@ -499,7 +500,7 @@ public slots:
      * @brief endRound SLot for the round ending
      * @param players The players after the round has ended
      */
-    void endRound(const std::vector<Player>& players);
+    void endRound(const std::vector<Player> &players);
 
     /**
      * @brief updateShowDealerCardBool Updates the bool for when to flip the dealers secret card
@@ -513,7 +514,7 @@ public slots:
      * @param originalPlayer The original player
      * @param newPlayer The new player
      */
-    void onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+    void onSplitPlayers(int originalIndex, const Player &originalPlayer, const Player &newPlayer);
 
     /**
      * @brief onGameOver Logic for when the controller sends the game over signal

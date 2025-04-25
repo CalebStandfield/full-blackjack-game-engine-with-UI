@@ -26,14 +26,14 @@ MOVE BotStrategy::getNextMove(const Hand &playerHand, const Card &dealerCard)
     return getHardHandMove(playerHand, dealerCard);
 }
 
-MOVE BotStrategy::getHardHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getHardHandMove(const Hand &playerHand, const Card &dealerCard)
 {
     int row = playerHand.getTotal() - 5;
 
     return Statistics::HardTable[row][cardToIndex(dealerCard)];
 }
 
-MOVE BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getSoftHandMove(const Hand &playerHand, const Card &dealerCard)
 {
     int effective = playerHand.getTotal() - 11;
     int row = effective - 2;
@@ -41,7 +41,7 @@ MOVE BotStrategy::getSoftHandMove(const Hand& playerHand, const Card& dealerCard
     return Statistics::SoftTable[row][cardToIndex(dealerCard)];
 }
 
-MOVE BotStrategy::getPairHandMove(const Hand& playerHand, const Card& dealerCard)
+MOVE BotStrategy::getPairHandMove(const Hand &playerHand, const Card &dealerCard)
 {
     int row = cardToIndex(playerHand.getCards()[0]);
     return Statistics::PairTable[row][cardToIndex(dealerCard)];
@@ -49,7 +49,7 @@ MOVE BotStrategy::getPairHandMove(const Hand& playerHand, const Card& dealerCard
 
 bool BotStrategy::isPair(const Hand &hand)
 {
-    const std::vector<Card>& cards = hand.getCards();
+    const std::vector<Card> &cards = hand.getCards();
     if (cards.size() != 2)
         return false;
     return (cards[0].getRank() == cards[1].getRank());

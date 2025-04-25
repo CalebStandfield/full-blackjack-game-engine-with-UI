@@ -8,11 +8,11 @@
 #include "box2dbase.h"
 
 box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
-    coinPixmap(new QPixmap(":/cash/otherimg/coin.png")), // initialize the world
-    m_world(new b2World(b2Vec2(0.0f, 9.8f))),
-    m_timeStep(1.0f/60.0f),
-    m_velocityIterations(6),
-    m_positionIterations(2)
+                                        coinPixmap(new QPixmap(":/cash/otherimg/coin.png")), // initialize the world
+                                        m_world(new b2World(b2Vec2(0.0f, 9.8f))),
+                                        m_timeStep(1.0f / 60.0f),
+                                        m_velocityIterations(6),
+                                        m_positionIterations(2)
 {
     m_coinTimer = new QTimer(this);
     connect(m_coinTimer, &QTimer::timeout, this, &box2Dbase::spawnNextCoin);
@@ -28,7 +28,8 @@ box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
     timer->start(1000 / 60);
 }
 
-box2Dbase::~box2Dbase(){
+box2Dbase::~box2Dbase()
+{
     // Clean up all QGraphicsItems
     clear();
 
@@ -46,30 +47,36 @@ float box2Dbase::randomFloat(float min, float max)
 void box2Dbase::advance()
 {
     // if the world doesnt exist
-    if (!m_world) return;
+    if (!m_world)
+        return;
 
     // step physics simulation forward
     m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
 
     // vector of all bodies that have left world bounds
-    QVector<b2Body*> bodiesOutofBounds;
+    QVector<b2Body *> bodiesOutofBounds;
 
     // iterate through all current bodies spawned
-    for (b2Body* body = m_world->GetBodyList(); body; body = body->GetNext()) {
-        if (body->GetType() != b2_dynamicBody) continue;
+    for (b2Body *body = m_world->GetBodyList(); body; body = body->GetNext())
+    {
+        if (body->GetType() != b2_dynamicBody)
+            continue;
         b2Vec2 position = body->GetPosition();
 
         // out of world bounds check
         if (position.x < 0 || position.x > WORLD_WIDTH ||
-            position.y < 0 || position.y > WORLD_HEIGHT) {
+            position.y < 0 || position.y > WORLD_HEIGHT)
+        {
             bodiesOutofBounds.append(body);
         }
     }
 
     // remove all bodies out of bounds
-    for (b2Body* body : bodiesOutofBounds) {
-        if (body->GetUserData()) {
-            QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
+    for (b2Body *body : bodiesOutofBounds)
+    {
+        if (body->GetUserData())
+        {
+            QGraphicsItem *item = static_cast<QGraphicsItem *>(body->GetUserData());
             // Remove from scene
             removeItem(item);
             // Free memory
@@ -79,9 +86,11 @@ void box2Dbase::advance()
     }
 
     // update graphics view
-    for (b2Body* body = m_world->GetBodyList(); body; body = body->GetNext()){
-        if (body->GetUserData()){
-            QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
+    for (b2Body *body = m_world->GetBodyList(); body; body = body->GetNext())
+    {
+        if (body->GetUserData())
+        {
+            QGraphicsItem *item = static_cast<QGraphicsItem *>(body->GetUserData());
             b2Vec2 position = body->GetPosition();
             item->setPos(position.x * pixels_PerMeter,
                          position.y * pixels_PerMeter);
@@ -92,28 +101,32 @@ void box2Dbase::advance()
     QGraphicsScene::advance();
 }
 
-void box2Dbase::onWinSpawnCoins(QPointF position, int coinsToSpawn) {
+void box2Dbase::onWinSpawnCoins(QPointF position, int coinsToSpawn)
+{
     // clear any existing coins first
     m_coinQueue.clear();
 
-    const float payoutWidth = 60.0f; //wider spread when spawned
-    for (int i = 0; i < coinsToSpawn; i++) {
-        float offset = randomFloat(-payoutWidth/2, payoutWidth/2);
+    const float payoutWidth = 60.0f; // wider spread when spawned
+    for (int i = 0; i < coinsToSpawn; i++)
+    {
+        float offset = randomFloat(-payoutWidth / 2, payoutWidth / 2);
         m_coinQueue.enqueue(position + QPointF(offset, 0));
     }
 
     // start spawning with celebratory timing
     initialBurst();
 
-    if (!m_coinTimer->isActive()) {
-         // slightly slower for visibility
+    if (!m_coinTimer->isActive())
+    {
+        // slightly slower for visibility
         m_coinTimer->start(100);
     }
-
 }
 
-void box2Dbase::spawnNextCoin() {
-    if (m_coinQueue.isEmpty()) {
+void box2Dbase::spawnNextCoin()
+{
+    if (m_coinQueue.isEmpty())
+    {
         // if queue is empty stop the timer
         m_coinTimer->stop();
         return;
@@ -131,7 +144,7 @@ void box2Dbase::spawnNextCoin() {
     bodyDef.angularDamping = 0.1f;
     // air resistance
     bodyDef.linearDamping = 0.1f;
-    b2Body* body = m_world->CreateBody(&bodyDef);
+    b2Body *body = m_world->CreateBody(&bodyDef);
 
     QPixmap scaledCoin = coinPixmap->scaled(COIN_SIZE_PIXELS, COIN_SIZE_PIXELS, Qt::KeepAspectRatio);
 
@@ -149,37 +162,40 @@ void box2Dbase::spawnNextCoin() {
     fixture.restitution = 0.6f;
     body->CreateFixture(&fixture);
 
-    QGraphicsPixmapItem* coin = new QGraphicsPixmapItem(scaledCoin);
-    coin->setOffset(-scaledCoin.width()/2, -scaledCoin.height()/2);
+    QGraphicsPixmapItem *coin = new QGraphicsPixmapItem(scaledCoin);
+    coin->setOffset(-scaledCoin.width() / 2, -scaledCoin.height() / 2);
     coin->setPos(pos);
     addItem(coin);
     body->SetUserData(coin);
 
-    float angle = QRandomGenerator::global()->bounded(-20, 20) * (M_PI/180);
+    float angle = QRandomGenerator::global()->bounded(-20, 20) * (M_PI / 180);
     float force = 4.0f + QRandomGenerator::global()->bounded(2.0f);
 
     body->ApplyLinearImpulse(b2Vec2(force * sin(angle), -force * cos(angle)), body->GetWorldCenter(), true);
 }
 
-void box2Dbase::initialBurst(){
+void box2Dbase::initialBurst()
+{
     // queue coins with horizontal spread (like a real slot)
     const float slotWidth = 30.0f;
     QPointF position;
     const float COIN_SIZE_PIXELS = 50.0f;
     QPixmap scaledCoin = coinPixmap->scaled(COIN_SIZE_PIXELS, COIN_SIZE_PIXELS, Qt::KeepAspectRatio);
 
-    for (int i = 0; i < 40; i++) {
-        float offset = randomFloat(-slotWidth/2, slotWidth/2);
+    for (int i = 0; i < 40; i++)
+    {
+        float offset = randomFloat(-slotWidth / 2, slotWidth / 2);
         position = QPointF(540, 730) + QPointF(offset, 0);
         m_coinQueue.enqueue(position);
     }
 
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 40; i++)
+    {
         // create physics body (circle shape)
         b2BodyDef bodyDef;
         bodyDef.type = b2_dynamicBody;
         bodyDef.position.Set(position.x() / pixels_PerMeter, position.y() / pixels_PerMeter);
-        b2Body* body = m_world->CreateBody(&bodyDef);
+        b2Body *body = m_world->CreateBody(&bodyDef);
 
         // create CIRCULAR physics shape (matches image dimensions)
         b2CircleShape circleShape;
@@ -187,7 +203,7 @@ void box2Dbase::initialBurst(){
 
         // create fixture
         b2FixtureDef fixtureDef;
-          // Use the circle shape, not the pixmap
+        // Use the circle shape, not the pixmap
         fixtureDef.shape = &circleShape;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.2f;
@@ -196,7 +212,7 @@ void box2Dbase::initialBurst(){
 
         // create graphics (PNG)
         QGraphicsPixmapItem *coinItem = new QGraphicsPixmapItem(scaledCoin);
-        coinItem->setOffset(-scaledCoin.width()/2, -scaledCoin.height()/2);
+        coinItem->setOffset(-scaledCoin.width() / 2, -scaledCoin.height() / 2);
         coinItem->setPos(position);
         addItem(coinItem);
 
@@ -209,34 +225,40 @@ void box2Dbase::initialBurst(){
     }
 
     // start with rapid initial burst
-    if (!m_coinTimer->isActive()) {
+    if (!m_coinTimer->isActive())
+    {
         // First coins fast
         m_coinTimer->start(50);
-        QTimer::singleShot(300, [this]() {
-            m_coinTimer->setInterval(1000 / m_coinsPerSecond);
-        });
+        QTimer::singleShot(300, [this]()
+                           { m_coinTimer->setInterval(1000 / m_coinsPerSecond); });
     }
 }
 
-void box2Dbase::stopSpawning(){
+void box2Dbase::stopSpawning()
+{
     m_coinQueue.clear();
-    if (m_coinTimer->isActive()) {
+    if (m_coinTimer->isActive())
+    {
         m_coinTimer->stop();
     }
 }
 
-bool box2Dbase::isCoinSpawning() {
+bool box2Dbase::isCoinSpawning()
+{
     return m_coinTimer->isActive();
 }
 
-void box2Dbase::clearCoins(){
+void box2Dbase::clearCoins()
+{
     stopSpawning();
 
-    b2Body* body = m_world->GetBodyList();
-    while (body) {
-        b2Body* next = body->GetNext();
-        if (body->GetUserData()) {
-            QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
+    b2Body *body = m_world->GetBodyList();
+    while (body)
+    {
+        b2Body *next = body->GetNext();
+        if (body->GetUserData())
+        {
+            QGraphicsItem *item = static_cast<QGraphicsItem *>(body->GetUserData());
             removeItem(item);
             delete item;
         }

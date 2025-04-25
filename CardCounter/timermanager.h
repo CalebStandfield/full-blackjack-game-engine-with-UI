@@ -42,7 +42,7 @@ private:
     /**
      * @brief timers A list to keep track of all timers
      */
-    QList<QTimer*> timers;
+    QList<QTimer *> timers;
 };
 
 #endif // TIMERMANAGER_H

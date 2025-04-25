@@ -22,7 +22,7 @@ class Card
      * @param card The card to print out
      * @return A string represenation of the card
      */
-    friend std::ostream& operator<<(std::ostream& os, const Card& card);
+    friend std::ostream &operator<<(std::ostream &os, const Card &card);
 
 public:
     /**

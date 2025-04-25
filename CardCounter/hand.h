@@ -13,7 +13,6 @@
 class Hand
 {
 public:
-
     /**
      * @brief Hand Constructor that creates a new empty hand with a bet of 0
      */
@@ -29,20 +28,20 @@ public:
      * @brief Hand Constructor that copies another hand
      * @param other The hand to copy
      */
-    Hand(const Hand& other);
+    Hand(const Hand &other);
 
     /**
      * @brief operator = Assignment operator to set the current hand to the other hand
      * @param other The hand to copy
      * @return A reference to the new hand
      */
-    Hand& operator=(const Hand other);
+    Hand &operator=(const Hand other);
 
     /**
      * @brief addCard Adds a card to the hand
      * @param card The card to add
      */
-    void addCard(const Card& card);
+    void addCard(const Card &card);
 
     /**
      * @brief getTotal Gets the total blackjack value of the hand
@@ -79,13 +78,13 @@ public:
      * @brief getCards Gets the cards in the hand
      * @return A vector of the cards in the hand
      */
-    const std::vector<Card>& getCards() const;
+    const std::vector<Card> &getCards() const;
 
     /**
      * @brief removeLastCard Removes the last card in the hand
      * @return Returns the removed card from the hands
      */
-    const Card& removeLastCard();
+    const Card &removeLastCard();
 
 private:
     /**

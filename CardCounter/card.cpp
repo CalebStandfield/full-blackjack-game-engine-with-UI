@@ -75,8 +75,7 @@ std::vector<QString> Card::images = {
     ":/cardImages/cards_pngsource/ace_of_spades.png",
     ":/cardImages/cards_pngsource/ace_of_hearts.png",
     ":/cardImages/cards_pngsource/ace_of_clubs.png",
-    ":/cardImages/cards_pngsource/ace_of_diamonds.png"
-};
+    ":/cardImages/cards_pngsource/ace_of_diamonds.png"};
 
 SUIT Card::getSuit() const
 {
@@ -108,7 +107,7 @@ std::string Card::toString()
     return Rank::toString(rank) + " of " + Suit::toString(suit);
 }
 
-std::ostream& operator<<(std::ostream& os, const Card& card)
+std::ostream &operator<<(std::ostream &os, const Card &card)
 {
     os << toString(card.rank) << " of " << toString(card.suit);
     return os;

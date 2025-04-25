@@ -17,11 +17,11 @@ void GameState::dealInitialCards()
     deck.shuffle();
 
     // Deal 2 cards to each player and set their status to waiting
-    for(int i = 0; i < 2; i++)
+    for (int i = 0; i < 2; i++)
     {
-        for(Player& player : players)
+        for (Player &player : players)
         {
-            if(player.status == PLAYERSTATUS::BANKRUPT)
+            if (player.status == PLAYERSTATUS::BANKRUPT)
                 continue;
 
             player.hand.addCard(deck.getNextCard());
@@ -37,14 +37,14 @@ void GameState::clearHands()
     dealerHand = Hand(0);
 
     // Reset player hands and remove split hands
-    for(int i = players.size() - 1; i >= 0; i--)
+    for (int i = players.size() - 1; i >= 0; i--)
     {
-        if(!players[i].originalHand)
+        if (!players[i].originalHand)
             players.erase(players.begin() + i);
         else
             players[i].hand = Hand(players[i].hand.getBet());
 
-        if(players[i].status != PLAYERSTATUS::BANKRUPT)
+        if (players[i].status != PLAYERSTATUS::BANKRUPT)
             players[i].status = PLAYERSTATUS::WAITING;
     }
 }
@@ -53,7 +53,8 @@ void GameState::hit(int playerIndex)
 {
     Player &currPlayer = players[playerIndex];
     currPlayer.hand.addCard(deck.getNextCard());
-    if(isBust(currPlayer.hand)){
+    if (isBust(currPlayer.hand))
+    {
         currPlayer.status = PLAYERSTATUS::BUST;
     }
 }
@@ -71,7 +72,8 @@ void GameState::doubleDown(int playerIndex)
     // Do one hit and then stand/check bust
     currPlayer.hand.addCard(deck.getNextCard());
     currPlayer.status = PLAYERSTATUS::STAND;
-    if(isBust(currPlayer.hand)){
+    if (isBust(currPlayer.hand))
+    {
         currPlayer.status = PLAYERSTATUS::BUST;
     }
 }
@@ -88,8 +90,9 @@ void GameState::split(int playerIndex)
     Player &originalPlayer = players[playerIndex - currPlayer.playerHandIndex];
     // Get the index of the current hand
     int handIndex = 1;
-    for(int i = playerIndex; i >= 0; i--){
-        if(players[i].originalHand)
+    for (int i = playerIndex; i >= 0; i--)
+    {
+        if (players[i].originalHand)
         {
             players[i].playerHandCount++;
             break;
@@ -103,13 +106,13 @@ void GameState::split(int playerIndex)
     originalPlayer.money -= currPlayer.hand.getBet();
 
     // Splits the hand of the original player and hits once for original and new hand
-    const Card& removedCard = currPlayer.hand.removeLastCard();
+    const Card &removedCard = currPlayer.hand.removeLastCard();
     secondHandPlayer.hand.addCard(removedCard);
     currPlayer.hand.addCard(deck.getNextCard());
     secondHandPlayer.hand.addCard(deck.getNextCard());
 
     // Set status of players
-    if(removedCard.getRank() == RANK::ACE)
+    if (removedCard.getRank() == RANK::ACE)
     {
         currPlayer.status = PLAYERSTATUS::STAND;
         secondHandPlayer.status = PLAYERSTATUS::STAND;
@@ -129,7 +132,7 @@ void GameState::dealerPlay()
         dealerHand.addCard(deck.getNextCard());
 }
 
-bool GameState::isBust(const Hand& hand) const
+bool GameState::isBust(const Hand &hand) const
 {
     return hand.getTotal() > 21;
 }
@@ -139,24 +142,24 @@ void GameState::endRound()
     int dealerTotal = dealerHand.getTotal();
     bool dealerBust = isBust(dealerHand);
 
-    for(int i = 0; i < (int)players.size(); i++)
+    for (int i = 0; i < (int)players.size(); i++)
     {
         Player &player = players[i];
         Player &originalPlayer = players[i - player.playerHandIndex];
         // If player busts, they either simply lose or go bankrupt
-        if(player.status == PLAYERSTATUS::BUST)
+        if (player.status == PLAYERSTATUS::BUST)
         {
             player.status = PLAYERSTATUS::LOST;
-            if(player.money <= 0)
+            if (player.money <= 0)
                 player.status = PLAYERSTATUS::BANKRUPT;
             continue;
         }
 
         int playerTotal = player.hand.getTotal();
-        if(dealerBust || playerTotal > dealerTotal)
+        if (dealerBust || playerTotal > dealerTotal)
         {
             // If player gets blackjack, player gets 2.5 times their bet
-            if(playerTotal == 21 && player.hand.getCards().size() == 2)
+            if (playerTotal == 21 && player.hand.getCards().size() == 2)
             {
                 originalPlayer.money += player.hand.getBet() * 2.5;
 
@@ -171,7 +174,7 @@ void GameState::endRound()
             }
         }
         // Player gets their money back if they have the same total
-        else if(playerTotal == dealerTotal)
+        else if (playerTotal == dealerTotal)
         {
             originalPlayer.money += player.hand.getBet();
             player.status = PLAYERSTATUS::PUSHED;
@@ -180,7 +183,7 @@ void GameState::endRound()
         else
         {
             player.status = PLAYERSTATUS::LOST;
-            if(player.money <= 0)
+            if (player.money <= 0)
                 player.status = PLAYERSTATUS::BANKRUPT;
         }
     }
@@ -201,17 +204,17 @@ void GameState::setPlayerBet(int index, int amount)
         players[index].status = PLAYERSTATUS::BETSUBMITTED;
 }
 
-const Player& GameState::getPlayer(int index) const
+const Player &GameState::getPlayer(int index) const
 {
     return players.at(index);
 }
 
-const Player& GameState::getOriginalPlayer(int index) const
+const Player &GameState::getOriginalPlayer(int index) const
 {
     return players[index - players[index].playerHandIndex];
 }
 
-const Hand& GameState::getDealerHand() const
+const Hand &GameState::getDealerHand() const
 {
     return dealerHand;
 }

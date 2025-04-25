@@ -22,7 +22,7 @@ public:
      * @brief TutorialPopup Creates the popup message class for the tutorial
      * @param ui The ui holding all elements on the screen
      */
-    explicit TutorialPopup(Ui::MainWindow* ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent = nullptr);
+    explicit TutorialPopup(Ui::MainWindow *ui, QString qWidgetStyle, QString qPushButtonStyle, QObject *parent = nullptr);
 
     /**
      * @brief Deconstructor
@@ -52,7 +52,7 @@ signals:
      * @param button The button to change
      * @param enabled The value of true for on, or false for off
      */
-    void enableButton(QPushButton* button, bool enabled);
+    void enableButton(QPushButton *button, bool enabled);
 
     /**
      * @brief toggleFirstTutorialRound Signal to toggle first tutorial round
@@ -90,12 +90,12 @@ private:
     /**
      * @brief popupMessages A vector containing all of the popup messages
      */
-    std::vector<QString>* popupMessages;
+    std::vector<QString> *popupMessages;
 
     /**
      * @brief toggleButtonOrder A vector containing the MOVE at each message popup so the correct button is turned on
      */
-    std::vector<MOVE>* moveOrder;
+    std::vector<MOVE> *moveOrder;
 
     /**
      * @brief storedButton The next button to activate

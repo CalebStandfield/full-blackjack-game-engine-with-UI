@@ -13,32 +13,32 @@ Hand::Hand() : Hand(0) {};
 
 Hand::Hand(int bet) : bet(bet) {}
 
-Hand::Hand(const Hand& hand)
+Hand::Hand(const Hand &hand)
 {
     this->bet = hand.getBet();
 
     // Copy all of the cards in the given hand
-    for(const Card& card : hand.getCards())
+    for (const Card &card : hand.getCards())
     {
         cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());
     }
 }
 
-Hand& Hand::operator=(const Hand hand)
+Hand &Hand::operator=(const Hand hand)
 {
     this->bet = hand.getBet();
 
     cards.clear();
 
     // Copy all of the cards in the given hand
-    for(const Card& card : hand.getCards())
+    for (const Card &card : hand.getCards())
     {
         cards.emplace_back(card.getSuit(), card.getRank(), card.getImagePath());
     }
     return *this;
 }
 
-void Hand::addCard(const Card& card)
+void Hand::addCard(const Card &card)
 {
     cards.push_back(card);
 }
@@ -58,7 +58,7 @@ void Hand::setCardImagePath(int index, QString imagePath)
     cards[index].setImagePath(imagePath);
 }
 
-const std::vector<Card>& Hand::getCards() const
+const std::vector<Card> &Hand::getCards() const
 {
     return cards;
 }
@@ -68,9 +68,9 @@ int Hand::getTotal() const
     return calculateTotalAndSoft().first;
 }
 
-const Card& Hand::removeLastCard()
+const Card &Hand::removeLastCard()
 {
-    const Card& card = cards[cards.size()-1];
+    const Card &card = cards[cards.size() - 1];
     cards.pop_back();
     return card;
 }
@@ -86,7 +86,7 @@ std::pair<int, bool> Hand::calculateTotalAndSoft() const
     int softAces = 0;
 
     // Count total value and number of Aces counted as 11.
-    for (const Card& card : cards)
+    for (const Card &card : cards)
     {
         int value = Rank::blackjackValue(card.getRank());
         if (value == 11)
@@ -105,4 +105,3 @@ std::pair<int, bool> Hand::calculateTotalAndSoft() const
     bool soft = (softAces > 0);
     return std::make_pair(total, soft);
 }
-

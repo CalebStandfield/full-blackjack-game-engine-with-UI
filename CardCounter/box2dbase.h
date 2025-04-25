@@ -18,7 +18,8 @@
  * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/22/2025
  */
-class box2Dbase : public QGraphicsScene{
+class box2Dbase : public QGraphicsScene
+{
     Q_OBJECT
 public:
     /**
@@ -49,7 +50,7 @@ public:
     /**
      * @brief removeBodies Remove all bodies once they are no longer needed
      */
-    //void removeBodies();
+    // void removeBodies();
 
     /**
      * @brief coinPixmap The pixmap image for the coin
@@ -101,7 +102,7 @@ private:
      * @brief m_timeStep Determines how much the physics world moves per second
      * The value is equivalent to 60 fps
      */
-    float32 m_timeStep = 1.0f/60.0f;
+    float32 m_timeStep = 1.0f / 60.0f;
 
     /**
      * @brief m_velocityIterations
@@ -137,7 +138,7 @@ private:
     /**
      * @brief m_coinTimer Controls the spawn timing of coins
      */
-    QTimer* m_coinTimer;
+    QTimer *m_coinTimer;
 
     /**
      * @brief m_coinsPerSecond Adjusts spawn rate
@@ -145,7 +146,6 @@ private:
     int m_coinsPerSecond = 10;
 
 signals:
-
 };
 
 #endif // BOX2DBASE_H

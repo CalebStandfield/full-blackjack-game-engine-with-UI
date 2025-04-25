@@ -54,8 +54,7 @@ public:
      * @param initialBet The inital bet for the first round
      * @param isUser True is the player is a user, false if they are a bot
      */
-    Player(int initialMoney, int initialBet, bool isUser, unsigned int playerHandCount, unsigned int playerHandIndex):
-        hand(initialBet), money(initialMoney), isUser(isUser), playerHandCount(playerHandCount), playerHandIndex(playerHandIndex){}
+    Player(int initialMoney, int initialBet, bool isUser, unsigned int playerHandCount, unsigned int playerHandIndex) : hand(initialBet), money(initialMoney), isUser(isUser), playerHandCount(playerHandCount), playerHandIndex(playerHandIndex) {}
 };
 
 #endif // PLAYER_H

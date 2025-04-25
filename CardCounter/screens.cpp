@@ -70,7 +70,8 @@ void Screens::setUpScreenConnects()
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
-            [this] () {toggleVisibleSettingsPopup(false);});
+            [this]()
+            { toggleVisibleSettingsPopup(false); });
     connect(ui->acceptSettingsButton,
             &QPushButton::clicked,
             this,
@@ -92,7 +93,7 @@ void Screens::setUpScreenConnects()
             this,
             &Screens::onEditChipCountLineEdit);
 
-    //Tutorial Pages
+    // Tutorial Pages
     connect(ui->basicStrategyChartButton,
             &QPushButton::clicked,
             this,
@@ -190,7 +191,8 @@ void Screens::setUpScreenConnects()
 void Screens::setUpTable()
 {
     tableView = new TableView(ui->table);
-    if (!ui->table->layout()) {
+    if (!ui->table->layout())
+    {
         ui->table->setLayout(new QVBoxLayout());
     }
 
@@ -290,7 +292,7 @@ void Screens::setUpBettingMenu()
 
     toggleEnabledQPushButton(ui->placeBetButton, false);
 
-    if(mode == GAMEPLAYMODE::BLACKJACK)
+    if (mode == GAMEPLAYMODE::BLACKJACK)
         updateBetLabelText(1);
     else
         updateBetLabelText(0);
@@ -311,14 +313,13 @@ void Screens::updateSettingsSlider(unsigned int value)
     if (name == "playerCountSettingsSlider")
     {
         ui->playerCountTextSettingsLabel->setText("Player Count: " + QString::number(value));
-        playerCount =  value;
+        playerCount = value;
     }
     else if (name == "deckCountSettingsSlider")
     {
         ui->deckCountTextSettingsLabel->setText("Deck Count: " + QString::number(value));
         deckCount = value;
     }
-
 }
 
 void Screens::setUpQStyleSheets()
@@ -520,13 +521,13 @@ void Screens::setUpBankruptcyMenu()
     ui->backToMainMenuFromPlay_2->setStyleSheet(QPushButtonStyle);
     ui->playAgain->setStyleSheet(QPushButtonStyle);
 
-    auto* effect = new QGraphicsColorizeEffect(ui->bankruptcyLabel);
+    auto *effect = new QGraphicsColorizeEffect(ui->bankruptcyLabel);
     effect->setColor(Qt::darkRed);
     ui->bankruptcyLabel->setGraphicsEffect(effect);
 
-    auto* animation = new QPropertyAnimation(effect, "color");
+    auto *animation = new QPropertyAnimation(effect, "color");
     animation->setDuration(2000);
-    animation->setLoopCount(-1); // infinite
+    animation->setLoopCount(-1);                 // infinite
     animation->setStartValue(QColor(100, 0, 0)); // dark red
     animation->setEndValue(QColor(255, 0, 0));   // bright red
     animation->setEasingCurve(QEasingCurve::InOutSine);
@@ -687,7 +688,7 @@ void Screens::setUpBasicStrategyCharts()
     QPixmap originalPixmap(":/StrategyCharts/BasicStrategyCharts.png");
     QGraphicsPixmapItem *imageItem = new QGraphicsPixmapItem(originalPixmap);
     imageItem->setScale(0.48);
-    QGraphicsScene* scene = new QGraphicsScene(this);
+    QGraphicsScene *scene = new QGraphicsScene(this);
     scene->addItem(imageItem);
     scene->setSceneRect(imageItem->sceneBoundingRect());
     ui->basicStrategyChart->setScene(scene);
@@ -695,7 +696,7 @@ void Screens::setUpBasicStrategyCharts()
     ui->basicStrategyChart->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->basicStrategyChart->setStyleSheet(QGraphicsViewStyle);
 
-    //Set up for the textBrowser
+    // Set up for the textBrowser
     ui->infoTextBrowser->setStyleSheet(QTextBrowserStyle);
 }
 
@@ -743,7 +744,8 @@ void Screens::onPressBettingAmountButtons()
     {
         currentBet = players[userIndex].money;
     }
-    else if (name == "halfButton") {
+    else if (name == "halfButton")
+    {
         currentBet = players[userIndex].money / 2;
     }
     else
@@ -762,9 +764,12 @@ void Screens::onEditChipCountLineEdit()
     bool ok;
     int value = input.toInt(&ok);
 
-    if (!ok || value < 1) {
+    if (!ok || value < 1)
+    {
         value = 1;
-    } else if (value > 1000000) {
+    }
+    else if (value > 1000000)
+    {
         value = 1000000;
     }
 
@@ -824,7 +829,8 @@ void Screens::acceptSettingsButtonPressed()
     userIndex = QRandomGenerator::global()->bounded(playerCount);
 
     // Initialize players
-    for (unsigned int i = 0; i < playerCount; i++) {
+    for (unsigned int i = 0; i < playerCount; i++)
+    {
         players.emplace_back(initialMoney, currentBet, i == userIndex, 1, 0);
         players[i].originalHand = true;
     }
@@ -845,17 +851,16 @@ void Screens::acceptSettingsButtonPressed()
     }
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL || mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
-        timer->scheduleSingleShot(2100, [=]() {
+        timer->scheduleSingleShot(2100, [=]()
+                                  {
             emit sendGameSetupCompleteStartBetting();
             updateBetLabelText(0);
-            onPressPlacedBetButton();
-        });
+            onPressPlacedBetButton(); });
     }
 
     // Ensure buttons remain disabled initially
     toggleEnabledGamePlayButtons(false);
 }
-
 
 void Screens::dealCard(int playerIndex, int handIndex, QString imagePath)
 {
@@ -868,17 +873,18 @@ void Screens::dealCard(int playerIndex, int handIndex, QString imagePath)
 
 int Screens::indexToSeat(unsigned int playerIndex)
 {
-    if(playerIndex >= players.size())
+    if (playerIndex >= players.size())
         return -1;
     int seatIndex = -1;
-    for(int i = 0; i <= (int)playerIndex; i++){
-        if(players[i].originalHand)
+    for (int i = 0; i <= (int)playerIndex; i++)
+    {
+        if (players[i].originalHand)
             seatIndex++;
     }
     return seatIndex;
 }
 
-void Screens::playerUpdated(int playerIndex, const Player& player, int)
+void Screens::playerUpdated(int playerIndex, const Player &player, int)
 {
     // If only one card, deal it immediately
     if (player.hand.getCards().size() == 1)
@@ -901,9 +907,8 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int)
                 continue;
             }
             // Delay dealing additional cards for animation effect
-            timer->scheduleSingleShot(600, [=]() {
-                dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath());
-            });
+            timer->scheduleSingleShot(600, [=]()
+                                      { dealCard(playerIndex, player.playerHandIndex, player.hand.getCards()[i].getImagePath()); });
         }
     }
 
@@ -919,41 +924,39 @@ void Screens::playerUpdated(int playerIndex, const Player& player, int)
     players[playerIndex].status = player.status;
 }
 
-
-void Screens::allPlayersUpdated(const std::vector<Player>& players)
+void Screens::allPlayersUpdated(const std::vector<Player> &players)
 {
     toggleEnabledGamePlayButtons(false);
     unsigned int waitTime = 0;
     std::vector<Player> tempPlayers;
 
     // Creates temporary players to allow for dealing animation
-    for(const Player& player : players)
+    for (const Player &player : players)
     {
         tempPlayers.emplace_back(player.money, player.hand.getBet(), player.isUser, player.playerHandCount, player.playerHandIndex);
     }
 
-    for(int j = 0; j < 2; j++)
+    for (int j = 0; j < 2; j++)
     {
         // Deal one card to each player
-        for(int i = 0; i < static_cast<int>(tempPlayers.size()); i++)
+        for (int i = 0; i < static_cast<int>(tempPlayers.size()); i++)
         {
             tempPlayers[i].hand.addCard(players[i].hand.getCards()[j]);
-            timer->scheduleSingleShot(waitTime, [=]() {
-                playerUpdated(i, tempPlayers[i], tempPlayers[i].hand.getTotal());
-            });
+            timer->scheduleSingleShot(waitTime, [=]()
+                                      { playerUpdated(i, tempPlayers[i], tempPlayers[i].hand.getTotal()); });
             waitTime += 600;
         }
         waitTime += 600;
     }
 
     // Round can start once deal animation is complete
-    timer->scheduleSingleShot(waitTime, [=]() {
+    timer->scheduleSingleShot(waitTime, [=]()
+                              {
         if (mode != GAMEPLAYMODE::BLACKJACKTUTORIAL)
         {
             toggleEnabledGamePlayButtons(true);
         }
-        emit dealAnimationComplete();
-    });
+        emit dealAnimationComplete(); });
 
     if (mode == GAMEPLAYMODE::BLACKJACKPRACTICE && players[userIndex].hand.getCards().size() >= 2)
     {
@@ -961,7 +964,7 @@ void Screens::allPlayersUpdated(const std::vector<Player>& players)
     }
 }
 
-void Screens::updateRecommendedMove(const Hand& playerHand)
+void Screens::updateRecommendedMove(const Hand &playerHand)
 {
     if (dealerHand.getCards().size() < 2)
     {
@@ -974,7 +977,7 @@ void Screens::updateRecommendedMove(const Hand& playerHand)
     ui->practiceBestMoveLabel->setText(QString("Best move is:\n%1").arg(moveString));
 }
 
-void Screens::dealerUpdated(const Hand& hand, int)
+void Screens::dealerUpdated(const Hand &hand, int)
 {
     // Turn off buttons and update the dealer hand in the vector
     toggleEnabledGamePlayButtons(false);
@@ -995,16 +998,15 @@ void Screens::dealerUpdated(const Hand& hand, int)
         waitTime = 600;
 
         QString imagePath = dealerHand.getCards().at(0).getImagePath();
-        tableView->revealDealerCard(imagePath);        
+        tableView->revealDealerCard(imagePath);
     }
 
     // Deal card to dealer
     for (int i = prevHandSize; i < static_cast<int>(dealerHand.getCards().size()); i++)
     {
-        timer->scheduleSingleShot(waitTime, [=]() {
-            dealCard(-1, 0, dealerHand.getCards()[i].getImagePath());
-        });
-        if(!showDealerCard)
+        timer->scheduleSingleShot(waitTime, [=]()
+                                  { dealCard(-1, 0, dealerHand.getCards()[i].getImagePath()); });
+        if (!showDealerCard)
         {
             waitTime *= 2;
         }
@@ -1014,17 +1016,15 @@ void Screens::dealerUpdated(const Hand& hand, int)
     // Show end of round results once dealer is done playing
     if (showDealerCard)
     {
-        timer->scheduleSingleShot(waitTime, [=]() {
-            emit sendDealerDonePlaying();
-        });
+        timer->scheduleSingleShot(waitTime, [=]()
+                                  { emit sendDealerDonePlaying(); });
     }
 
     // Show the first reccomended move after dealer gets cards
     if (dealerHand.getCards().size() == 2 && mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
-        timer->scheduleSingleShot(waitTime / 1.5, [=]() {
-            updateRecommendedMove(players[userIndex].hand);
-        });
+        timer->scheduleSingleShot(waitTime / 1.5, [=]()
+                                  { updateRecommendedMove(players[userIndex].hand); });
     }
 }
 
@@ -1033,7 +1033,7 @@ void Screens::updateShowDealerCardBool(bool flipped)
     showDealerCard = flipped;
 }
 
-void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer)
+void Screens::onSplitPlayers(int originalIndex, const Player &originalPlayer, const Player &newPlayer)
 {
     int playerIndex = originalIndex - players[originalIndex].playerHandIndex;
     tableView->splitPlayerHand(indexToSeat(originalIndex), originalIndex - playerIndex);
@@ -1051,9 +1051,8 @@ void Screens::onSplitPlayers(int originalIndex, const Player& originalPlayer, co
     playerUpdated(originalIndex, originalPlayer, originalPlayer.hand.getTotal());
 
     // Updates new player hand
-    timer->scheduleSingleShot(600 * 2, [=]() {
-        playerUpdated(originalIndex + 1, newPlayer, newPlayer.hand.getTotal());
-    });
+    timer->scheduleSingleShot(600 * 2, [=]()
+                              { playerUpdated(originalIndex + 1, newPlayer, newPlayer.hand.getTotal()); });
 
     if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL)
     {
@@ -1077,7 +1076,7 @@ void Screens::currentPlayerTurn(int nextPlayerIndex, int, int, int)
     }
 
     // Turn buttons on if the player is user
-    if(players[nextPlayerIndex].isUser)
+    if (players[nextPlayerIndex].isUser)
     {
         toggleEnabledGamePlayButtons(true);
         toggleEnabledQPushButton(ui->placeBetButton, true);
@@ -1130,7 +1129,7 @@ void Screens::toggleEnabledQPushButton(QPushButton *button, bool enabled)
     button->setEnabled(enabled);
 }
 
-void Screens::endRound(const std::vector<Player>& players)
+void Screens::endRound(const std::vector<Player> &players)
 {
     toggleEnabledQPushButton(ui->nextRound, true);
     toggleEnabledGamePlayButtons(false);
@@ -1144,12 +1143,13 @@ void Screens::endRound(const std::vector<Player>& players)
 
     std::vector<Player> localPlayers = players;
 
-    for(Player& player : localPlayers)
+    for (Player &player : localPlayers)
     {
         ui->coinAnimView->viewport()->update();
 
         // Check player status and spawn coins if user won or has blackjack
-        if(player.status == PLAYERSTATUS::WON && player.isUser){
+        if (player.status == PLAYERSTATUS::WON && player.isUser)
+        {
             m_scene->onWinSpawnCoins(QPointF(540.0, 720.0), 0);
         }
         else if (player.status == PLAYERSTATUS::BLACKJACK && player.isUser)
@@ -1158,7 +1158,6 @@ void Screens::endRound(const std::vector<Player>& players)
         }
     }
 }
-
 
 void Screens::onPressNextRound()
 {
@@ -1171,7 +1170,8 @@ void Screens::onPressNextRound()
     tutorialPopup->toggleVisableTutorialPopup(false);
 
     // if the scene is active/valid
-    if (m_scene) {
+    if (m_scene)
+    {
         m_scene->stopSpawning();
         m_scene->clearCoins();
         m_scene->update();
@@ -1181,9 +1181,9 @@ void Screens::onPressNextRound()
     tableView->clearTable();
 
     // Remove split hands
-    for(int i = players.size() - 1; i >= 0; i--)
+    for (int i = players.size() - 1; i >= 0; i--)
     {
-        if(!players[i].originalHand)
+        if (!players[i].originalHand)
             players.erase(players.begin() + i);
         else
             players[i].playerHandCount = 1;
@@ -1207,9 +1207,8 @@ void Screens::onPressNextRound()
     // If tutorial or practice, wait for dealerpile to finish and then start next round
     else if (mode == GAMEPLAYMODE::BLACKJACKTUTORIAL || mode == GAMEPLAYMODE::BLACKJACKPRACTICE)
     {
-        timer->scheduleSingleShot(2100, [=]() {
-            onPressPlacedBetButton();
-        });
+        timer->scheduleSingleShot(2100, [=]()
+                                  { onPressPlacedBetButton(); });
         ui->practiceBestMoveLabel->setText("Best move is: \n");
     }
 }
@@ -1231,7 +1230,8 @@ void Screens::resetEverything()
     emit sendStopEverything();
 
     // If win money still spawning, stop it and clear coins
-    if (m_scene) {
+    if (m_scene)
+    {
         m_scene->stopSpawning();
         m_scene->clearCoins();
         m_scene->clear();

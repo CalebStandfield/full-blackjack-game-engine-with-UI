@@ -65,7 +65,7 @@ public:
      * @brief isBust Checks if a hand is over 21
      * @param hand The hand to check
      */
-    bool isBust(const Hand& hand) const;
+    bool isBust(const Hand &hand) const;
 
     /**
      * @brief getPlayerCount Gets how many players are active in the game
@@ -76,19 +76,19 @@ public:
      * @brief getPlayer Gets a player's current hand
      * @param index The current player's index
      */
-    const Player& getPlayer(int index) const;
+    const Player &getPlayer(int index) const;
 
     /**
      * @brief getOriginalPlayer Returns the original player's index (not a split index)
      * @param index The index of one of the player's hands
      * @return The index of the original hand
      */
-    const Player& getOriginalPlayer(int index) const;
+    const Player &getOriginalPlayer(int index) const;
 
     /**
      * @brief getDealerHand Gets the dealer's current hand
      */
-    const Hand& getDealerHand() const;
+    const Hand &getDealerHand() const;
 
     /**
      * @brief setPlayerActive Sets the player at given index to ACTIVE

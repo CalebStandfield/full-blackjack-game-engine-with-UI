@@ -14,8 +14,9 @@
 #include "gamestate.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -34,7 +35,7 @@ public:
      * @param controller A pointer to the controller to handle game logic
      * @param parent The parent of this object
      */
-    MainWindow(Controller* controller, QWidget *parent = nullptr);
+    MainWindow(Controller *controller, QWidget *parent = nullptr);
 
     /**
      * @brief ~MainWindow Deconstructor fot the MainWindow
@@ -65,7 +66,7 @@ private:
     /**
      * @brief m_scene Box2D for winning animations
      */
-    box2Dbase* m_scene;
+    box2Dbase *m_scene;
 
     /**
      * @brief state The state of the game

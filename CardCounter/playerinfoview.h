@@ -44,7 +44,7 @@ public slots:
      * @param money The money the player has
      * @param status The status of the player
      */
-    void onPlayerUpdated(int playerIndex, const Player &player, int money, int total);//TODO
+    void onPlayerUpdated(int playerIndex, const Player &player, int money, int total); // TODO
 
     /**
      * @brief onUpdateAllPlayers Slot to update all of the players
@@ -58,7 +58,7 @@ public slots:
      * @param originalPlayer The original player
      * @param money The money of the first hand
      */
-    void onSplitPlayers(int originalIndex, const Player& originalPlayer, int money);
+    void onSplitPlayers(int originalIndex, const Player &originalPlayer, int money);
 
     /**
      * @brief onCurrentPlayerTurn Slot to select a new player
@@ -78,7 +78,7 @@ public slots:
      * @brief onEndRound Slot to receive when the round has ended
      * @param players The players after the round has ended
      */
-    void onEndRound(const std::vector<Player>& players);
+    void onEndRound(const std::vector<Player> &players);
 
 private:
     QVector<int> modelToSeat;
@@ -101,7 +101,7 @@ private:
     /**
      * @brief seatLabels A vector holding all of the player labels
      */
-    QVector<QLabel*> seatLabels;
+    QVector<QLabel *> seatLabels;
 
     /**
      * @brief buildLayout Builds the layout and adds the labels to it
@@ -126,7 +126,7 @@ private:
      * @param player The player info to use
      * @param money The money of the original player
      */
-    void refreshSeat(int seat, const Player& player, int money);
+    void refreshSeat(int seat, const Player &player, int money);
 
     /**
      * @brief paintBorder Paints the border around a label to the given status

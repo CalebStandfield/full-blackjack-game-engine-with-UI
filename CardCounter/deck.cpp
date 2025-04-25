@@ -18,7 +18,7 @@ Deck::Deck(int deckNumber, int deterministic) : deterministic(deterministic)
     createDeck();
 
     // Insert master deck into shuffled deck deckNumber times (creates a deck the size of deckNumber)
-    for(int i = 0; i < deckNumber; i++)
+    for (int i = 0; i < deckNumber; i++)
         shuffledDeck.insert(shuffledDeck.end(), masterDeck.begin(), masterDeck.end());
 
     shuffle();
@@ -38,16 +38,16 @@ void Deck::createDeck()
 void Deck::shuffle()
 {
     // Random shuffle
-    if(deterministic == 0)
+    if (deterministic == 0)
     {
         std::default_random_engine rand(std::random_device{}());
         std::shuffle(shuffledDeck.begin(), shuffledDeck.end(), rand);
         currentDeckIndex = 0;
     }
     // Tutorial ordered deck
-    else if(deterministic == 1)
+    else if (deterministic == 1)
     {
-        const std::initializer_list<const char*> tutorialOrder = {
+        const std::initializer_list<const char *> tutorialOrder = {
             "7C",
             "KS",
             "5D",
@@ -128,25 +128,25 @@ void Deck::shuffle()
             Suit::SUIT s = charToSuit(code[1]);
 
             // Find the matching card in masterDeck
-            auto it = std::find_if(masterDeck.begin(), masterDeck.end(), [&](const Card& c){
-                                       return c.getRank() == r && c.getSuit() == s;
-            });
+            auto it = std::find_if(masterDeck.begin(), masterDeck.end(), [&](const Card &c)
+                                   { return c.getRank() == r && c.getSuit() == s; });
             if (it != masterDeck.end())
                 shuffledDeck.push_back(*it);
         }
 
         // Fill the rest of shuffled deck with random cards
-        for(int i = shuffledDeck.size(); i < 52 * 2; i++){
+        for (int i = shuffledDeck.size(); i < 52 * 2; i++)
+        {
             shuffledDeck.push_back(masterDeck[QRandomGenerator::global()->bounded(52)]);
         }
-
     }
     // Sets the entire deck to TWO of SPADES
     else
     {
         shuffledDeck.clear();
         // All twos baby
-        for(int i = 0; i < 100; i++){
+        for (int i = 0; i < 100; i++)
+        {
             shuffledDeck.emplace_back(SUIT::SPADES, RANK::TWO, Card::getImageFromVector(0));
         }
     }
@@ -164,7 +164,8 @@ Card Deck::getNextCard()
     return shuffledDeck[currentDeckIndex++];
 }
 
-bool Deck::isEmpty() const {
+bool Deck::isEmpty() const
+{
     return currentDeckIndex >= static_cast<int>(shuffledDeck.size());
 }
 

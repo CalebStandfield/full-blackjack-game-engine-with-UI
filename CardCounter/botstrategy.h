@@ -26,14 +26,14 @@ public:
      * @param dealerCard The dealer's up card.
      * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND).
      */
-    static MOVE getNextMove(const Hand& playerHand, const Card& dealerCard);
+    static MOVE getNextMove(const Hand &playerHand, const Card &dealerCard);
 
     /**
      * @brief isPair Checks if the hand is a pair (2 of the same card)
      * @param hand The hand to check
      * @return True if the hand is a pair, false if it is not
      */
-    static bool isPair(const Hand& hand);
+    static bool isPair(const Hand &hand);
 
 private:
     /**
@@ -41,7 +41,7 @@ private:
      * @param card The card to convert
      * @return Returns the int value for the index of the card
      */
-    static int cardToIndex(const Card& card);
+    static int cardToIndex(const Card &card);
 
     /**
      * @brief getSoftHandMove Determines the recommended move for a soft hand (ace counted as 11)
@@ -49,7 +49,7 @@ private:
      * @param dealerCard The dealer's up card
      * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
      */
-    static MOVE getSoftHandMove(const Hand& playerHand, const Card& dealerCard);
+    static MOVE getSoftHandMove(const Hand &playerHand, const Card &dealerCard);
 
     /**
      * @brief getHARDHandMove Determines the recommended move for a hard hand
@@ -57,7 +57,7 @@ private:
      * @param dealerCard The dealer's up card
      * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
      */
-    static MOVE getHardHandMove(const Hand& playerHand, const Card& dealerCard);
+    static MOVE getHardHandMove(const Hand &playerHand, const Card &dealerCard);
 
     /**
      * @brief getPairHandMove Determines the recommended move for a pair hand (Exactly 2 of the same RANK cards)
@@ -65,7 +65,7 @@ private:
      * @param dealerCard The dealer's up card
      * @return A MOVE corresponding to the recommended move (HIT, DOUBLE, SPLIT, STAND)
      */
-    static MOVE getPairHandMove(const Hand& playerHand, const Card& dealerCard);
+    static MOVE getPairHandMove(const Hand &playerHand, const Card &dealerCard);
 };
 
 #endif // BOTSTRATEGY_H

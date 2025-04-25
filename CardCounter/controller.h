@@ -100,14 +100,14 @@ signals:
      * @param money The money they have left
      * @param status The status of the player
      */
-    void playerUpdated(int playerIndex, const Player& player, int money, int total);//TODO
+    void playerUpdated(int playerIndex, const Player &player, int money, int total); // TODO
 
     /**
      * @brief dealerUpdated Signal that the dealer has updated with their updated info
      * @param hand The new hand of the dealer
      * @param total The total value of their cards
      */
-    void dealerUpdated(const Hand& hand, int total);
+    void dealerUpdated(const Hand &hand, int total);
 
     /**
      * @brief currentPlayerTurn Signal that it is the next player's turn
@@ -128,7 +128,7 @@ signals:
      * @brief endRound Signal that the round has ended
      * @param players A vector of the players after the round has ended
      */
-    void endRound(const std::vector<Player>& players);
+    void endRound(const std::vector<Player> &players);
 
     /**
      * @brief gameMessage Signal to send a game message (ex. player 0 has busted)
@@ -150,7 +150,7 @@ signals:
      * @brief updateAllPlayers Signal to update all of the players in the game
      * @param players The vector of players to update in the view
      */
-    void updateAllPlayers(const std::vector<Player>& players);
+    void updateAllPlayers(const std::vector<Player> &players);
 
     /**
      * @brief splitPlayers Signal to split the player at the given index with the updated players
@@ -158,7 +158,7 @@ signals:
      * @param originalPlayer The original player
      * @param newPlayer The new player
      */
-    void splitPlayers(int originalIndex, const Player& originalPlayer, const Player& newPlayer);
+    void splitPlayers(int originalIndex, const Player &originalPlayer, const Player &newPlayer);
 
     /**
      * @brief splitPlayerUpdateInfo Signal to playerinfoview to update player information
@@ -166,7 +166,7 @@ signals:
      * @param originalPlayer The original player
      * @param money Money of the first hand
      */
-    void splitPlayerUpdateInfo(int originalIndex, const Player& originalPlayer, int money);
+    void splitPlayerUpdateInfo(int originalIndex, const Player &originalPlayer, int money);
 
 private:
     /**
@@ -177,12 +177,12 @@ private:
     /**
      * @brief botPlayer The BotStrategy that determines the bot's move
      */
-    BotStrategy* botStrategy;
+    BotStrategy *botStrategy;
 
     /**
      * @brief timer The timer class to schedule all single shot calls
      */
-    TimerManager* timer;
+    TimerManager *timer;
 
     /**
      * @brief currentPlayerIndex The index of the current player in the round
@@ -202,7 +202,7 @@ private:
     /**
      * @brief checkTurnEnd
      */
-    void checkTurnEnd(const Player& player);
+    void checkTurnEnd(const Player &player);
 
     /**
      * @brief onePlayerStillAlive Checks if there is at least one player still with a stood hand

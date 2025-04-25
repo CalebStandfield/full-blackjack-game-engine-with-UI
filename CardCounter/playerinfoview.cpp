@@ -15,7 +15,7 @@ PlayerInfoView::PlayerInfoView(Ui::MainWindow *ui, QObject *parent) : QObject(pa
 void PlayerInfoView::buildLayout(int seats)
 {
     // Sets seatcount to seats or a max of 5
-    seatCount = qMin(seats,5);
+    seatCount = qMin(seats, 5);
     seatLabels.resize(seatCount);
 
     QString QWidgetStyle =
@@ -36,13 +36,15 @@ void PlayerInfoView::buildLayout(int seats)
 
     // Clears layout from previous games
     QLayoutItem *child;
-    while ((child = layout->takeAt(0)) != nullptr) {
+    while ((child = layout->takeAt(0)) != nullptr)
+    {
         delete child->widget();
         delete child;
     }
 
     // Creates labels and adds them to the layout for each player
-    for (int i = 0; i < seatCount; i++) {
+    for (int i = 0; i < seatCount; i++)
+    {
         QLabel *label = new QLabel(ui->playInfoContainer);
         label->setFixedSize(200, 140);
         label->setAlignment(Qt::AlignCenter);
@@ -56,7 +58,8 @@ void PlayerInfoView::buildLayout(int seats)
 QString PlayerInfoView::getStatusColor(PLAYERSTATUS status)
 {
     QString color;
-    switch (status) {
+    switch (status)
+    {
     case PLAYERSTATUS::LOST:
     case PLAYERSTATUS::BUST:
         color = "#cc3333";
@@ -104,10 +107,11 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
     QString labelColor;
 
     // For end of round status', paint the whole card status color
-    if(fillWholeCard(status))
+    if (fillWholeCard(status))
     {
         labelColor = QString("background-color:%1;color:white;"
-                            "border:3px solid #000000;").arg(statusColor);
+                             "border:3px solid #000000;")
+                         .arg(statusColor);
     }
     // For mid round status', paint just the border status color
     else
@@ -120,13 +124,13 @@ void PlayerInfoView::paintBorder(QLabel *label, PLAYERSTATUS status)
                              "border-radius:12px;"
                              "padding:12px 20px;"
                              "font-size:16px;"
-                             "font-weight:600;}").arg(labelColor));
+                             "font-weight:600;}")
+                             .arg(labelColor));
 }
 
 bool PlayerInfoView::fillWholeCard(PLAYERSTATUS status)
 {
-    return status == PLAYERSTATUS::WON || status == PLAYERSTATUS::BLACKJACK || status == PLAYERSTATUS::LOST
-           || status == PLAYERSTATUS::PUSHED || status == PLAYERSTATUS::BANKRUPT;
+    return status == PLAYERSTATUS::WON || status == PLAYERSTATUS::BLACKJACK || status == PLAYERSTATUS::LOST || status == PLAYERSTATUS::PUSHED || status == PLAYERSTATUS::BANKRUPT;
 }
 
 void PlayerInfoView::rebuildMapping()
@@ -154,7 +158,7 @@ void PlayerInfoView::onSettingsAccepted(const std::vector<Player> &players, int,
     for (int i = 0; i < static_cast<int>(players.size()); i++)
     {
         // Stores userIndex for creating name of label
-        if(players[i].isUser)
+        if (players[i].isUser)
         {
             userIndex = i;
         }
@@ -162,7 +166,7 @@ void PlayerInfoView::onSettingsAccepted(const std::vector<Player> &players, int,
     }
 }
 
-void PlayerInfoView::refreshSeat(int seat, const Player& player, int money)
+void PlayerInfoView::refreshSeat(int seat, const Player &player, int money)
 {
     if (seat >= seatCount)
         return;
@@ -171,7 +175,7 @@ void PlayerInfoView::refreshSeat(int seat, const Player& player, int money)
     setSeatText(seat, money, player.hand.getBet(), player.status, player.hand.getTotal());
 }
 
-void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player& player, int money, int total)
+void PlayerInfoView::onPlayerUpdated(int playerIndex, const Player &player, int money, int total)
 {
     if (playerIndex >= modelToSeat.size())
         return;
@@ -190,7 +194,7 @@ void PlayerInfoView::onUpdateAllPlayers(const std::vector<Player> &players)
         refreshSeat(modelToSeat[i], players[i], players[i].money);
 }
 
-void PlayerInfoView::onSplitPlayers(int originalIndex, const Player& originalPlayer, int money)
+void PlayerInfoView::onSplitPlayers(int originalIndex, const Player &originalPlayer, int money)
 {
     // Adds a new person to vector after originalIndex and updates the label's money
     insertSplitMapping(originalIndex);
@@ -227,7 +231,7 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
 
     QString name;
     // If seat is the user, set name as User
-    if(seat == userIndex)
+    if (seat == userIndex)
         name = "User";
     // If seat is not user, use Player
     else
@@ -240,20 +244,18 @@ void PlayerInfoView::setSeatText(int seat, int money, int bet, PLAYERSTATUS stat
     seatLabels[seat]->setTextFormat(Qt::RichText);
     seatLabels[seat]->setText(
         QString(QByteArrayLiteral(
-                "<span style='color:%6;'>%1</span><br>"
-                "<span style='color:white;'>Bet: $%3</span><br>"
-                "<span style='color:white;'>Hand Total: %7</span><br>"
-                "<span style='color: %4;'>%5</span><br>"
-                "<span style='color:white;'>Money: $%2</span><br>")
-                )
+                    "<span style='color:%6;'>%1</span><br>"
+                    "<span style='color:white;'>Bet: $%3</span><br>"
+                    "<span style='color:white;'>Hand Total: %7</span><br>"
+                    "<span style='color: %4;'>%5</span><br>"
+                    "<span style='color:white;'>Money: $%2</span><br>"))
             .arg(name)
             .arg(money)
             .arg(bet)
             .arg(statusTextColor)
             .arg(QString::fromStdString(statusString))
             .arg(textColor)
-            .arg(handTotal)
-        );
+            .arg(handTotal));
 
     seatLabels[seat]->show();
 }
@@ -263,43 +265,46 @@ void PlayerInfoView::onStopEverything()
     ui->playInfoContainer->hide();
 }
 
-void PlayerInfoView::onEndRound(const std::vector<Player>& players)
+void PlayerInfoView::onEndRound(const std::vector<Player> &players)
 {
     // Keeps track of best hand for a split player
     std::vector<int> bestHandsIndex = std::vector<int>(seatCount);
     int player = -1;
-    for(int i = 0; i < static_cast<int>(players.size()); i++){
+    for (int i = 0; i < static_cast<int>(players.size()); i++)
+    {
         // If original hand of a player, add to bestHands
-        if(players[i].originalHand){
+        if (players[i].originalHand)
+        {
             player++;
             bestHandsIndex[player] = i;
             continue;
         }
         // Sets the status of best player if it is better than what is currently stored
         PLAYERSTATUS bestHandStatus = players[bestHandsIndex[player]].status;
-        switch(players[i].status){
-            case PLAYERSTATUS::BLACKJACK:
+        switch (players[i].status)
+        {
+        case PLAYERSTATUS::BLACKJACK:
+            bestHandsIndex[player] = i;
+            break;
+        case PLAYERSTATUS::WON:
+            if (bestHandStatus != PLAYERSTATUS::BLACKJACK)
                 bestHandsIndex[player] = i;
-                break;
-            case PLAYERSTATUS::WON:
-                if(bestHandStatus != PLAYERSTATUS::BLACKJACK)
-                    bestHandsIndex[player] = i;
-                break;
-            case PLAYERSTATUS::PUSHED:
-                if(bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON)
-                    bestHandsIndex[player] = i;
-                break;
-            case PLAYERSTATUS::LOST:
-                if(bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON && bestHandStatus != PLAYERSTATUS::PUSHED)
-                    bestHandsIndex[player] = i;
-                break;
-            default:
-                break;
+            break;
+        case PLAYERSTATUS::PUSHED:
+            if (bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON)
+                bestHandsIndex[player] = i;
+            break;
+        case PLAYERSTATUS::LOST:
+            if (bestHandStatus != PLAYERSTATUS::BLACKJACK && bestHandStatus != PLAYERSTATUS::WON && bestHandStatus != PLAYERSTATUS::PUSHED)
+                bestHandsIndex[player] = i;
+            break;
+        default:
+            break;
         }
     }
 
     // Refresh all labels
-    for(int i = 0; i < static_cast<int>(bestHandsIndex.size()); i++)
+    for (int i = 0; i < static_cast<int>(bestHandsIndex.size()); i++)
     {
         refreshSeat(i, players[bestHandsIndex[i]], players[bestHandsIndex[i] - players[bestHandsIndex[i]].playerHandIndex].money);
     }

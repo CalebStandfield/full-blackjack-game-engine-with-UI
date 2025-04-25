@@ -17,7 +17,8 @@ class AnimatableCardItem;
  * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins
  * @date 4/22/2025
  */
-class TableView : public QGraphicsView {
+class TableView : public QGraphicsView
+{
     Q_OBJECT
 public:
     /**
@@ -77,7 +78,7 @@ public:
      * @param endPos The end pos of the card
      * @param rotationAngle The end rotation of the card
      */
-    void addCardAnimated(int playerIndex, int handIndex, const QString& imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
+    void addCardAnimated(int playerIndex, int handIndex, const QString &imagePath, QPointF startPos, QPointF endPos, qreal rotationAngle);
 
     /**
      * @brief addPlayerCardAt Adds a card to the TableView without animation
@@ -87,7 +88,7 @@ public:
      * @param pos The position to add the card to the table
      * @param rotationAngle The rotation of the card
      */
-    void addPlayerCardAt(int playerIndex, int handIndex, const QString& imagePath, QPointF pos, qreal rotationAngle);
+    void addPlayerCardAt(int playerIndex, int handIndex, const QString &imagePath, QPointF pos, qreal rotationAngle);
 
     /**
      * @brief addDealerCardAt Adds a card for the dealer
@@ -95,7 +96,7 @@ public:
      * @param pos The position to add the card to the table
      * @param rotationAngle The rotation of the card
      */
-    void addDealerCardAt(const QString& imagePath, QPointF pos, qreal rotationAngle);
+    void addDealerCardAt(const QString &imagePath, QPointF pos, qreal rotationAngle);
 
     /**
      * @brief createDealerPile Creates a pile of cards for the dealer
@@ -116,7 +117,7 @@ public:
      * @param setShadow A bool for if the card should have shadow or not
      * @return AnimatableCardItem* A new AnimatableCardItem for either placing or animating
      */
-    AnimatableCardItem* createCardItem(const QString& imagePath, QPointF startPos, qreal rotationAngle, bool setShadow);
+    AnimatableCardItem *createCardItem(const QString &imagePath, QPointF startPos, qreal rotationAngle, bool setShadow);
 
     /**
      * @brief createAnimationCardItem Uses an AnimatableCardItem to start the animation
@@ -127,7 +128,7 @@ public:
      * @param endRotation The ending rotation of the card
      * @return QParallelAnimationGroup* Returns a group of animations
      */
-    QParallelAnimationGroup* createAnimationCardItem(AnimatableCardItem* cardItem, QPointF startPos, QPointF endPos, qreal startRotation, qreal endRotation);
+    QParallelAnimationGroup *createAnimationCardItem(AnimatableCardItem *cardItem, QPointF startPos, QPointF endPos, qreal startRotation, qreal endRotation);
 
     /**
      * @brief clearTable Clears all objects from the table
@@ -143,12 +144,12 @@ private:
     /**
      * @brief playerCards Vector of players, hands of the players, and cards in said hands
      */
-    std::vector<std::vector<std::vector<AnimatableCardItem*>>> playerCards;
+    std::vector<std::vector<std::vector<AnimatableCardItem *>>> playerCards;
 
     /**
      * @brief dealerCards Vector of the dealers cards
      */
-    std::vector<AnimatableCardItem*> dealerCards;
+    std::vector<AnimatableCardItem *> dealerCards;
 
     /**
      * @brief sizeX The x size of the card to scale down to
@@ -163,12 +164,12 @@ private:
     /**
      * @brief scene QGraphicsScene responsible for displaying the table
      */
-    QGraphicsScene* scene;
+    QGraphicsScene *scene;
 
     /**
      * @brief tableBackground The background of the tableView
      */
-    QGraphicsPixmapItem* tableBackground;
+    QGraphicsPixmapItem *tableBackground;
 
     /**
      * @brief setPlayerTextPositionsOnTable Sets the text of the players on the table
@@ -204,7 +205,8 @@ private:
  * Uses properties like position (`pos`) and rotation (`rotation`) via
  * Q_PROPERTY, to assist in animations
  */
-class AnimatableCardItem : public QObject, public QGraphicsPixmapItem {
+class AnimatableCardItem : public QObject, public QGraphicsPixmapItem
+{
     Q_OBJECT
 
     // Enable animation of the item's position using QPropertyAnimation
@@ -219,7 +221,7 @@ public:
      * @param pixmap The image to display for the item
      * @param parent The parent graphics item (optional)
      */
-    AnimatableCardItem(const QPixmap& pixmap, QGraphicsItem* parent = nullptr)
+    AnimatableCardItem(const QPixmap &pixmap, QGraphicsItem *parent = nullptr)
         : QObject(), QGraphicsPixmapItem(pixmap, parent) {}
 };
 

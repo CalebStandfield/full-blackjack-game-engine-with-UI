@@ -6,39 +6,41 @@
 namespace Move
 {
 
-/**
- * @brief The MOVE enum An enum for the moves of backjack
- *
- * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
- * @date 4/20/2025
- */
-enum class MOVE {
-    HIT,
-    DOUBLE,
-    SPLIT,
-    STAND
-};
+    /**
+     * @brief The MOVE enum An enum for the moves of backjack
+     *
+     * @authors Noah Zaffos, Caleb Standfield, Ethan Perkins, Jas Sandhu, Nash Hawkins, John Chen
+     * @date 4/20/2025
+     */
+    enum class MOVE
+    {
+        HIT,
+        DOUBLE,
+        SPLIT,
+        STAND
+    };
 
-/**
- * @brief toString Converts a MOVE to a string
- * @param move The MOVE to convert
- * @return A string of the MOVE provided
- */
-inline std::string toString(MOVE move)
-{
-    switch (move) {
-    case MOVE::HIT:
-        return "Hit";
-    case MOVE::DOUBLE:
-        return "Double";
-    case MOVE::SPLIT:
-        return "Split";
-    case MOVE::STAND:
-        return "Stand";
+    /**
+     * @brief toString Converts a MOVE to a string
+     * @param move The MOVE to convert
+     * @return A string of the MOVE provided
+     */
+    inline std::string toString(MOVE move)
+    {
+        switch (move)
+        {
+        case MOVE::HIT:
+            return "Hit";
+        case MOVE::DOUBLE:
+            return "Double";
+        case MOVE::SPLIT:
+            return "Split";
+        case MOVE::STAND:
+            return "Stand";
+        }
+
+        return "Unknown move";
     }
-
-    return "Unknown move";
-}
 }
 
 using Move::MOVE;
