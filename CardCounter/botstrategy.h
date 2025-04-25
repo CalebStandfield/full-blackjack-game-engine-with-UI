@@ -15,6 +15,9 @@
 class BotStrategy
 {
 public:
+    /**
+     * @brief BotStrategy Constructer for the bot strategy class
+     */
     BotStrategy();
 
     /**

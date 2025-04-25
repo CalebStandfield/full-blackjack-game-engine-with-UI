@@ -23,13 +23,12 @@ class Controller : public QObject
 public:
     /**
      * @brief Controller Constructor that creates a new controller to the the blackjack game
-     * @param parent
+     * @param parent The parent of this object
      */
     explicit Controller(QObject *parent = nullptr);
 
     /**
      * @brief Controller Destructor for Controller class
-     * @param
      */
     ~Controller();
 

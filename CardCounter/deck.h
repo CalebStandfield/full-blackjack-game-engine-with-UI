@@ -22,12 +22,12 @@ public:
     Deck(int deckNumber = 1, int deterministic = 0);
 
     /**
-     * Shuffles the shuffleDeck so it is randomized
+     * @brief shuffle Shuffes the shuffleDeck so it is randomized
      */
     void shuffle();
 
     /**
-     * @brief deterministicShuffle
+     * @brief deterministicShuffle Shuffles the deck in a deterministic state
      */
     void deterministicShuffle();
 
