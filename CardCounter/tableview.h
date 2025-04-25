@@ -161,11 +161,6 @@ private:
     unsigned int sizeY = 91;
 
     /**
-     * @brief setUpTableViewConnects Creates all the QT connect statements for the TableView
-     */
-    void setUpTableViewConnects();
-
-    /**
      * @brief scene QGraphicsScene responsible for displaying the table
      */
     QGraphicsScene* scene;

@@ -9,6 +9,12 @@
 #include "controller.h"
 #include <QApplication>
 
+/**
+ * @brief main The point of execution
+ * @param argc Number of args
+ * @param argv Char array of args
+ * @return int An int for the success or failues of the program
+ */
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

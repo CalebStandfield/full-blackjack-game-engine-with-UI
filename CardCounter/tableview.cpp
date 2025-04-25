@@ -34,11 +34,6 @@ TableView::~TableView()
     delete timer;
 }
 
-void TableView::setUpTableViewConnects()
-{
-
-}
-
 void TableView::createPlayerCardContainers(unsigned int playerCount)
 {
     playerCards.resize(playerCount);
@@ -107,7 +102,8 @@ QPointF TableView::getCardEndPosition(int playerIndex, int handIndex, int cardIn
     qreal xOffset = 550;
     qreal yOffset = -10;
     qreal cardOffset = 11;
-    qreal r = 450; // Radius for a semicircle centered at the offset pointed downward
+    // Radius for a semicircle centered at the offset pointed downward
+    qreal r = 450;
 
     // Calculate the angle for the position of the card
     qreal tempAngle = ((playerIndex + 1) * M_PI / (playerCards.size() + 2)) + ((handIndex + 1) * M_PI / ((playerCards.size() + 2) * (playerCards[playerIndex].size() + 1)));
@@ -196,10 +192,12 @@ void TableView::createDealerPile()
 
     for (int i = 0; i < 26; i++)
     {
-        int delay = i * 50; // 100ms delay between each card
+        // 100ms delay between each card
+        int delay = i * 50;
 
         timer->scheduleSingleShot(delay, [=]() {
-            QPointF endPos = QPointF(450, 75 - i); // Slight vertical offset per card
+            // Slight vertical offset per card
+            QPointF endPos = QPointF(450, 75 - i);
 
             AnimatableCardItem* cardItem = createCardItem(":/cardImages/cards_pngsource/back_of_card.png", startPos, 90, true);
 
