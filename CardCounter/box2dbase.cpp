@@ -8,7 +8,7 @@
 #include "box2dbase.h"
 
 box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
-    coinPixmap(new QPixmap(":/cash/otherimg/coin.png")),  // initialize the world
+    coinPixmap(new QPixmap(":/cash/otherimg/coin.png")), // initialize the world
     m_world(new b2World(b2Vec2(0.0f, 9.8f))),
     m_timeStep(1.0f/60.0f),
     m_velocityIterations(6),
@@ -24,7 +24,8 @@ box2Dbase::box2Dbase(QObject *parent) : QGraphicsScene{parent},
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &box2Dbase::advance);
-    timer->start(1000 / 60); // ~60 FPS
+    // ~60 FPS
+    timer->start(1000 / 60);
 }
 
 box2Dbase::~box2Dbase(){
@@ -35,12 +36,15 @@ box2Dbase::~box2Dbase(){
     delete m_world;
 }
 
-float box2Dbase::randomFloat(float min, float max){
+float box2Dbase::randomFloat(float min, float max)
+{
     return static_cast<float>(QRandomGenerator::global()->generateDouble() * (min - max) + min);
 }
 
-void box2Dbase::advance(){
-    if (!m_world) return; // if the world doesnt exist
+void box2Dbase::advance()
+{
+    // if the world doesnt exist
+    if (!m_world) return;
 
     // step physics simulation forward
     m_world->Step(m_timeStep, m_velocityIterations, m_positionIterations);
@@ -64,8 +68,10 @@ void box2Dbase::advance(){
     for (b2Body* body : bodiesOutofBounds) {
         if (body->GetUserData()) {
             QGraphicsItem* item = static_cast<QGraphicsItem*>(body->GetUserData());
-            removeItem(item);  // Remove from scene
-            delete item;       // Free memory
+            // Remove from scene
+            removeItem(item);
+            // Free memory
+            delete item;
         }
         m_world->DestroyBody(body);
     }
@@ -98,13 +104,15 @@ void box2Dbase::onWinSpawnCoins(QPointF position, int coinsToSpawn) {
     initialBurst();
 
     if (!m_coinTimer->isActive()) {
-        m_coinTimer->start(100); // slightly slower for visibility
+         // slightly slower for visibility
+        m_coinTimer->start(100);
     }
 
 }
 
 void box2Dbase::spawnNextCoin() {
-    if (m_coinQueue.isEmpty()) { // if queue is empty stop the timer
+    if (m_coinQueue.isEmpty()) {
+        // if queue is empty stop the timer
         m_coinTimer->stop();
         return;
     }
@@ -117,8 +125,10 @@ void box2Dbase::spawnNextCoin() {
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
     bodyDef.position.Set(pos.x() / pixels_PerMeter, pos.y() / pixels_PerMeter);
-    bodyDef.angularDamping = 0.1f;  // resist spinning
-    bodyDef.linearDamping = 0.1f;   // air resistance
+    // resist spinning
+    bodyDef.angularDamping = 0.1f;
+    // air resistance
+    bodyDef.linearDamping = 0.1f;
     b2Body* body = m_world->CreateBody(&bodyDef);
 
     QPixmap scaledCoin = coinPixmap->scaled(COIN_SIZE_PIXELS, COIN_SIZE_PIXELS, Qt::KeepAspectRatio);
@@ -131,8 +141,10 @@ void box2Dbase::spawnNextCoin() {
     b2FixtureDef fixture;
     fixture.shape = &circle;
     fixture.density = 0.4f;
-    fixture.friction = 0.1f;     // high friction
-    fixture.restitution = 0.6f;  // minimal bounce
+    // high friction
+    fixture.friction = 0.1f;
+    // minimal bounce
+    fixture.restitution = 0.6f;
     body->CreateFixture(&fixture);
 
     QGraphicsPixmapItem* coin = new QGraphicsPixmapItem(scaledCoin);
@@ -173,7 +185,8 @@ void box2Dbase::initialBurst(){
 
         // create fixture
         b2FixtureDef fixtureDef;
-        fixtureDef.shape = &circleShape;  // Use the circle shape, not the pixmap
+          // Use the circle shape, not the pixmap
+        fixtureDef.shape = &circleShape;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.2f;
         fixtureDef.restitution = 0.6f;
@@ -195,7 +208,8 @@ void box2Dbase::initialBurst(){
 
     // start with rapid initial burst
     if (!m_coinTimer->isActive()) {
-        m_coinTimer->start(50); // First coins fast
+        // First coins fast
+        m_coinTimer->start(50);
         QTimer::singleShot(300, [this]() {
             m_coinTimer->setInterval(1000 / m_coinsPerSecond);
         });
